@@ -70,7 +70,7 @@ fun Despacho(){
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .padding(20.dp),
+        .padding(PADDING_HORIZONTAL),
         horizontalAlignment = Alignment.CenterHorizontally)
     {
         Spacer(modifier = Modifier.size(espaciado))
@@ -98,11 +98,11 @@ fun Despacho(){
             Spacer(modifier = Modifier.size(espaciado))
             Column(modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.End) {
-                Toggle(normal = sentidoNormal, onClick = {sentidoNormal = it})
+                ToggleVertical(normal = sentidoNormal, onClick = {sentidoNormal = it}, textoA= "Normal", textoB="Invertida")
             }
         }
-        Spacer(modifier = Modifier.size(espaciado*3))
-        BotonStandard(texto = "Despacho Pack / Gran Volumen",
+        Spacer(modifier = Modifier.size(espaciado*2))
+        BotonStandard(texto = "Despacho Pack / G.Volumen",
                     onClick = { cargarFormatoDespacho(vertical,horizontal, sentidoNormal)
                                 BTHandler.imprimir(etiquetaPack)}
         )
@@ -125,11 +125,10 @@ fun Despacho(){
 fun Predespacho(){
     var horizontal : Int by remember { mutableStateOf(0)}
     var vertical : Int by remember { mutableStateOf(0)}
-    var sentidoNormal: Boolean by remember { mutableStateOf(true)}
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .padding(20.dp),
+        .padding(PADDING_HORIZONTAL),
         horizontalAlignment = Alignment.CenterHorizontally)
     {
         Spacer(modifier = Modifier.size(espaciado))
@@ -155,13 +154,13 @@ fun Predespacho(){
                 }
             }
         }
-        Spacer(modifier = Modifier.size(espaciado*3))
+        Spacer(modifier = Modifier.size(espaciado*2))
         BotonStandard(texto = "Predespacho Papel Continuo",
             onClick = { cargarFormatoPredespacho(vertical,horizontal, 225)
                 BTHandler.imprimir(etiquetaPredespacho)}
         )
         Spacer(modifier = Modifier.size(espaciado))
-        BotonStandard(texto = "Predespacho Etiqueta Autoadhesiva",
+        BotonStandard(texto = "Predespacho Etiqueta",
             onClick = { cargarFormatoPredespacho(vertical,horizontal, 0)
                 BTHandler.imprimir(etiquetaPredespacho) }
         )
@@ -242,62 +241,6 @@ fun FlechaAbajo(variable: Int, onClick: (Int) -> Unit){
     }
 }
 
-@Composable
-fun Toggle(normal:Boolean, onClick: (Boolean) -> Unit){
-    if(normal){
-        Column(){
-            OutlinedButton(onClick = {},
-                colors =ButtonDefaults.buttonColors(backgroundColor = Naranja ),
-                shape = RoundedCornerShape(
-                    topStart = redondeoFlechas,
-                    topEnd = redondeoFlechas
-                ),
-                border = BorderStroke(1.dp, Naranja),
-                modifier = Modifier.width(110.dp).height(27.dp),
-                contentPadding = PaddingValues(1.dp)
-            ){
-                Text("Normal", color = Color.White, fontWeight = FontWeight.Bold)
-            }
-            OutlinedButton(onClick = {onClick(!normal)},
-                //colors =ButtonDefaults.buttonColors(backgroundColor = GrisClaro ),
-                shape = RoundedCornerShape(
-                    bottomEnd = redondeoFlechas,
-                    bottomStart = redondeoFlechas
-                ),
-                border = BorderStroke(1.dp, Naranja),
-                modifier = Modifier.width(110.dp).height(27.dp),
-                contentPadding = PaddingValues(1.dp)
-            ){
-                Text(text= "Invertida",color = Naranja)
-            }
-        }
-    }else{
-        OutlinedButton(onClick = {onClick(!normal)},
-            //colors =ButtonDefaults.buttonColors(backgroundColor = GrisClaro ),
-            shape = RoundedCornerShape(
-                topStart = redondeoFlechas,
-                topEnd = redondeoFlechas
-            ),
-            border = BorderStroke(1.dp, Naranja),
-            modifier = Modifier.width(110.dp).height(27.dp),
-            contentPadding = PaddingValues(1.dp)
-        ){
-            Text(text= "Normal", color = Naranja)
-        }
-        OutlinedButton(onClick = {},
-            colors =ButtonDefaults.buttonColors(backgroundColor = Naranja ),
-            shape = RoundedCornerShape(
-                bottomEnd = redondeoFlechas,
-                bottomStart = redondeoFlechas
-            ),
-            border = BorderStroke(1.dp, Naranja),
-            modifier = Modifier.width(110.dp).height(27.dp),
-            contentPadding = PaddingValues(1.dp)
-        ){
-            Text(text= "Invertida", color=Color.White, fontWeight = FontWeight.Bold)
-        }
-    }
-}
 
 fun cargarFormatoDespacho(vertical: Int, horizontal: Int, sentidoNormal: Boolean){
 
@@ -414,21 +357,6 @@ fun cargarFormatoPredespacho(vertical: Int, horizontal: Int,margen:Int){
             "<STX>R<ETX>")
 }
 
-fun cambiarPapel(){
-    BTHandler.imprimir("A"+
-            "IG2" +
-            "PM0" +
-            "Z")
-    //hayRolloPapel = true
-}
-
-fun cambiarEtiqueta(){
-    BTHandler.imprimir("A"+
-            "IG1" +
-            "PM1" +
-            "Z")
-    //hayRolloEtiqueta = true
-}
 
 val etiquetaPack = "<STX>R<ETX> \n" +
         "<STX><ESC>E1<CAN><ETX>\n" +

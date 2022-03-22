@@ -35,155 +35,101 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
     var ingresoCantidad by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
     val estadoCheckBox = remember { mutableStateOf(ControlProductos.etiqueta) }
-    var loteOK = remember{mutableStateOf(false)}
     val interlineado = 6.dp
-
-    var productoMostrable: Producto? = ControlProductos.productosMatchCodigoBarras[0]
-
-    if (loteOK.value) {
-        productoMostrable = ControlProductos.productoIngresado
-    }
-
     Scaffold(
         topBar = {barraTOP()},
         content = {
             Column(modifier= Modifier.fillMaxWidth()){
 
                 //Nombre Producto
-                if (productoMostrable != null) {
-                    Text(text=productoMostrable.nombre,
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign=TextAlign.Center,
-                        modifier= Modifier.fillMaxWidth().background(NaranjaMuySuave).padding(vertical = interlineado))
-                }
+                ControlProductos.productoIngresado?.let { it1 -> Text(text=it1.nombre,
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign=TextAlign.Center,
+                    modifier= Modifier.fillMaxWidth().background(NaranjaMuySuave).padding(vertical = interlineado)) }
 
                 //Código Barras
-                Text(text=productoMostrable?.codigoBarras.toString(),
+                Text(text=ControlProductos.productoIngresado?.codigoBarras.toString(),
                     textAlign = TextAlign.End,modifier= Modifier.fillMaxWidth().padding(interlineado))
 
+                //Lote
+                Row(modifier= Modifier.fillMaxWidth()){
+                    Text(text="Lote:  ", fontWeight = FontWeight.Bold)
+                    Text(text=ControlProductos.productoIngresado?.lote.toString())
+                }
 
+                //Vencimiento
+                Row(modifier= Modifier.fillMaxWidth()) {
+                    Text(text="Vencimiento:  ", fontWeight = FontWeight.Bold)
+                    Text(text = ControlProductos.productoIngresado?.vencimiento.toString())
+                }
 
-                if(loteOK.value){ //Lote Ya cargado
-                    //Lote
-                    Row(modifier= Modifier.fillMaxWidth()){
-                        Text(text="Lote:  ", fontWeight = FontWeight.Bold)
-                        Text(text=productoMostrable?.lote.toString())
+                //Contable
+                Row(modifier= Modifier.fillMaxWidth().padding(vertical = 10.dp)){
+
+                    //CONTABLE
+                    Column(modifier = Modifier.weight(1.0f)){
+                        Text(text="Contable",
+                            modifier=Modifier.padding(2.dp)
+                                .background(MoradoMuySuave)
+                                .fillMaxWidth(),
+                            textAlign=TextAlign.Center)
+                        Text(text=ControlProductos.productoIngresado?.cantidad.toString(),
+                            modifier=Modifier.fillMaxWidth(),
+                            textAlign=TextAlign.Center)
                     }
 
-                    //Vencimiento
-                    Row(modifier= Modifier.fillMaxWidth()) {
-                        Text(text="Vencimiento:  ", fontWeight = FontWeight.Bold)
-                        Text(text = productoMostrable?.vencimiento.toString())
+                    //CONTADO
+                    Column(modifier = Modifier.weight(1.0f)) {
+                        Text(
+                            text = "Contado",
+                            modifier = Modifier.padding(2.dp)
+                                .background(MoradoMuySuave)
+                                .fillMaxWidth(),
+                            textAlign = TextAlign.Center)
+                        Text(
+                            text = ControlProductos.productoIngresado?.contado().toString(),
+                            modifier=Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center)
                     }
 
-                    //Contable
-                    Row(modifier= Modifier.fillMaxWidth().padding(vertical = 10.dp)){
-
-                        //CONTABLE
-                        Column(modifier = Modifier.weight(1.0f)){
-                            Text(text="Contable",
-                                modifier=Modifier.padding(2.dp)
-                                    .background(MoradoMuySuave)
-                                    .fillMaxWidth(),
-                                textAlign=TextAlign.Center)
-                            Text(text=productoMostrable?.cantidad.toString(),
-                                modifier=Modifier.fillMaxWidth(),
-                                textAlign=TextAlign.Center)
-                        }
-
-                        //CONTADO
-                        Column(modifier = Modifier.weight(1.0f)) {
-                            Text(
-                                text = "Contado",
-                                modifier = Modifier.padding(2.dp)
-                                    .background(MoradoMuySuave)
-                                    .fillMaxWidth(),
-                                textAlign = TextAlign.Center)
-                            Text(
-                                text = productoMostrable?.contado().toString(),
-                                modifier=Modifier.fillMaxWidth(),
-                                textAlign = TextAlign.Center)
-                        }
-
-                        //DIFERENCIA
-                        Column(modifier = Modifier.weight(1.0f)) {
-                            Text(
-                                text = "Diferencia",
-                                modifier = Modifier.padding(2.dp)
-                                    .background(MoradoMuySuave)
-                                    .fillMaxWidth(),
-                                textAlign = TextAlign.Center
-                            )
-                            Text(
-                                text = productoMostrable?.diferencia().toString(),
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.fillMaxWidth())
-                        }
+                    //DIFERENCIA
+                    Column(modifier = Modifier.weight(1.0f)) {
+                        Text(
+                            text = "Diferencia",
+                            modifier = Modifier.padding(2.dp)
+                                .background(MoradoMuySuave)
+                                .fillMaxWidth(),
+                            textAlign = TextAlign.Center
+                        )
+                        Text(
+                            text = ControlProductos.productoIngresado?.diferencia().toString(),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth())
                     }
+                }
 
-                    //Localizador
-                    Row(modifier=Modifier
+                //Localizador
+                Row(modifier=Modifier
                         .background(NaranjaMuySuave)
                         .padding(interlineado)
                         .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically){
-                        productoMostrable?.let { it1 -> Text(text= it1.localizador,
-                            fontSize = 22.sp,
-                            fontWeight = FontWeight.Bold,
-                            textAlign=TextAlign.Center,
-                            modifier= Modifier.fillMaxWidth()) }
 
-                    }
+                    verticalAlignment = Alignment.CenterVertically){
+                    ControlProductos.productoIngresado?.let { it1 -> Text(text= it1.localizador,
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign=TextAlign.Center,
+                        modifier= Modifier.fillMaxWidth()) }
 
-                    //Fila Input Text
-                    Row(modifier= Modifier.fillMaxWidth().padding(vertical = interlineado),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ){
-                        //Input Text
-                        Text(text="Cantidad: ")
-                        Box(modifier= Modifier.border(2.dp, GrisOscuro, RoundedCornerShape(10))
-                            .background(color= Color.White)
-                            .size(80.dp,30.dp).padding(horizontal = 5.dp)
-                            .focusTarget(),
-                            contentAlignment = Alignment.CenterStart
-                        ){
+                }
 
-                            BasicTextField(value = ingresoCantidad,
-                                onValueChange = {ingresoCantidad = it},
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                keyboardActions = KeyboardActions(onDone={
-                                    ControlProductos.cargarCantidad(ingresoCantidad)
-                                    onClickControladorProductos()
-                                }),
-                                enabled = true,
-                                singleLine = true,
-                                modifier = Modifier
-                                    .onKeyEvent {
-                                        if(it.key.keyCode == Key.Enter.keyCode) {
-                                            ControlProductos.cargarCantidad(ingresoCantidad.dropLast(1))
-                                            onClickControladorProductos()
-                                        }
-                                        false
-                                    }
-                                    .focusRequester(focusRequester)
-                            )
-                        }
-
-                        //CheckBox Etiqueta
-                        Spacer(modifier=Modifier.size(30.dp))
-                        Text("Etiqueta:",modifier=Modifier.padding(interlineado))
-                        Checkbox(checked = estadoCheckBox.value,
-                            onCheckedChange = { estadoCheckBox.value = it
-                                ControlProductos.etiqueta = estadoCheckBox.value},
-                            modifier= Modifier.padding(vertical = interlineado))
-                    }
-
-                }else {  // Lote Por Cargar
-
-                    //Input Lote
-                    Text(text="Lote: ")
+                //Input Text
+                Row(modifier= Modifier.fillMaxWidth().padding(vertical = interlineado),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ){
+                    Text(text="Cantidad: ")
                     Box(modifier= Modifier.border(2.dp, GrisOscuro, RoundedCornerShape(10))
                         .background(color= Color.White)
                         .size(80.dp,30.dp).padding(horizontal = 5.dp)
@@ -193,41 +139,30 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
 
                         BasicTextField(value = ingresoCantidad,
                             onValueChange = {ingresoCantidad = it},
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             keyboardActions = KeyboardActions(onDone={
-                                if (productoMostrable != null) {
-                                    val productoConLote = buscarProductoEnLista(productoMostrable.codigoBarras,ingresoCantidad,ControlProductos.productosMatchCodigoBarras)
-                                    if (productoConLote == null){
-                                        ingresoCantidad ==""
-                                    }else{
-                                        loteOK.value = true
-                                        ControlProductos.productoIngresado = productoConLote
-                                        onClickControladorProductos()
-                                    }
-                                }
-
+                                ControlProductos.cargarCantidad(ingresoCantidad)
+                                onClickControladorProductos()
                             }),
                             enabled = true,
                             singleLine = true,
                             modifier = Modifier
                                 .onKeyEvent {
                                     if(it.key.keyCode == Key.Enter.keyCode) {
-                                        if (productoMostrable != null) {
-                                            val productoConLote = buscarProductoEnLista(productoMostrable.codigoBarras,ingresoCantidad.dropLast(1),ControlProductos.productosMatchCodigoBarras)
-                                            if (productoConLote == null){
-                                                ingresoCantidad ==""
-                                            }else{
-                                                loteOK.value = true
-                                                ControlProductos.productoIngresado = productoConLote
-                                                onClickControladorProductos()
-                                            }
-                                        }
+                                        ControlProductos.cargarCantidad(ingresoCantidad.dropLast(1))
+                                        onClickControladorProductos()
                                     }
                                     false
                                 }
-                                //.focusRequester(focusRequester)
+                                .focusRequester(focusRequester)
                         )
                     }
+                    Spacer(modifier=Modifier.size(30.dp))
+                    Text("Etiqueta:",modifier=Modifier.padding(interlineado))
+                    Checkbox(checked = estadoCheckBox.value,
+                        onCheckedChange = { estadoCheckBox.value = it
+                            ControlProductos.etiqueta = estadoCheckBox.value},
+                        modifier= Modifier.padding(vertical = interlineado))
                 }
             }
         }
@@ -236,4 +171,18 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
     }
+}
+
+
+fun imprimirEtiquetaRecepcion(producto:Producto, cantidad:Int){
+    val etiqueta = "<STX><ESC>C<ETX>\n" +
+            "<STX><ESC>P<ETX>\n" +
+            "<STX>E22;F22;<ETX>      \n" +
+            "<STX>H0;o360,55;f3;c26;d0,30;k20;<ETX>\n" +
+            "<STX>H1;o260,55;f3;c26;d0,30;k17;<ETX>\n" +
+            "<STX>H2;o210,55;f3;c26;d0,30;k14;<ETX>\n" +
+            "<STX>H3;o140,55;f3;c26;d0,20;k24;<ETX>\n" +
+            "<STX>H4;o040,55;f3;c21;d0,30;k10;<ETX>\n" +
+            "<STX>R<ETX>"
+
 }

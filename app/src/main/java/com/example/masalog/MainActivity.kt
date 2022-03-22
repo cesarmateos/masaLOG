@@ -8,15 +8,11 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.masalog.ui.theme.MasaLOGTheme
-import com.google.gson.Gson
 
 
 class MainActivity : ComponentActivity() {
@@ -51,13 +47,30 @@ fun MasaNavHost(navController: NavHostController,modifier: Modifier = Modifier) 
     ) {
         composable(Pantallas.Inicio.name) {
             PantallaInicio(
-                onClickImpresoras = { navController.navigate(Pantallas.Impresoras.name) },
+                onClickEtiquetas = { navController.navigate(Pantallas.Etiquetas.name) },
                 onClickControladorInput = { navController.navigate(Pantallas.ControladorInput.name) },
+                onClickImpresoras = {navController.navigate(Pantallas.Impresoras.name)},
+                onClickEtiquetado = {navController.navigate(Pantallas.EtiquetadoPlanta.name)}
             )
         }
 
-        composable(Pantallas.Impresoras.name) {
+        composable(Pantallas.Etiquetas.name) {
             PantallaConfiguraEtiqueta()
+        }
+
+        composable(Pantallas.Impresoras.name) {
+            PantallaConfiguraImpresora(
+                onClickConfiguraRP4 = {navController.navigate(Pantallas.ConfiguraRP4.name)},
+                onClickConfiguraSATO = {navController.navigate(Pantallas.ConfiguraSATO.name)}
+            )
+        }
+
+        composable(Pantallas.ConfiguraRP4.name) {
+            PantallaConfiguraImpresoraRP4()
+        }
+
+        composable(Pantallas.ConfiguraSATO.name) {
+            PantallaConfiguraImpresoraSATO()
         }
 
         composable(Pantallas.ControladorInput.name){
@@ -79,6 +92,9 @@ fun MasaNavHost(navController: NavHostController,modifier: Modifier = Modifier) 
             )
         }
 
+        composable(Pantallas.EtiquetadoPlanta.name) {
+            PantallaEtiquetado_Seleccion()
+        }
         /*
 composable(route= Pantallas.ControladorProductos.name+ "/{control}",
 arguments = listOf(navArgument("control"){type = NavType.StringType})) {

@@ -1,7 +1,6 @@
 package com.example.masalog
 
-import android.text.style.StyleSpan
-import androidx.compose.foundation.BorderStroke
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -17,7 +16,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusTarget
@@ -25,11 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.semantics.SemanticsProperties.ImeAction
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -57,7 +51,7 @@ fun  PantallaControlaListadoProductos(onClickControladorIngreso: () -> Unit = {}
                 ) {
                     Text("Producto:")
                     Spacer(modifier= Modifier.size(5.dp))
-                    lectorBarras(onClickControladorIngreso)
+                    LectorBarras(onClickControladorIngreso)
                     Spacer(modifier= Modifier.size(20.dp))
                     Text("Etiqueta:")
                     Checkbox(checked = estadoCheckBox.value,
@@ -66,13 +60,13 @@ fun  PantallaControlaListadoProductos(onClickControladorIngreso: () -> Unit = {}
                 }
 
                 Row(modifier=Modifier.weight(1.0f)){
-                    cajaScrolleable(productos = ControlProductos.porControlar(),
+                    CajaScrolleable(productos = ControlProductos.porControlar(),
                         onClickControladorIngreso,
                         "Por Leer",
                         ::sumarUnidadesPorContar)
                 }
                 Row(modifier=Modifier.weight(1.0f)){
-                    cajaScrolleable(productos = ControlProductos.controlados(),
+                    CajaScrolleable(productos = ControlProductos.controlados(),
                         onClickControladorIngreso,
                         "Leídos",
                         ::sumarUnidadesContadas)
@@ -85,18 +79,25 @@ fun  PantallaControlaListadoProductos(onClickControladorIngreso: () -> Unit = {}
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun lectorBarras(onClickControladorIngreso: () -> Unit = {}) {
+fun LectorBarras(onClickControladorIngreso: () -> Unit = {}) {
 
     var ingresoBarras by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
+    val teclado = remember{ mutableStateOf(false)}
     val keyboardController = LocalSoftwareKeyboardController.current
-    keyboardController?.hide()
+
+    if (teclado.value){
+        keyboardController?.show()
+    }else{
+        keyboardController?.hide()
+    }
+
 
         Box(
             modifier = Modifier
                 .border(2.dp, GrisOscuro, RoundedCornerShape(10))
                 .background(color = Color.White)
-                .size(150.dp, 30.dp)
+                .size(140.dp, 30.dp)
                 .padding(horizontal = 5.dp)
                 .focusTarget(),
             contentAlignment = Alignment.CenterStart
@@ -105,8 +106,8 @@ fun lectorBarras(onClickControladorIngreso: () -> Unit = {}) {
                 onValueChange = { ingresoBarras = it },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 keyboardActions = KeyboardActions(onDone = {
-                    ControlProductos.lectura(ingresoBarras)
-                    onClickControladorIngreso()
+                   ControlProductos.lectura(ingresoBarras)
+                   onClickControladorIngreso()
                 }),
                 enabled = true,
                 singleLine = true,
@@ -121,14 +122,11 @@ fun lectorBarras(onClickControladorIngreso: () -> Unit = {}) {
                     .focusRequester(focusRequester)
             )
         }
-/*
-        Spacer(Modifier.size(10.dp))
 
-        Button(onClick = {keyboardController?.show()}) {
-            Text("Teclado")
-        }
+    Button(onClick = {teclado.value = !teclado.value},
+    modifier = Modifier.size(30.dp,30.dp)){
 
- */
+    }
 
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
@@ -137,7 +135,7 @@ fun lectorBarras(onClickControladorIngreso: () -> Unit = {}) {
 }
 
 @Composable
-fun cajaScrolleable(productos:List<Producto>,
+fun CajaScrolleable(productos:List<Producto>,
                     onClickControladorIngreso: () -> Unit = {},
                     texto:String,
                     sumador: (productos:List<Producto>)-> String)
@@ -217,11 +215,6 @@ fun cajaScrolleable(productos:List<Producto>,
                     Text(item.nombre.take(29),
                         modifier= Modifier.padding(3.dp).weight(5.0f),
                         fontSize = tamanioFuente)
-                    /*
-                    Text(item.diferencia().toString(), color = color, textAlign = TextAlign.Right, modifier= Modifier
-                        .padding(3.dp)//.size(40.dp))
-                        .weight(1.0f))
-                    */
 
                    Text(item.cantidad.toString(), textAlign = TextAlign.Right, modifier= Modifier
                        .padding(3.dp)//.size(40.dp))
@@ -238,22 +231,6 @@ fun cajaScrolleable(productos:List<Producto>,
     }
 }
 
-/*
-@Composable
-fun bultosHandler(){
-    Row(
-        Modifier
-            .height(50.dp)
-            .background(NaranjaMuySuave)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically){
-        Text(text="Bulto : ", fontWeight = FontWeight.Bold)
-        Button(onClick={}){
-            Text("Cerrar Bulto")
-        }
-    }
-}
-*/
 fun sumarUnidadesPorContar(productos:List<Producto>): String{
     return productos.fold(0){ total, producto -> total + (producto.cantidad-producto.contado())}.toString()
 }
