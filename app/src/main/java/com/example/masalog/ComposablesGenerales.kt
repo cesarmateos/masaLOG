@@ -1,6 +1,7 @@
 package com.example.masalog
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -8,6 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
@@ -16,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.masalog.ui.theme.GrisClaro
 import com.example.masalog.ui.theme.Naranja
+import com.example.masalog.ui.theme.NaranjaMuySuave
 
 import kotlin.math.min
 import kotlin.math.max
@@ -38,12 +41,16 @@ fun flechita(intLimitado: IntLimitado, intMostrable: Int, rotacion: Float, onCli
                      },
         shape = RoundedCornerShape(50),
         colors =ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
-        modifier = Modifier.height(23.dp).width(35.dp),
+        modifier = Modifier
+            .height(23.dp)
+            .width(35.dp),
         contentPadding = PaddingValues(1.dp)
     ) {
         Icon(imageVector = Icons.Filled.KeyboardArrowDown,
             contentDescription = "Abajo",
-            modifier = Modifier.size(20.dp).rotate(rotacion))
+            modifier = Modifier
+                .size(20.dp)
+                .rotate(rotacion))
     }
 }
 
@@ -54,13 +61,15 @@ fun ToggleHorizontal(estadoA:Boolean, onClick: (Boolean) -> Unit, textoA: String
         Row(){
             //Clickeado
             OutlinedButton(onClick = {},
-                colors = ButtonDefaults.buttonColors(backgroundColor = Naranja ),
+                colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary ),
                 shape = RoundedCornerShape(
                     topStart = redondeoFlechas,
                     bottomStart = redondeoFlechas
                 ),
-                border = BorderStroke(1.dp, Naranja),
-                modifier = Modifier.width(90.dp).height(23.dp),
+                border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
+                modifier = Modifier
+                    .width(90.dp)
+                    .height(23.dp),
                 contentPadding = PaddingValues(1.dp)
             ){
                 Text(textoA, color = Color.White, fontWeight = FontWeight.Bold)
@@ -72,7 +81,9 @@ fun ToggleHorizontal(estadoA:Boolean, onClick: (Boolean) -> Unit, textoA: String
                     bottomEnd = redondeoFlechas
                 ),
                 border = BorderStroke(1.dp, GrisClaro),
-                modifier = Modifier.width(90.dp).height(23.dp),
+                modifier = Modifier
+                    .width(90.dp)
+                    .height(23.dp),
                 contentPadding = PaddingValues(1.dp)
             ){
                 Text(text= textoB,color = GrisClaro)
@@ -86,20 +97,24 @@ fun ToggleHorizontal(estadoA:Boolean, onClick: (Boolean) -> Unit, textoA: String
                 bottomStart = redondeoFlechas
             ),
             border = BorderStroke(1.dp, GrisClaro),
-            modifier = Modifier.width(90.dp).height(23.dp),
+            modifier = Modifier
+                .width(90.dp)
+                .height(23.dp),
             contentPadding = PaddingValues(1.dp)
         ){
             Text(text= textoA, color = GrisClaro)
         }
         //Clickeado
         OutlinedButton(onClick = {},
-            colors = ButtonDefaults.buttonColors(backgroundColor = Naranja ),
+            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary ),
             shape = RoundedCornerShape(
                 bottomEnd = redondeoFlechas,
                 topEnd = redondeoFlechas
             ),
-            border = BorderStroke(1.dp, Naranja),
-            modifier = Modifier.width(90.dp).height(23.dp),
+            border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
+            modifier = Modifier
+                .width(90.dp)
+                .height(23.dp),
             contentPadding = PaddingValues(1.dp)
         ){
             Text(text= textoB, color= Color.White, fontWeight = FontWeight.Bold)
@@ -113,13 +128,15 @@ fun ToggleVertical(normal:Boolean, onClick: (Boolean) -> Unit, textoA: String, t
         Column(){
             //Clickeado
             OutlinedButton(onClick = {},
-                colors =ButtonDefaults.buttonColors(backgroundColor = Naranja ),
+                colors =ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary ),
                 shape = RoundedCornerShape(
                     topStart = redondeoFlechas,
                     topEnd = redondeoFlechas
                 ),
-                border = BorderStroke(1.dp, Naranja),
-                modifier = Modifier.width(110.dp).height(27.dp),
+                border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
+                modifier = Modifier
+                    .width(110.dp)
+                    .height(27.dp),
                 contentPadding = PaddingValues(1.dp)
             ){
                 Text(textoA, color = Color.White, fontWeight = FontWeight.Bold)
@@ -131,7 +148,9 @@ fun ToggleVertical(normal:Boolean, onClick: (Boolean) -> Unit, textoA: String, t
                     bottomStart = redondeoFlechas
                 ),
                 border = BorderStroke(1.dp, GrisClaro),
-                modifier = Modifier.width(110.dp).height(27.dp),
+                modifier = Modifier
+                    .width(110.dp)
+                    .height(27.dp),
                 contentPadding = PaddingValues(1.dp)
             ){
                 Text(text= textoB,color = GrisClaro)
@@ -145,23 +164,70 @@ fun ToggleVertical(normal:Boolean, onClick: (Boolean) -> Unit, textoA: String, t
                 topEnd = redondeoFlechas
             ),
             border = BorderStroke(1.dp, GrisClaro),
-            modifier = Modifier.width(110.dp).height(27.dp),
+            modifier = Modifier
+                .width(110.dp)
+                .height(27.dp),
             contentPadding = PaddingValues(1.dp)
         ){
             Text(text= textoA, color = GrisClaro)
         }
         //Clickeado
         OutlinedButton(onClick = {},
-            colors =ButtonDefaults.buttonColors(backgroundColor = Naranja ),
+            colors =ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary ),
             shape = RoundedCornerShape(
                 bottomEnd = redondeoFlechas,
                 bottomStart = redondeoFlechas
             ),
-            border = BorderStroke(1.dp, Naranja),
-            modifier = Modifier.width(110.dp).height(27.dp),
+            border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
+            modifier = Modifier
+                .width(110.dp)
+                .height(27.dp),
             contentPadding = PaddingValues(1.dp)
         ){
             Text(text= textoB, color=Color.White, fontWeight = FontWeight.Bold)
+        }
+    }
+}
+
+
+@Composable
+fun TituloSeccion(texto:String){
+    Row(horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier= Modifier
+            .background(NaranjaMuySuave)
+            .padding(10.dp)
+            .fillMaxWidth()
+    ){
+        Text(text= texto,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold)
+    }
+}
+
+@Composable
+fun EsctructuraTituloCuerpoBoton(textoTitulo: String,
+                                 textoBoton:String,
+                                 onClick: () -> Unit,
+                                 cuerpo: @Composable() () -> Unit){
+    Column(){
+        TituloSeccion(texto = textoTitulo)
+        Row(modifier=Modifier.fillMaxWidth().weight(1.0f).padding(PADDING_HORIZONTAL)){
+            cuerpo()
+        }
+        Row(modifier=Modifier.fillMaxWidth().padding(PADDING_HORIZONTAL)) {
+            BotonStandard(texto = textoBoton, onClick)
+        }
+    }
+}
+
+@Composable
+fun EstructuraTituloCuerpo(textoTitulo: String,
+                           cuerpo: @Composable() () -> Unit){
+    Column(){
+        TituloSeccion(texto = textoTitulo)
+        Row(modifier=Modifier.fillMaxWidth().padding(PADDING_HORIZONTAL)){
+            cuerpo()
         }
     }
 }
@@ -183,3 +249,4 @@ class IntLimitado(ValorIncial:Int,LimiteInferior:Int, LimiteSuperior: Int){
         this.valor = max(this.valor-1,limiteInferior)
     }
 }
+

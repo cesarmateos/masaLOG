@@ -23,33 +23,41 @@ fun  PantallaConfiguraImpresora(
     Scaffold(
         topBar = {barraTOP()},
         content = {
-            Row(modifier = Modifier.padding(15.dp).fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ){
-                Card(elevation = 4.dp,
-                    onClick = onClickConfiguraSATO){
-                    Column(horizontalAlignment = Alignment.CenterHorizontally){
-                        Image(painter= painterResource(id = R.drawable.sato),
-                            contentDescription = "SATO CL4NX",
-                            modifier = Modifier.size(160.dp).clip(RoundedCornerShape(10.dp)))
-                        Text(text="SATO CL4NX")
-                    }
+            Column(){
+                TituloSeccion(texto = "Configurar Impresora")
+                Row(modifier = Modifier
+                    .padding(15.dp)
+                    .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ){
+                    Card(elevation = 4.dp,
+                        onClick = onClickConfiguraSATO){
+                        Column(horizontalAlignment = Alignment.CenterHorizontally){
+                            Image(painter= painterResource(id = R.drawable.sato),
+                                contentDescription = "SATO CL4NX",
+                                modifier = Modifier
+                                    .size(160.dp)
+                                    .clip(RoundedCornerShape(10.dp)))
+                            Text(text="SATO CL4NX")
+                        }
 
-                }
-                Spacer(modifier = Modifier.size(15.dp))
-                Card(elevation = 4.dp,
-                    onClick = onClickConfiguraRP4){
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Image(
-                            painter = painterResource(id = R.drawable.rp4),
-                            contentDescription = "Honeywell RP4",
-                            modifier = Modifier.size(160.dp).clip(RoundedCornerShape(10.dp))
-                        )
-                        Text(text = "Honeywell RP4")
+                    }
+                    Spacer(modifier = Modifier.size(15.dp))
+                    Card(elevation = 4.dp,
+                        onClick = onClickConfiguraRP4){
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Image(
+                                painter = painterResource(id = R.drawable.rp4),
+                                contentDescription = "Honeywell RP4",
+                                modifier = Modifier
+                                    .size(160.dp)
+                                    .clip(RoundedCornerShape(10.dp))
+                            )
+                            Text(text = "Honeywell RP4")
+                        }
                     }
                 }
             }
-
         }
     )
 }

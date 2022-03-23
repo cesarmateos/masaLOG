@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -32,89 +33,67 @@ fun  PantallaConfiguraImpresoraSATO() {
             var velocidad: Int by remember { mutableStateOf(velocidadLimitada.valor) }
             var oscuridad: Int by remember { mutableStateOf(oscuridadLimitada.valor) }
 
-            Column( // Columna General
-                modifier = Modifier
-                    .fillMaxSize())
-            {
+            EsctructuraTituloCuerpoBoton(
+                textoTitulo = "Configurar SATO CL4NX",
+                textoBoton = "Enviar Configuración",
+                onClick = { cambiarConfiguracionSATO(papel,modificaPapel,oscuridad, modificaOscuridad,velocidad,modificaVelocidad)}) {
 
-                //Título
-                Row(
-                    Modifier
-                        .height(50.dp)
-                        .background(NaranjaMuySuave)
-                        .padding(horizontal = 10.dp, vertical = 3.dp)
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center)
-                {
-                    Text(text= "Configurar SATO CL4NX",fontSize = 18.sp, style = TextStyle(fontWeight = FontWeight.Bold))
-                }
-
-                Spacer(Modifier.size(30.dp))
-
-                //Tipo Papel
-                Row(
-                    modifier= Modifier.padding(horizontal = 10.dp, vertical = 3.dp),
-                    verticalAlignment = Alignment.CenterVertically)
-                {
-                    Text(text="Tipo de papel:",fontSize = sizeFuente)
-                    Spacer(Modifier.size(10.dp))
-                    if(modificaPapel){
-                        ToggleHorizontal(estadoA = papel, onClick = {papel = it}, textoA= "Papel", textoB="Etiqueta")
-                    }else{
-                        Text(text="Modificar",fontSize = sizeFuente, modifier= Modifier.clickable{modificaPapel=true}, color = Naranja)
+                Column(){ //COLUMNA GENERAL
+                    Row(
+                        modifier= Modifier.padding(horizontal = 10.dp, vertical = 3.dp),
+                        verticalAlignment = Alignment.CenterVertically)
+                    {
+                        Text(text="Tipo de papel:",fontSize = sizeFuente)
+                        Spacer(Modifier.size(10.dp))
+                        if(modificaPapel){
+                            ToggleHorizontal(estadoA = papel, onClick = {papel = it}, textoA= "Papel", textoB="Etiqueta")
+                        }else{
+                            Text(text="Modificar",fontSize = sizeFuente, modifier= Modifier.clickable{modificaPapel=true}, color = MaterialTheme.colors.secondary)
+                        }
                     }
-                }
 
-                Spacer(Modifier.size(10.dp))
-
-                //Velocidad
-                Row(
-                    modifier= Modifier.padding(horizontal = 10.dp, vertical = 3.dp),
-                    verticalAlignment = Alignment.CenterVertically)
-                {
-                    Text(text="Velocidad:",fontSize = sizeFuente)
                     Spacer(Modifier.size(10.dp))
-                    if(modificaVelocidad){
-                        Text(text= velocidad.toString().padStart(2, '0'), fontSize = sizeFuente)
-                        Spacer(modifier= Modifier.size(20.dp))
-                        flechita (intLimitado= velocidadLimitada, intMostrable =velocidad, rotacion = 0f, onClick = { velocidad = it },operacion= {a:IntLimitado->a.restar()})
-                        Spacer(modifier= Modifier.size(10.dp))
-                        flechita (intLimitado= velocidadLimitada, intMostrable =velocidad, rotacion = 180f, onClick = { velocidad = it },operacion= {a:IntLimitado->a.sumar()})
-                    }else{
-                        Text(text="Modificar",fontSize = sizeFuente, modifier= Modifier.clickable{modificaVelocidad=true}, color = Naranja)
+
+                    //Velocidad
+                    Row(
+                        modifier= Modifier.padding(horizontal = 10.dp, vertical = 3.dp),
+                        verticalAlignment = Alignment.CenterVertically)
+                    {
+                        Text(text="Velocidad:",fontSize = sizeFuente)
+                        Spacer(Modifier.size(10.dp))
+                        if(modificaVelocidad){
+                            Text(text= velocidad.toString().padStart(2, '0'), fontSize = sizeFuente)
+                            Spacer(modifier= Modifier.size(20.dp))
+                            flechita (intLimitado= velocidadLimitada, intMostrable =velocidad, rotacion = 0f, onClick = { velocidad = it },operacion= {a:IntLimitado->a.restar()})
+                            Spacer(modifier= Modifier.size(10.dp))
+                            flechita (intLimitado= velocidadLimitada, intMostrable =velocidad, rotacion = 180f, onClick = { velocidad = it },operacion= {a:IntLimitado->a.sumar()})
+                        }else{
+                            Text(text="Modificar",fontSize = sizeFuente, modifier= Modifier.clickable{modificaVelocidad=true}, color = MaterialTheme.colors.secondary)
+                        }
                     }
-                }
 
-                Spacer(Modifier.size(10.dp))
-
-                //Oscuridad
-                Row(
-                    modifier= Modifier.padding(horizontal = 10.dp, vertical = 3.dp),
-                    verticalAlignment = Alignment.CenterVertically)
-                {
-                    Text(text="Oscuridad:",fontSize = sizeFuente)
                     Spacer(Modifier.size(10.dp))
-                    if(modificaOscuridad){
-                        Text(text= oscuridad.toString().padStart(2, '0'), fontSize = sizeFuente)
-                        Spacer(modifier= Modifier.size(20.dp))
-                        flechita (intLimitado= oscuridadLimitada, intMostrable=oscuridad, rotacion = 0f, onClick = { oscuridad = it },operacion= {a:IntLimitado->a.restar()})
-                        Spacer(modifier= Modifier.size(10.dp))
-                        flechita (intLimitado= oscuridadLimitada, intMostrable=oscuridad, rotacion = 0f, onClick = { oscuridad = it },operacion= {a:IntLimitado->a.sumar()})
-                    }else{
-                        Text(text="Modificar",fontSize = sizeFuente, modifier= Modifier.clickable{modificaOscuridad=true}, color = Naranja)
+
+                    //Oscuridad
+                    Row(
+                        modifier= Modifier.padding(horizontal = 10.dp, vertical = 3.dp),
+                        verticalAlignment = Alignment.CenterVertically)
+                    {
+                        Text(text="Oscuridad:",fontSize = sizeFuente)
+                        Spacer(Modifier.size(10.dp))
+                        if(modificaOscuridad){
+                            Text(text= oscuridad.toString().padStart(2, '0'), fontSize = sizeFuente)
+                            Spacer(modifier= Modifier.size(20.dp))
+                            flechita (intLimitado= oscuridadLimitada, intMostrable=oscuridad, rotacion = 0f, onClick = { oscuridad = it },operacion= {a:IntLimitado->a.restar()})
+                            Spacer(modifier= Modifier.size(10.dp))
+                            flechita (intLimitado= oscuridadLimitada, intMostrable=oscuridad, rotacion = 0f, onClick = { oscuridad = it },operacion= {a:IntLimitado->a.sumar()})
+                        }else{
+                            Text(text="Modificar",fontSize = sizeFuente, modifier= Modifier.clickable{modificaOscuridad=true}, color = MaterialTheme.colors.secondary)
+                        }
                     }
-                }
-
-                Spacer(Modifier.size(30.dp))
-
-                //Enviar
-                Row(modifier= Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = PADDING_HORIZONTAL)){
-                    BotonStandard("Enviar Configuración", {cambiarConfiguracionSATO(papel,modificaPapel,oscuridad, modificaOscuridad,velocidad,modificaVelocidad)})
                 }
             }
+
         }
     )
 }

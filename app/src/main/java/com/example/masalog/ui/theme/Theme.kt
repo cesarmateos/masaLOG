@@ -20,7 +20,6 @@ val NaranjaPython = Color(0xffFF9933)
 val MoradoSuave = Color(0xffC5ADF2)
 val MoradoMuySuave = Color(0xffFCF2FF)
 val MoradoMuyOscuro = Color(0xff432D57)
-
 val VerdeOK = Color(0XFF52c33e)
 
 private val DarkColorPalette = darkColors(

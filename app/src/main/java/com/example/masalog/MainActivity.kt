@@ -50,7 +50,7 @@ fun MasaNavHost(navController: NavHostController,modifier: Modifier = Modifier) 
                 onClickEtiquetas = { navController.navigate(Pantallas.Etiquetas.name) },
                 onClickControladorInput = { navController.navigate(Pantallas.ControladorInput.name) },
                 onClickImpresoras = {navController.navigate(Pantallas.Impresoras.name)},
-                onClickEtiquetado = {navController.navigate(Pantallas.EtiquetadoPlanta.name)}
+                onClickEtiquetado = {navController.navigate(Pantallas.EtiquetadoPlantaInicio.name)}
             )
         }
 
@@ -92,24 +92,16 @@ fun MasaNavHost(navController: NavHostController,modifier: Modifier = Modifier) 
             )
         }
 
-        composable(Pantallas.EtiquetadoPlanta.name) {
-            PantallaEtiquetado_Seleccion()
+        composable(Pantallas.EtiquetadoPlantaInicio.name) {
+            PantallaEtiquetado_Inicio(
+                onClickEtiquetadoPlantaEscaneado = {navController.navigate(Pantallas.EtiquetadoPlantaEscaneado.name)}
+            )
         }
-        /*
-composable(route= Pantallas.ControladorProductos.name+ "/{control}",
-arguments = listOf(navArgument("control"){type = NavType.StringType})) {
-    backStackEntry ->
-    backStackEntry?.arguments?.getString("control")?.let{ json->
-        val control = Gson().fromJson(json, ControlProductos::class.java)
-        PantallaControlaListadoProductos(controlProductos = control)
-    }
-}
+/*
+        composable(Pantallas.EtiquetadoPlantaEscaneado.name){
+            PantallaEtiquetado_Escaneado(listadoEtiquetado = null)
+        }
 */
-    }
-}
 
-@Preview
-@Composable
-fun default(){
-    MasaLOG()
+    }
 }

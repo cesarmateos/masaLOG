@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.sp
 import com.example.masalog.ui.theme.GrisOscuro
 import com.example.masalog.ui.theme.MoradoMuySuave
 import com.example.masalog.ui.theme.NaranjaMuySuave
-import com.example.masalog.ui.theme.VioletaOscuro
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -42,26 +41,26 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
             Column(modifier= Modifier.fillMaxWidth()){
 
                 //Nombre Producto
-                ControlProductos.productoIngresado?.let { it1 -> Text(text=it1.nombre,
+                ControlProductos.productoComplejoIngresado?.let { it1 -> Text(text=it1.nombre,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign=TextAlign.Center,
                     modifier= Modifier.fillMaxWidth().background(NaranjaMuySuave).padding(vertical = interlineado)) }
 
                 //Código Barras
-                Text(text=ControlProductos.productoIngresado?.codigoBarras.toString(),
+                Text(text=ControlProductos.productoComplejoIngresado?.codigoBarras.toString(),
                     textAlign = TextAlign.End,modifier= Modifier.fillMaxWidth().padding(interlineado))
 
                 //Lote
                 Row(modifier= Modifier.fillMaxWidth()){
                     Text(text="Lote:  ", fontWeight = FontWeight.Bold)
-                    Text(text=ControlProductos.productoIngresado?.lote.toString())
+                    Text(text=ControlProductos.productoComplejoIngresado?.lote.toString())
                 }
 
                 //Vencimiento
                 Row(modifier= Modifier.fillMaxWidth()) {
                     Text(text="Vencimiento:  ", fontWeight = FontWeight.Bold)
-                    Text(text = ControlProductos.productoIngresado?.vencimiento.toString())
+                    Text(text = ControlProductos.productoComplejoIngresado?.vencimiento.toString())
                 }
 
                 //Contable
@@ -74,7 +73,7 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
                                 .background(MoradoMuySuave)
                                 .fillMaxWidth(),
                             textAlign=TextAlign.Center)
-                        Text(text=ControlProductos.productoIngresado?.cantidad.toString(),
+                        Text(text=ControlProductos.productoComplejoIngresado?.cantidad.toString(),
                             modifier=Modifier.fillMaxWidth(),
                             textAlign=TextAlign.Center)
                     }
@@ -88,7 +87,7 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
                                 .fillMaxWidth(),
                             textAlign = TextAlign.Center)
                         Text(
-                            text = ControlProductos.productoIngresado?.contado().toString(),
+                            text = ControlProductos.productoComplejoIngresado?.contado().toString(),
                             modifier=Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Center)
                     }
@@ -103,7 +102,7 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
                             textAlign = TextAlign.Center
                         )
                         Text(
-                            text = ControlProductos.productoIngresado?.diferencia().toString(),
+                            text = ControlProductos.productoComplejoIngresado?.diferencia().toString(),
                             textAlign = TextAlign.Center,
                             modifier = Modifier.fillMaxWidth())
                     }
@@ -116,7 +115,7 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
                         .fillMaxWidth(),
 
                     verticalAlignment = Alignment.CenterVertically){
-                    ControlProductos.productoIngresado?.let { it1 -> Text(text= it1.localizador,
+                    ControlProductos.productoComplejoIngresado?.let { it1 -> Text(text= it1.localizador,
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign=TextAlign.Center,
@@ -174,7 +173,7 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
 }
 
 
-fun imprimirEtiquetaRecepcion(producto:Producto, cantidad:Int){
+fun imprimirEtiquetaRecepcion(productoComplejo:ProductoComplejo, cantidad:Int){
     val etiqueta = "<STX><ESC>C<ETX>\n" +
             "<STX><ESC>P<ETX>\n" +
             "<STX>E22;F22;<ETX>      \n" +

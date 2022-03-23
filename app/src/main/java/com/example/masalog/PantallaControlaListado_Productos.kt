@@ -60,13 +60,13 @@ fun  PantallaControlaListadoProductos(onClickControladorIngreso: () -> Unit = {}
                 }
 
                 Row(modifier=Modifier.weight(1.0f)){
-                    CajaScrolleable(productos = ControlProductos.porControlar(),
+                    CajaScrolleable(productoComplejos = ControlProductos.porControlar(),
                         onClickControladorIngreso,
                         "Por Leer",
                         ::sumarUnidadesPorContar)
                 }
                 Row(modifier=Modifier.weight(1.0f)){
-                    CajaScrolleable(productos = ControlProductos.controlados(),
+                    CajaScrolleable(productoComplejos = ControlProductos.controlados(),
                         onClickControladorIngreso,
                         "Leídos",
                         ::sumarUnidadesContadas)
@@ -135,10 +135,10 @@ fun LectorBarras(onClickControladorIngreso: () -> Unit = {}) {
 }
 
 @Composable
-fun CajaScrolleable(productos:List<Producto>,
+fun CajaScrolleable(productoComplejos:List<ProductoComplejo>,
                     onClickControladorIngreso: () -> Unit = {},
                     texto:String,
-                    sumador: (productos:List<Producto>)-> String)
+                    sumador: (productoComplejos:List<ProductoComplejo>)-> String)
 {
     val tamanioFuente : TextUnit = 13.sp
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -170,7 +170,7 @@ fun CajaScrolleable(productos:List<Producto>,
                 Row(modifier = Modifier.width(100.dp)){
                     Text(text= "L: ", color= GrisOscuro,fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(start =10.dp))
-                    Text(text= productos.size.toString(), color= GrisOscuro,
+                    Text(text= productoComplejos.size.toString(), color= GrisOscuro,
                         modifier = Modifier
                             .padding(start = 10.dp)
                             .fillMaxWidth())
@@ -180,7 +180,7 @@ fun CajaScrolleable(productos:List<Producto>,
                 Row(modifier = Modifier.width(100.dp)) {
                     Text(text = "U: ", color = GrisOscuro, fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(start =10.dp))
-                    Text(text = sumador(productos),color= GrisOscuro,
+                    Text(text = sumador(productoComplejos),color= GrisOscuro,
                         modifier = Modifier
                             .padding(start = 10.dp)
                             .fillMaxWidth())
@@ -192,7 +192,7 @@ fun CajaScrolleable(productos:List<Producto>,
             Modifier
                 .fillMaxSize()
                 .border(3.dp, GrisOscuro)){
-            items(items=productos, itemContent = {
+            items(items=productoComplejos, itemContent = {
                 item ->
                 var color = Color.Red
                 if(item.diferencia()==0) {
@@ -231,10 +231,10 @@ fun CajaScrolleable(productos:List<Producto>,
     }
 }
 
-fun sumarUnidadesPorContar(productos:List<Producto>): String{
-    return productos.fold(0){ total, producto -> total + (producto.cantidad-producto.contado())}.toString()
+fun sumarUnidadesPorContar(productoComplejos:List<ProductoComplejo>): String{
+    return productoComplejos.fold(0){ total, producto -> total + (producto.cantidad-producto.contado())}.toString()
 }
 
-fun sumarUnidadesContadas(productos:List<Producto>): String{
-    return productos.fold(0){ total, producto -> total + producto.contado()}.toString()
+fun sumarUnidadesContadas(productoComplejos:List<ProductoComplejo>): String{
+    return productoComplejos.fold(0){ total, producto -> total + producto.contado()}.toString()
 }

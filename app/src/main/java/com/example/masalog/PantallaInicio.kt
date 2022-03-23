@@ -19,23 +19,21 @@ fun PantallaInicio(
     Scaffold(
         topBar = { barraTOP() },
         content = {
-            Row(horizontalArrangement = Arrangement.Center, modifier= Modifier.padding(PADDING_HORIZONTAL)){
-                Text(text= "Selecciona una tarea a realizar:")
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(20.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
-                BotonStandard("Configurar Impresora", onClickImpresoras)
-                Spacer(Modifier.size(PADDING_HORIZONTAL))
-                BotonStandard("Configurar Etiquetas",onClickEtiquetas)
-                Spacer(Modifier.size(PADDING_HORIZONTAL))
-                BotonStandard("Controlador",onClickControladorInput)
-                Spacer(Modifier.size(PADDING_HORIZONTAL))
-                BotonStandard("Etiquetado Planta",onClickEtiquetado)
+            EstructuraTituloCuerpo(textoTitulo = "Seleccione una tarea") {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+                    BotonStandard("Configurar Impresora", onClickImpresoras)
+                    Spacer(Modifier.size(PADDING_HORIZONTAL))
+                    BotonStandard("Configurar Etiquetas",onClickEtiquetas)
+                    Spacer(Modifier.size(PADDING_HORIZONTAL))
+                    BotonStandard("Controlador",onClickControladorInput)
+                    Spacer(Modifier.size(PADDING_HORIZONTAL))
+                    BotonStandard("Etiquetado Planta",onClickEtiquetado)
+
+                }
 
             }
        }

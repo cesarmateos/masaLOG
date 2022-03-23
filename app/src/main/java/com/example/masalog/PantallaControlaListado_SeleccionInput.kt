@@ -1,7 +1,5 @@
 package com.example.masalog
 
-import android.content.Intent
-import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
@@ -9,17 +7,10 @@ import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.google.gson.Gson
-import java.io.BufferedReader
-import java.io.File
-import java.io.InputStreamReader
 import java.nio.charset.StandardCharsets
 
 @Composable
@@ -27,48 +18,46 @@ fun PantallaControlaListadoInput(
     onClickControladorProductos: () -> Unit = {}
 ) {
     Scaffold(
-    topBar = {barraTOP()},
-    content = {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(20.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            Text(text = "Seleccionar origen de datos")
-            Spacer(Modifier.size(espaciado))
-            elegirArchivo(onClickControladorProductos)
-
+        topBar = {barraTOP()},
+        content = {
+            EstructuraTituloCuerpo(textoTitulo = "Seleccione origen de datos") {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+                    elegirArchivo(onClickControladorProductos)
+                }
+            }
         }
-    }
     )
 
 }
 
 @Composable
 private fun elegirArchivo(onClickControladorProductos: () -> Unit = {}) {
-
     val context = LocalContext.current
-
-
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { result ->
 
-        val item = result?.let {
-            //context.contentResolver.takePersistableUriPermission(it,Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            context.contentResolver.openInputStream(it)
+        try{
+            val item = result?.let {
+                //context.contentResolver.takePersistableUriPermission(it,Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                context.contentResolver.openInputStream(it)
+            }
+
+            val bytes = item?.readBytes()
+            val text = String(bytes!!, StandardCharsets.UTF_8)
+
+            construirControlProductosDesdeString(text)
+
+            item.close()
+        }catch(exception: Exception){
+            //Este Try/Catch está por si se arrepiente al elegir archivo
         }
 
-        val bytes = item?.readBytes()
-        val text = String(bytes!!, StandardCharsets.UTF_8)
-
-        construirControlProductosDesdeString(text)
-
-        item.close()
     }
-
 
     if(ControlProductos.productos.isEmpty()){
         // ARCHIVO DE MIERDA
@@ -76,16 +65,8 @@ private fun elegirArchivo(onClickControladorProductos: () -> Unit = {}) {
         onClickControladorProductos()
     }
 
-    return Column {
-        Button(onClick = {
+    return BotonStandard(texto="Desde Archivo CSV",  onClick = { launcher.launch("*/*")})
 
-
-           launcher.launch("*/*")
-
-        }) {
-            Text("Desde Archivo")
-        }
-    }
 }
 
 
@@ -101,7 +82,7 @@ fun construirControlProductosDesdeString(texto:String){
         lineas.forEach {
             var lista = it.split(";")
             if (lista.isNotEmpty()){
-                val producto = Producto(lista[0].toLong(),lista[1],lista[2],lista[3],lista[4].toInt(),lista[5])
+                val producto = ProductoComplejo(lista[0].toLong(),lista[1],lista[2],lista[3],lista[4].toInt(),lista[5])
                 ControlProductos.productos.add(producto)
                 }
             }

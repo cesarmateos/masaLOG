@@ -5,17 +5,17 @@ import android.icu.util.Calendar
 import java.util.*
 
 object ControlProductos {
-    var productoIngresado: Producto? = null
-    val productos = mutableListOf<Producto>()
-    var productosMatchCodigoBarras = mutableListOf<Producto>()
+    var productoComplejoIngresado: ProductoComplejo? = null
+    val productos = mutableListOf<ProductoComplejo>()
+    var productosMatchCodigoBarras = mutableListOf<ProductoComplejo>()
     var etiqueta = true
 
 
-    fun porControlar(): List<Producto>{
+    fun porControlar(): List<ProductoComplejo>{
         return productos.filter{item -> item.faltaControlar() >0}
     }
 
-    fun controlados() : List<Producto>{
+    fun controlados() : List<ProductoComplejo>{
         return productos.filter{item -> item.contado() >0}
     }
 
@@ -24,14 +24,14 @@ object ControlProductos {
         productosMatchCodigoBarras = devolverListaConMatchCodigoBarras(barras, productos)
 
         if (productosMatchCodigoBarras.isEmpty()) {
-            val productoDesconocido = Producto(barras, "****", "****","****",0,"Producto Desconocido")
+            val productoDesconocido = ProductoComplejo(barras, "****", "****","****",0,"Producto Desconocido")
             productos.add(productoDesconocido)
             productosMatchCodigoBarras.add(productoDesconocido)
         }
     }
 
     fun cargarCantidad(cantidad:String){
-        productoIngresado?.agregar(cantidad.toInt())
+        productoComplejoIngresado?.agregar(cantidad.toInt())
         if(etiqueta){
             imprimirEtiquetaRecepcion(cantidad)
         }
@@ -40,7 +40,7 @@ object ControlProductos {
     fun limpiar() {
         productos.clear()
         productosMatchCodigoBarras.clear()
-        productoIngresado = null
+        productoComplejoIngresado = null
     }
 
     fun imprimirEtiquetaRecepcion(cantidad:String){
@@ -59,12 +59,12 @@ object ControlProductos {
                 "<STX>H7;o035,55;f3;c21;d0,20;k10;<ETX>\n" +
                 "<STX>R<ESC>E32<CAN><ETX>\n" +
                 "<STX>"+
-                productoIngresado?.codigoBarras.toString() + "<CR>\n" + //H0
-                productoIngresado?.nombre?.take(26)+ "<CR>\n" + //H1
-                productoIngresado?.nombre?.drop(25)+ "<CR>\n" + // H2
-                productoIngresado?.localizador+ "<CR>\n" +  //H3
-                "Lote: "+ productoIngresado?.lote+ "<CR>\n" +  //H4
-                "Venc.: "+ productoIngresado?.vencimiento+ "<CR>\n" + //H5
+                productoComplejoIngresado?.codigoBarras.toString() + "<CR>\n" + //H0
+                productoComplejoIngresado?.nombre?.take(26)+ "<CR>\n" + //H1
+                productoComplejoIngresado?.nombre?.drop(25)+ "<CR>\n" + // H2
+                productoComplejoIngresado?.localizador+ "<CR>\n" +  //H3
+                "Lote: "+ productoComplejoIngresado?.lote+ "<CR>\n" +  //H4
+                "Venc.: "+ productoComplejoIngresado?.vencimiento+ "<CR>\n" + //H5
                 cantidad+ "<CR>\n" +//H6
                 dateInString+ //H7
                 "<ETX>\n" +
@@ -75,54 +75,20 @@ object ControlProductos {
 }
 
 
-class Producto(
-    initCodigoBarras: Long,
-    initLocalizador:String,
-    initLote:String,
-    initVencimiento:String,
-    initCantidad:Int,
-    initNombre:String){
-
-    val codigoBarras : Long = initCodigoBarras
-    val localizador : String = initLocalizador
-    val lote: String = initLote
-    val vencimiento: String = initVencimiento
-    val nombre : String = initNombre
-    val cantidad : Int = initCantidad
-    private var contado : Int = 0
-
-    fun agregar(cantidad: Int){
-        contado = contado + cantidad
-    }
-
-    fun contado(): Int{
-        return contado
-    }
-
-    fun diferencia():Int{
-        return contado - cantidad
-    }
-
-    fun faltaControlar():Int{
-        return cantidad - contado
-    }
-}
-
-fun buscarProductoEnLista(codigo: Long, lote: String, lista: MutableList<Producto>): Producto? {
+fun buscarProductoEnLista(codigo: Long, lote: String, lista: MutableList<ProductoComplejo>): ProductoComplejo? {
     val iterador = lista.listIterator()
     var match = false
     while (iterador.hasNext() && !match) {
         val producto = iterador.next()
         if (producto.codigoBarras == codigo && producto.lote== lote) {
-            match = true
             return producto
         }
     }
     return null
 }
 
-fun devolverListaConMatchCodigoBarras(codigo: Long, lista: MutableList<Producto>): MutableList<Producto> {
-    val productosEncontrados = mutableListOf<Producto>()
+fun devolverListaConMatchCodigoBarras(codigo: Long, lista: MutableList<ProductoComplejo>): MutableList<ProductoComplejo> {
+    val productosEncontrados = mutableListOf<ProductoComplejo>()
     val iterador = lista.listIterator()
     while (iterador.hasNext()) {
         val producto = iterador.next()
