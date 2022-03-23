@@ -40,7 +40,11 @@ fun  PantallaControlaListadoProductos(onClickControladorIngreso: () -> Unit = {}
     Scaffold(
         topBar = {barraTOP()},
         content = {
+
+            //Columna General
             Column(modifier = Modifier.fillMaxWidth()){
+
+                //Fila Superior
                 Row(
                     Modifier
                         .height(40.dp)
@@ -59,12 +63,15 @@ fun  PantallaControlaListadoProductos(onClickControladorIngreso: () -> Unit = {}
                                             ControlProductos.etiqueta = estadoCheckBox.value})
                 }
 
+                //Productos por Leer
                 Row(modifier=Modifier.weight(1.0f)){
                     CajaScrolleable(productoComplejos = ControlProductos.porControlar(),
                         onClickControladorIngreso,
                         "Por Leer",
                         ::sumarUnidadesPorContar)
                 }
+
+                //Producots Leídos
                 Row(modifier=Modifier.weight(1.0f)){
                     CajaScrolleable(productoComplejos = ControlProductos.controlados(),
                         onClickControladorIngreso,
@@ -76,6 +83,7 @@ fun  PantallaControlaListadoProductos(onClickControladorIngreso: () -> Unit = {}
         }
     )
 }
+
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

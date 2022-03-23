@@ -97,11 +97,10 @@ fun MasaNavHost(navController: NavHostController,modifier: Modifier = Modifier) 
                 onClickEtiquetadoPlantaEscaneado = {navController.navigate(Pantallas.EtiquetadoPlantaEscaneado.name)}
             )
         }
-/*
+
         composable(Pantallas.EtiquetadoPlantaEscaneado.name){
-            PantallaEtiquetado_Escaneado(listadoEtiquetado = null)
+            PantallaEtiquetado_Escaneado()
         }
-*/
 
     }
 }

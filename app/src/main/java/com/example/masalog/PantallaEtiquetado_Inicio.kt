@@ -18,7 +18,7 @@ import com.example.masalog.ui.theme.NaranjaMuySuave
 import java.nio.charset.StandardCharsets
 
 @Composable
-fun PantallaEtiquetado_Inicio(onClickEtiquetadoPlantaEscaneado: (ListadoEtiquetado) -> Unit = {}) {
+fun PantallaEtiquetado_Inicio(onClickEtiquetadoPlantaEscaneado: () -> Unit = {}) {
     var carga: Boolean by remember { mutableStateOf(true) }
     Scaffold(
         topBar = { barraTOP() },
@@ -31,7 +31,7 @@ fun PantallaEtiquetado_Inicio(onClickEtiquetadoPlantaEscaneado: (ListadoEtiqueta
                         Spacer(Modifier.size(10.dp))
                         ToggleHorizontal(estadoA = carga, onClick = {carga= it}, textoA = "Sí", textoB = "No")
                     }
-                    elegirArchivoEtiquetado(onClickEtiquetadoPlantaEscaneado)
+                    elegirArchivoEtiquetado({onClickEtiquetadoPlantaEscaneado})
                 }
 
 
@@ -43,9 +43,8 @@ fun PantallaEtiquetado_Inicio(onClickEtiquetadoPlantaEscaneado: (ListadoEtiqueta
 
 
 @Composable
-private fun elegirArchivoEtiquetado(onClickEtiquetadoPlantaEscaneado: (ListadoEtiquetado) -> Unit = {}) {
+private fun elegirArchivoEtiquetado(onClickEtiquetadoPlantaEscaneado: () -> Unit = {}) {
     val context = LocalContext.current
-    val productos = ListadoEtiquetado()
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { result ->
@@ -57,19 +56,19 @@ private fun elegirArchivoEtiquetado(onClickEtiquetadoPlantaEscaneado: (ListadoEt
             val bytes = item?.readBytes()
             val text = String(bytes!!, StandardCharsets.UTF_8)
 
-            productos.cargarProductos(text)
+            ListadoEtiquetado.cargarProductos(text)
 
             item.close()
         }catch(exception: Exception){
             //Por si se arrepiente al elegir archivo
-    }
+        }
 
     }
 
-    if(productos.productos.isEmpty()){
+    if(ListadoEtiquetado.productos.isEmpty()){
         // ARCHIVO DE MIERDA
     }else{
-        onClickEtiquetadoPlantaEscaneado(productos)
+        onClickEtiquetadoPlantaEscaneado()
     }
 
     return BotonStandard(texto = "Cargar Archivo CSV",

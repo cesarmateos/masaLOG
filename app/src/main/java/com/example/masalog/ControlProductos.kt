@@ -45,7 +45,7 @@ object ControlProductos {
 
     fun imprimirEtiquetaRecepcion(cantidad:String){
 
-        val date = getCurrentDateTime()
+        val date = Calendar.getInstance().time
         val dateInString = date.toString("dd/MM/yyyy HH:mm:ss")
 
         val etiqueta = "<STX><ESC>P;E32;F32;<ETX>\n" +
@@ -72,38 +72,9 @@ object ControlProductos {
 
         BTHandler.imprimir(etiqueta)
     }
-}
 
-
-fun buscarProductoEnLista(codigo: Long, lote: String, lista: MutableList<ProductoComplejo>): ProductoComplejo? {
-    val iterador = lista.listIterator()
-    var match = false
-    while (iterador.hasNext() && !match) {
-        val producto = iterador.next()
-        if (producto.codigoBarras == codigo && producto.lote== lote) {
-            return producto
-        }
+    fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
+        val formatter = SimpleDateFormat(format, locale)
+        return formatter.format(this)
     }
-    return null
-}
-
-fun devolverListaConMatchCodigoBarras(codigo: Long, lista: MutableList<ProductoComplejo>): MutableList<ProductoComplejo> {
-    val productosEncontrados = mutableListOf<ProductoComplejo>()
-    val iterador = lista.listIterator()
-    while (iterador.hasNext()) {
-        val producto = iterador.next()
-        if (producto.codigoBarras == codigo) {
-            productosEncontrados.add(producto)
-        }
-    }
-    return productosEncontrados
-}
-
-fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
-    val formatter = SimpleDateFormat(format, locale)
-    return formatter.format(this)
-}
-
-fun getCurrentDateTime(): Date {
-    return Calendar.getInstance().time
 }
