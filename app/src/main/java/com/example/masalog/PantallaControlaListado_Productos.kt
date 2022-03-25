@@ -91,15 +91,9 @@ fun LectorBarras(onClickControladorIngreso: () -> Unit = {}) {
 
     var ingresoBarras by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
-    val teclado = remember{ mutableStateOf(false)}
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    if (teclado.value){
-        keyboardController?.show()
-    }else{
-        keyboardController?.hide()
-    }
-
+    //keyboardController?.hide()
 
         Box(
             modifier = Modifier
@@ -130,11 +124,6 @@ fun LectorBarras(onClickControladorIngreso: () -> Unit = {}) {
                     .focusRequester(focusRequester)
             )
         }
-
-    Button(onClick = {teclado.value = !teclado.value},
-    modifier = Modifier.size(30.dp,30.dp)){
-
-    }
 
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()

@@ -2,21 +2,33 @@ package com.example.masalog
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.focus.focusTarget
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.masalog.ui.theme.GrisClaro
+import com.example.masalog.ui.theme.GrisOscuro
 import com.example.masalog.ui.theme.Naranja
 import com.example.masalog.ui.theme.NaranjaMuySuave
 
@@ -229,6 +241,48 @@ fun EstructuraTituloCuerpo(textoTitulo: String,
         Row(modifier=Modifier.fillMaxWidth().padding(PADDING_HORIZONTAL)){
             cuerpo()
         }
+    }
+}
+
+@Composable
+fun CajaTextoGris(text:String,modifier: Modifier){
+    Text(text= text,
+        textAlign = TextAlign.Center,
+        color = MaterialTheme.colors.onSecondary,
+        modifier = modifier)
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun InputTexto(onClick: (String) -> Unit,keyboardType: KeyboardType){
+
+    var ingresoBarras by remember { mutableStateOf("") }
+
+    Box(
+        modifier = Modifier
+            .border(2.dp, GrisOscuro, RoundedCornerShape(10))
+            .background(color = Color.White)
+            .size(140.dp, 30.dp)
+            .padding(horizontal = 5.dp)
+            .focusTarget(),
+        contentAlignment = Alignment.CenterStart
+    ) {
+        BasicTextField(value = ingresoBarras,
+            onValueChange = { ingresoBarras = it },
+            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+            keyboardActions = KeyboardActions(onDone = {
+               onClick(ingresoBarras)
+            }),
+            enabled = true,
+            singleLine = true,
+            modifier = Modifier
+                .onKeyEvent {
+                    if (it.key.keyCode == Key.Enter.keyCode) {
+                        onClick(ingresoBarras.dropLast(1))
+                    }
+                    false
+                }
+        )
     }
 }
 
