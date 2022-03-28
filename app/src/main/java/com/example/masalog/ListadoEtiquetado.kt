@@ -24,9 +24,9 @@ object ListadoEtiquetado {
                     "<STX><ESC>P<ETX>\n"+
                     "<STX>E22;F22;<ETX>\n"+
                     "<STX>H0;o355,55;f3;c21;k14;d3,"+producto.codigoBarras.toString()+"<ETX>\n"+
-                    "<STX>H1;o280,55;f3;c26;k14;d3"+producto.nombre.take(30)+"<ETX>\n"+
-                    "<STX>H2;o245,55;f3;c26;k14;d3"+producto.nombre.drop(30)+"<ETX>\n"+
-                    "<STX>H3;o165,55;f3;c26;k14;d3"+producto.localizador+"<ETX>\n"+
+                    "<STX>H1;o280,55;f3;c26;k14;d3,"+producto.nombre.take(30)+"<ETX>\n"+
+                    "<STX>H2;o245,55;f3;c26;k14;d3,"+producto.nombre.drop(30)+"<ETX>\n"+
+                    "<STX>H3;o165,55;f3;c26;k24;d3,"+producto.localizador+"<ETX>\n"+
                     "<STX>H4;o045,55;f3;c21;d0,30;k10;<ETX>\n"+
                     "<STX>R<ETX>\n"+
                     "<STX><ESC>E22<CAN><ETX>\n"+

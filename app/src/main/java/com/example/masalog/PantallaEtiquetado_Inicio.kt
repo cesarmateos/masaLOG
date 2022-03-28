@@ -18,6 +18,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusTarget
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
@@ -46,9 +47,14 @@ fun PantallaEtiquetado_Inicio(onClickEtiquetadoPlantaEscaneado: () -> Unit = {})
                 Column(){
                     if(archivo){ //Archivo Ya Cargado
 
-                        var ingresoBarras by remember { mutableStateOf("") }
-
                         Column(modifier= Modifier.fillMaxWidth()){
+                            Text(text="Se han cargado "+ ListadoEtiquetado.productos.size.toString()+" registros",
+                                textAlign = TextAlign.Center,
+                                color = MaterialTheme.colors.secondary,
+                                modifier= Modifier
+                                    .padding(5.dp)
+                                    .fillMaxWidth())
+                            Spacer(modifier= Modifier.size(10.dp))
                             Row(
                                 Modifier
                                     .height(40.dp)
@@ -58,40 +64,15 @@ fun PantallaEtiquetado_Inicio(onClickEtiquetadoPlantaEscaneado: () -> Unit = {})
                             ) {
                                 Text("Producto:")
                                 Spacer(modifier= Modifier.size(5.dp))
-                                InputTexto(onClick = {ListadoEtiquetado.imprimeLocalizador()}, keyboardType =KeyboardType.Number )
-                                Box(
-                                    modifier = Modifier
-                                        .border(2.dp, GrisOscuro, RoundedCornerShape(10))
-                                        .background(color = Color.White)
-                                        .size(140.dp, 30.dp)
-                                        .padding(horizontal = 5.dp)
-                                        .focusTarget(),
-                                    contentAlignment = Alignment.CenterStart
-                                ) {
-                                    BasicTextField(value = ingresoBarras,
-                                        onValueChange = { ingresoBarras = it },
-                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                        keyboardActions = KeyboardActions(onDone = {
-                                            ListadoEtiquetado.imprimeLocalizador(ingresoBarras)
-                                        }),
-                                        enabled = true,
-                                        singleLine = true,
-                                        modifier = Modifier
-                                            .onKeyEvent {
-                                                if (it.key.keyCode == Key.Enter.keyCode) {
-                                                    ListadoEtiquetado.imprimeLocalizador(ingresoBarras.dropLast(1))
-                                                }
-                                                false
-                                            }
-                                    )
-                                }
+                                InputTexto(onClick = {texto: String -> ListadoEtiquetado.imprimeLocalizador(texto)}, keyboardType =KeyboardType.Number )
                             }
-                        }
-
+                        /*
                         Row(){
                             Text(text= "Cargar Unidades:")
                             Spacer(Modifier.size(10.dp))
                             ToggleHorizontal(estadoA = carga, onClick = {carga= it}, textoA = "Sí", textoB = "No")
+                        }
+                        */
                         }
 
                     }else{ //Cargar Archivo

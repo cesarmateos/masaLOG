@@ -17,6 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusTarget
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
@@ -254,9 +256,10 @@ fun CajaTextoGris(text:String,modifier: Modifier){
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun InputTexto(onClick: (String) -> Unit,keyboardType: KeyboardType){
+fun InputTexto(onClick: (texto: String) -> Unit,keyboardType: KeyboardType){
 
     var ingresoBarras by remember { mutableStateOf("") }
+    val focusRequester = remember { FocusRequester() }
 
     Box(
         modifier = Modifier
@@ -282,7 +285,12 @@ fun InputTexto(onClick: (String) -> Unit,keyboardType: KeyboardType){
                     }
                     false
                 }
+                .focusRequester(focusRequester)
         )
+    }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
     }
 }
 
