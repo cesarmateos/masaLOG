@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.masalog.controlado.ControlProductos
 import com.example.masalog.ui.theme.GrisOscuro
 import com.example.masalog.ui.theme.MoradoMuySuave
 import com.example.masalog.ui.theme.NaranjaMuySuave
@@ -48,13 +49,13 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
                     modifier= Modifier.fillMaxWidth().background(NaranjaMuySuave).padding(vertical = interlineado)) }
 
                 //Código Barras
-                Text(text=ControlProductos.productoComplejoIngresado?.codigoBarras.toString(),
+                Text(text= ControlProductos.productoComplejoIngresado?.codigoBarras.toString(),
                     textAlign = TextAlign.End,modifier= Modifier.fillMaxWidth().padding(interlineado))
 
                 //Lote
                 Row(modifier= Modifier.fillMaxWidth()){
                     Text(text="Lote:  ", fontWeight = FontWeight.Bold)
-                    Text(text=ControlProductos.productoComplejoIngresado?.lote.toString())
+                    Text(text= ControlProductos.productoComplejoIngresado?.lote.toString())
                 }
 
                 //Vencimiento
@@ -73,7 +74,7 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
                                 .background(MoradoMuySuave)
                                 .fillMaxWidth(),
                             textAlign=TextAlign.Center)
-                        Text(text=ControlProductos.productoComplejoIngresado?.cantidad.toString(),
+                        Text(text= ControlProductos.productoComplejoIngresado?.cantidad.toString(),
                             modifier=Modifier.fillMaxWidth(),
                             textAlign=TextAlign.Center)
                     }

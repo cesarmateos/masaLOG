@@ -1,16 +1,10 @@
-package com.example.masalog
+package com.example.masalog.etiquetado
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -18,18 +12,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusTarget
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.key.Key
-import androidx.compose.ui.input.key.key
-import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.example.masalog.*
 import com.example.masalog.ui.theme.*
 import java.nio.charset.StandardCharsets
 
@@ -64,7 +52,7 @@ fun PantallaEtiquetado_Inicio(onClickEtiquetadoPlantaEscaneado: () -> Unit = {})
                             ) {
                                 Text("Producto:")
                                 Spacer(modifier= Modifier.size(5.dp))
-                                InputTexto(onClick = {texto: String -> ListadoEtiquetado.imprimeLocalizador(texto)}, keyboardType =KeyboardType.Number )
+                                InputTexto(onClick = {texto: String -> ListadoEtiquetado.imprimeLocalizador(texto) }, keyboardType =KeyboardType.Number )
                             }
                         /*
                         Row(){

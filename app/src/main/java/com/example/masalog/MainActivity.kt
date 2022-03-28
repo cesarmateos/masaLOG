@@ -7,11 +7,12 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.masalog.etiquetado.PantallaEtiquetado_Escaneado
+import com.example.masalog.etiquetado.PantallaEtiquetado_Inicio
 import com.example.masalog.ui.theme.MasaLOGTheme
 
 

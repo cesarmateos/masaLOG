@@ -1,7 +1,10 @@
-package com.example.masalog
+package com.example.masalog.controlado
 
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
+import com.example.masalog.BTHandler
+import com.example.masalog.ProductoComplejo
+import com.example.masalog.devolverListaConMatchCodigoBarras
 import java.util.*
 
 object ControlProductos {
@@ -12,11 +15,11 @@ object ControlProductos {
 
 
     fun porControlar(): List<ProductoComplejo>{
-        return productos.filter{item -> item.faltaControlar() >0}
+        return productos.filter{ item -> item.faltaControlar() >0}
     }
 
     fun controlados() : List<ProductoComplejo>{
-        return productos.filter{item -> item.contado() >0}
+        return productos.filter{ item -> item.contado() >0}
     }
 
     fun lectura(codigoBarras: String) {
