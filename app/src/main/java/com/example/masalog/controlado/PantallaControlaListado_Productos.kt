@@ -59,9 +59,9 @@ fun  PantallaControlaListadoProductos(onClickControladorIngreso: () -> Unit = {}
                     LectorBarras(onClickControladorIngreso)
                     Spacer(modifier= Modifier.size(20.dp))
                     Text("Etiqueta:")
-                    Checkbox(checked = estadoCheckBox.value,
-                        onCheckedChange = { estadoCheckBox.value = it
-                                            ControlProductos.etiqueta = estadoCheckBox.value})
+                    //Checkbox(checked = estadoCheckBox.value,
+                     //   onCheckedChange = { estadoCheckBox.value = it
+                    //                        ControlProductos.etiqueta = estadoCheckBox.value})
                 }
 
                 //Productos por Leer
@@ -75,12 +75,11 @@ fun  PantallaControlaListadoProductos(onClickControladorIngreso: () -> Unit = {}
                 //Producots Leídos
                 Row(modifier=Modifier.weight(1.0f)){
                     CajaScrolleable(productoComplejos = ControlProductos.controlados(),
-                        onClickControladorIngreso,
-                        "Leídos",
-                        ::sumarUnidadesContadas)
+                             onClickControladorIngreso,
+                           "Leídos",
+                         ::sumarUnidadesContadas)
+                          }
                 }
-                //bultosHandler()
-            }
         }
     )
 }
@@ -94,7 +93,7 @@ fun LectorBarras(onClickControladorIngreso: () -> Unit = {}) {
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    //keyboardController?.hide()
+    keyboardController?.hide()
 
         Box(
             modifier = Modifier

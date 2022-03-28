@@ -54,13 +54,6 @@ fun PantallaEtiquetado_Inicio(onClickEtiquetadoPlantaEscaneado: () -> Unit = {})
                                 Spacer(modifier= Modifier.size(5.dp))
                                 InputTexto(onClick = {texto: String -> ListadoEtiquetado.imprimeLocalizador(texto) }, keyboardType =KeyboardType.Number )
                             }
-                        /*
-                        Row(){
-                            Text(text= "Cargar Unidades:")
-                            Spacer(Modifier.size(10.dp))
-                            ToggleHorizontal(estadoA = carga, onClick = {carga= it}, textoA = "Sí", textoB = "No")
-                        }
-                        */
                         }
 
                     }else{ //Cargar Archivo

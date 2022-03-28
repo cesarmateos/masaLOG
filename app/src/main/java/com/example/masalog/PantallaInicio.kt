@@ -29,8 +29,8 @@ fun PantallaInicio(
                     Spacer(Modifier.size(PADDING_HORIZONTAL))
                     BotonStandard("Configurar Etiquetas",onClickEtiquetas)
                     Spacer(Modifier.size(PADDING_HORIZONTAL))
-                    BotonStandard("Controlador",onClickControladorInput)
-                    Spacer(Modifier.size(PADDING_HORIZONTAL))
+                    //BotonStandard("Controlador",onClickControladorInput)
+                    //Spacer(Modifier.size(PADDING_HORIZONTAL))
                     BotonStandard("Etiquetado Planta",onClickEtiquetado)
 
                 }

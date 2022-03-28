@@ -60,7 +60,7 @@ object ListadoEtiquetado {
         try {
             lineas.forEach {
                 var lista = it.split(";")
-                if (lista.isNotEmpty()) {
+                if (lista.isNotEmpty() && lista[0]!="") {
                     val producto = Producto(lista[0].toLong(), lista[1], lista[2])
                     productos.add(producto)
                 }
