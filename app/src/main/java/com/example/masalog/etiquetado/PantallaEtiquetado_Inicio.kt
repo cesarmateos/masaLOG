@@ -25,7 +25,6 @@ import java.nio.charset.StandardCharsets
 @Composable
 fun PantallaEtiquetado_Inicio(onClickFinEtiquetado: () -> Unit = {}) {
     var archivo: Boolean by remember { mutableStateOf(ListadoEtiquetado.archivoCargado) }
-    val alertaProducto = remember { mutableStateOf(true)}
 
     Scaffold(
         topBar = { barraTOP() },

@@ -303,15 +303,6 @@ fun InputTexto(onClick: (texto: String) -> Unit,keyboardType: KeyboardType){
     }
 }
 
-@Composable
-fun Alerta(texto:String, estado:Boolean, cambiarEstado: (Boolean) -> Unit){
-    AlertDialog(onDismissRequest = { cambiarEstado(false) },
-        title = { Text(text = "Error") },
-        text = {texto},
-        buttons = { BotonStandard(texto = "Cerrar", onClick = {cambiarEstado(false)})}
-    )
-}
-
 class IntLimitado(ValorIncial:Int,LimiteInferior:Int, LimiteSuperior: Int){
     var valor:Int = ValorIncial
     val limiteSuperior = LimiteSuperior

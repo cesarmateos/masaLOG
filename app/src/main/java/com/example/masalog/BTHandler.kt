@@ -31,6 +31,7 @@ object BTHandler {
 
     //Variable de estado que accederá la UI
     val estadoBT = MutableLiveData<EstadoDispositivo>()
+    val alerta = MutableLiveData<Boolean>(false)
 
     private var logoCargado: Boolean = false
     private var outputStream: OutputStream? = null
@@ -108,6 +109,8 @@ object BTHandler {
                 write(byteArrayOf(10))                  // Feed line
                 estadoBT.postValue(EstadoDispositivo.CONECTADO)
             }
+        }else{
+            alerta.postValue(true)
         }
     }
 
@@ -144,6 +147,10 @@ object BTHandler {
             logoCargado = false
             estadoBT.postValue(EstadoDispositivo.DESCONECTADO)
         }
+    }
+
+    fun cerrarDialogo(){
+        alerta.postValue(false)
     }
 
     fun mandarLogo(){

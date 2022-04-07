@@ -12,9 +12,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/icono"
+        android:icon="@mipmap/pantuflas"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/icono"
+        android:roundIcon="@mipmap/pantuflas_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MasaLOG">
         <activity

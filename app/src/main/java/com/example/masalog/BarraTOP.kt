@@ -20,6 +20,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.res.stringResource
 
 
 @Composable
@@ -46,6 +47,21 @@ fun barraTOP(){
 fun topDerecho(){
 
     val estado: EstadoDispositivo? by BTHandler.estadoBT.observeAsState()
+    val alerta: Boolean? by BTHandler.alerta.observeAsState()
+
+    //ALERTA DE IMPRESORA DESCONECTADA
+    if(alerta == true){
+        AlertDialog(onDismissRequest = { BTHandler.cerrarDialogo() },
+            title = { Text(text = "Impresora Desconectada") },
+            text = { Text(text= stringResource(R.string.alerta_impresora_no_activa)) },
+            buttons = {
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(PADDING_HORIZONTAL)){
+                    BotonStandard(texto = "Cerrar", onClick = {BTHandler.cerrarDialogo()})
+                }}
+        )
+    }
 
     Row(modifier = Modifier.padding(8.dp),
         horizontalArrangement = Arrangement.spacedBy(6.dp)){

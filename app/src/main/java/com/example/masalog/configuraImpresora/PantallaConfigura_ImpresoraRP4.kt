@@ -33,7 +33,8 @@ fun  PantallaConfiguraImpresoraRP4() {
             EsctructuraTituloCuerpoBoton(
                 textoTitulo = "Configurar Honeywell RP4",
                 textoBoton = stringResource(R.string.envia_configuracion),
-                onClick = { cambiarConfiguracionRP4(bluetooth,modificaBluetooth,oscuridad, modificaOscuridad,velocidad,modificaVelocidad)}) {
+                onClick = { cambiarConfiguracionRP4(bluetooth,modificaBluetooth,oscuridad, modificaOscuridad,velocidad,modificaVelocidad) })
+            {
 
                 Column() { //COLUMNA GENERAL
 
@@ -42,7 +43,7 @@ fun  PantallaConfiguraImpresoraRP4() {
                         modifier= Modifier.padding(horizontal = 10.dp, vertical = 3.dp),
                         verticalAlignment = Alignment.CenterVertically)
                     {
-                        Text(text="Tiempoconectada:",fontSize = sizeFuente)
+                        Text(text="Tiempo Conectada:",fontSize = sizeFuente)
                         Spacer(Modifier.size(10.dp))
                         if(modificaBluetooth){
                             Text(text= bluetooth.toString().padStart(3, '0'), fontSize = sizeFuente)
@@ -94,7 +95,6 @@ fun  PantallaConfiguraImpresoraRP4() {
                             Text(text="Modificar",fontSize = sizeFuente, modifier= Modifier.clickable{modificaOscuridad=true}, color = MaterialTheme.colors.secondary)
                         }
                     }
-
                 }
             }
         }

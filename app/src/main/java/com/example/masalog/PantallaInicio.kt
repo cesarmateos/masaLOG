@@ -23,7 +23,10 @@ fun PantallaInicio(
         content = {
             EstructuraTituloCuerpo(textoTitulo = "Seleccione una tarea") {
                 Column(){
-                    Row(modifier=Modifier.fillMaxWidth().weight(1.0f).padding(PADDING_HORIZONTAL)){
+                    Row(modifier= Modifier
+                        .fillMaxWidth()
+                        .weight(1.0f)
+                        .padding(PADDING_HORIZONTAL)){
                         Column(
                             modifier = Modifier.fillMaxSize(),
                             verticalArrangement = Arrangement.Center,
@@ -36,7 +39,8 @@ fun PantallaInicio(
                             //BotonStandard("Controlador",onClickControladorInput)
                             //Spacer(Modifier.size(PADDING_HORIZONTAL))
                             BotonStandard("Etiquetado desde Archivo",onClickEtiquetado)
-
+                            Spacer(Modifier.size(PADDING_HORIZONTAL))
+                            BotonStandard(texto = "Etiquetas Varias", onClick = {})
                         }
                     }
                     Row(modifier=Modifier.fillMaxWidth()) {
