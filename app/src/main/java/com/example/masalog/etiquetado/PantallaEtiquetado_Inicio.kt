@@ -23,9 +23,9 @@ import java.nio.charset.StandardCharsets
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun PantallaEtiquetado_Inicio(onClickEtiquetadoPlantaEscaneado: () -> Unit = {}) {
-    var carga: Boolean by remember { mutableStateOf(true) }
+fun PantallaEtiquetado_Inicio(onClickFinEtiquetado: () -> Unit = {}) {
     var archivo: Boolean by remember { mutableStateOf(ListadoEtiquetado.archivoCargado) }
+    val alertaProducto = remember { mutableStateOf(true)}
 
     Scaffold(
         topBar = { barraTOP() },
@@ -54,6 +54,9 @@ fun PantallaEtiquetado_Inicio(onClickEtiquetadoPlantaEscaneado: () -> Unit = {})
                                 Spacer(modifier= Modifier.size(5.dp))
                                 InputTexto(onClick = {texto: String -> ListadoEtiquetado.imprimeLocalizador(texto) }, keyboardType =KeyboardType.Number )
                             }
+                            Spacer(modifier= Modifier.size(10.dp))
+                            BotonStandard(texto = "Terminar Etiquetado", onClick = {ListadoEtiquetado.descargarArchivo()
+                                onClickFinEtiquetado()})
                         }
 
                     }else{ //Cargar Archivo
@@ -87,9 +90,7 @@ fun PantallaEtiquetado_Inicio(onClickEtiquetadoPlantaEscaneado: () -> Unit = {})
 
                         }
                         //Boton Carga CSV
-                        elegirArchivoEtiquetado(onClickEtiquetadoPlantaEscaneado = {onClickEtiquetadoPlantaEscaneado},
-                            archivoCargado = archivo,
-                            modificaArchivoCargado = {archivo= it}
+                        elegirArchivoEtiquetado(archivoCargado = archivo,  modificaArchivoCargado = {archivo= it}
                         )
                     }
                 }
@@ -100,8 +101,7 @@ fun PantallaEtiquetado_Inicio(onClickEtiquetadoPlantaEscaneado: () -> Unit = {})
 
 
 @Composable
-private fun elegirArchivoEtiquetado(onClickEtiquetadoPlantaEscaneado: () -> Unit = {},
-                                    archivoCargado:Boolean,
+private fun elegirArchivoEtiquetado(archivoCargado:Boolean,
                                     modificaArchivoCargado: (Boolean)->Unit = {}) {
     val context = LocalContext.current
     val launcher = rememberLauncherForActivityResult(
@@ -123,12 +123,6 @@ private fun elegirArchivoEtiquetado(onClickEtiquetadoPlantaEscaneado: () -> Unit
             //Por si se arrepiente al elegir archivo
         }
 
-    }
-
-    if(ListadoEtiquetado.productos.isEmpty()){
-        // ARCHIVO DE MIERDA
-    }else{
-        onClickEtiquetadoPlantaEscaneado()
     }
 
     return BotonStandard(texto = "Cargar Archivo CSV",

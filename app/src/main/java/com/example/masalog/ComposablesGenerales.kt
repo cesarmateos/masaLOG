@@ -226,10 +226,15 @@ fun EsctructuraTituloCuerpoBoton(textoTitulo: String,
                                  cuerpo: @Composable() () -> Unit){
     Column(){
         TituloSeccion(texto = textoTitulo)
-        Row(modifier=Modifier.fillMaxWidth().weight(1.0f).padding(PADDING_HORIZONTAL)){
+        Row(modifier= Modifier
+            .fillMaxWidth()
+            .weight(1.0f)
+            .padding(PADDING_HORIZONTAL)){
             cuerpo()
         }
-        Row(modifier=Modifier.fillMaxWidth().padding(PADDING_HORIZONTAL)) {
+        Row(modifier= Modifier
+            .fillMaxWidth()
+            .padding(PADDING_HORIZONTAL)) {
             BotonStandard(texto = textoBoton, onClick)
         }
     }
@@ -240,7 +245,9 @@ fun EstructuraTituloCuerpo(textoTitulo: String,
                            cuerpo: @Composable() () -> Unit){
     Column(){
         TituloSeccion(texto = textoTitulo)
-        Row(modifier=Modifier.fillMaxWidth().padding(PADDING_HORIZONTAL)){
+        Row(modifier= Modifier
+            .fillMaxWidth()
+            .padding(PADDING_HORIZONTAL)){
             cuerpo()
         }
     }
@@ -275,6 +282,7 @@ fun InputTexto(onClick: (texto: String) -> Unit,keyboardType: KeyboardType){
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
             keyboardActions = KeyboardActions(onDone = {
                onClick(ingresoBarras)
+                ingresoBarras = ""
             }),
             enabled = true,
             singleLine = true,
@@ -282,6 +290,7 @@ fun InputTexto(onClick: (texto: String) -> Unit,keyboardType: KeyboardType){
                 .onKeyEvent {
                     if (it.key.keyCode == Key.Enter.keyCode) {
                         onClick(ingresoBarras.dropLast(1))
+                        ingresoBarras = ""
                     }
                     false
                 }
@@ -294,21 +303,30 @@ fun InputTexto(onClick: (texto: String) -> Unit,keyboardType: KeyboardType){
     }
 }
 
+@Composable
+fun Alerta(texto:String, estado:Boolean, cambiarEstado: (Boolean) -> Unit){
+    AlertDialog(onDismissRequest = { cambiarEstado(false) },
+        title = { Text(text = "Error") },
+        text = {texto},
+        buttons = { BotonStandard(texto = "Cerrar", onClick = {cambiarEstado(false)})}
+    )
+}
+
 class IntLimitado(ValorIncial:Int,LimiteInferior:Int, LimiteSuperior: Int){
     var valor:Int = ValorIncial
     val limiteSuperior = LimiteSuperior
     val limiteInferior = LimiteInferior
 
-    fun sumar(){
-        this.valor = min(this.valor+1,limiteSuperior)
+    fun sumar(unidades:Int){
+        this.valor = min(this.valor+unidades,limiteSuperior)
     }
 
     fun nuevoValor(nuevoValor:Int){
         this.valor = nuevoValor.coerceIn(limiteInferior, limiteSuperior)
     }
 
-    fun restar(){
-        this.valor = max(this.valor-1,limiteInferior)
+    fun restar(unidades:Int){
+        this.valor = max(this.valor-unidades,limiteInferior)
     }
 }
 

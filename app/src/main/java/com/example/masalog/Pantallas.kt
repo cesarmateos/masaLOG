@@ -9,8 +9,7 @@ enum class Pantallas {
     ControladorInput,
     ControladorProductos,
     ControladorIngreso,
-    EtiquetadoPlantaInicio,
-    EtiquetadoPlantaEscaneado;
+    EtiquetadoPlantaInicio;
 
     companion object {
         fun fromRoute(route: String?): Pantallas =
@@ -24,7 +23,6 @@ enum class Pantallas {
                 ControladorProductos.name -> ControladorProductos
                 ControladorIngreso.name -> ControladorIngreso
                 EtiquetadoPlantaInicio.name -> EtiquetadoPlantaInicio
-                EtiquetadoPlantaEscaneado.name -> EtiquetadoPlantaEscaneado
                 null -> Inicio
                 else -> throw IllegalArgumentException("La ruta $route no es reconocida.")
             }

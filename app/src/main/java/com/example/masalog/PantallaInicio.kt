@@ -5,6 +5,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 
@@ -20,19 +22,28 @@ fun PantallaInicio(
         topBar = { barraTOP() },
         content = {
             EstructuraTituloCuerpo(textoTitulo = "Seleccione una tarea") {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ){
-                    BotonStandard("Configurar Impresora", onClickImpresoras)
-                    Spacer(Modifier.size(PADDING_HORIZONTAL))
-                    BotonStandard("Configurar Etiquetas",onClickEtiquetas)
-                    Spacer(Modifier.size(PADDING_HORIZONTAL))
-                    //BotonStandard("Controlador",onClickControladorInput)
-                    //Spacer(Modifier.size(PADDING_HORIZONTAL))
-                    BotonStandard("Etiquetado Planta",onClickEtiquetado)
+                Column(){
+                    Row(modifier=Modifier.fillMaxWidth().weight(1.0f).padding(PADDING_HORIZONTAL)){
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ){
+                            BotonStandard("Configurar Impresora", onClickImpresoras)
+                            Spacer(Modifier.size(PADDING_HORIZONTAL))
+                            BotonStandard("Configurar Etiquetas",onClickEtiquetas)
+                            Spacer(Modifier.size(PADDING_HORIZONTAL))
+                            //BotonStandard("Controlador",onClickControladorInput)
+                            //Spacer(Modifier.size(PADDING_HORIZONTAL))
+                            BotonStandard("Etiquetado desde Archivo",onClickEtiquetado)
 
+                        }
+                    }
+                    Row(modifier=Modifier.fillMaxWidth()) {
+                        Text(text= stringResource(R.string.app_name_version),
+                            textAlign = TextAlign.End,
+                            modifier= Modifier.fillMaxWidth())
+                    }
                 }
 
             }

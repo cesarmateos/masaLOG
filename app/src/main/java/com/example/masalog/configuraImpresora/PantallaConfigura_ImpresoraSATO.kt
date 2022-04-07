@@ -1,22 +1,18 @@
 package com.example.masalog
 
-import androidx.compose.foundation.background
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.masalog.ui.theme.Naranja
-import com.example.masalog.ui.theme.NaranjaMuySuave
+
 
 @Composable
 fun  PantallaConfiguraImpresoraSATO() {
@@ -35,7 +31,7 @@ fun  PantallaConfiguraImpresoraSATO() {
 
             EsctructuraTituloCuerpoBoton(
                 textoTitulo = "Configurar SATO CL4NX",
-                textoBoton = "Enviar Configuración",
+                textoBoton = stringResource(R.string.envia_configuracion),
                 onClick = { cambiarConfiguracionSATO(papel,modificaPapel,oscuridad, modificaOscuridad,velocidad,modificaVelocidad)}) {
 
                 Column(){ //COLUMNA GENERAL
@@ -64,9 +60,9 @@ fun  PantallaConfiguraImpresoraSATO() {
                         if(modificaVelocidad){
                             Text(text= velocidad.toString().padStart(2, '0'), fontSize = sizeFuente)
                             Spacer(modifier= Modifier.size(20.dp))
-                            flechita (intLimitado= velocidadLimitada, intMostrable =velocidad, rotacion = 0f, onClick = { velocidad = it },operacion= {a:IntLimitado->a.restar()})
+                            flechita (intLimitado= velocidadLimitada, intMostrable =velocidad, rotacion = 0f, onClick = { velocidad = it },operacion= {a:IntLimitado->a.restar(1)})
                             Spacer(modifier= Modifier.size(10.dp))
-                            flechita (intLimitado= velocidadLimitada, intMostrable =velocidad, rotacion = 180f, onClick = { velocidad = it },operacion= {a:IntLimitado->a.sumar()})
+                            flechita (intLimitado= velocidadLimitada, intMostrable =velocidad, rotacion = 180f, onClick = { velocidad = it },operacion= {a:IntLimitado->a.sumar(1)})
                         }else{
                             Text(text="Modificar",fontSize = sizeFuente, modifier= Modifier.clickable{modificaVelocidad=true}, color = MaterialTheme.colors.secondary)
                         }
@@ -84,9 +80,9 @@ fun  PantallaConfiguraImpresoraSATO() {
                         if(modificaOscuridad){
                             Text(text= oscuridad.toString().padStart(2, '0'), fontSize = sizeFuente)
                             Spacer(modifier= Modifier.size(20.dp))
-                            flechita (intLimitado= oscuridadLimitada, intMostrable=oscuridad, rotacion = 0f, onClick = { oscuridad = it },operacion= {a:IntLimitado->a.restar()})
+                            flechita (intLimitado= oscuridadLimitada, intMostrable=oscuridad, rotacion = 0f, onClick = { oscuridad = it },operacion= {a:IntLimitado->a.restar(1)})
                             Spacer(modifier= Modifier.size(10.dp))
-                            flechita (intLimitado= oscuridadLimitada, intMostrable=oscuridad, rotacion = 0f, onClick = { oscuridad = it },operacion= {a:IntLimitado->a.sumar()})
+                            flechita (intLimitado= oscuridadLimitada, intMostrable=oscuridad, rotacion = 180f, onClick = { oscuridad = it },operacion= {a:IntLimitado->a.sumar(1)})
                         }else{
                             Text(text="Modificar",fontSize = sizeFuente, modifier= Modifier.clickable{modificaOscuridad=true}, color = MaterialTheme.colors.secondary)
                         }

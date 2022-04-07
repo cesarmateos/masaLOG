@@ -25,15 +25,16 @@ import androidx.compose.runtime.livedata.observeAsState
 @Composable
 fun barraTOP(){
     TopAppBar (
-        navigationIcon =  {
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(imageVector = Icons.Default.Menu, contentDescription = null)
+        /*navigationIcon =  {
+            IconButton(onClick = { /* scope.launch{ scaffoldState.drawerState.open()}*/ }) {
+                Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
             }
                           },
+         */
         title = {
             Image(
                 painterResource(R.drawable.logo),
-                contentDescription = "",)
+                contentDescription = "Masa",)
                 },
         actions = {
             topDerecho() },
@@ -134,6 +135,8 @@ fun SelectorDispositivo(){
             }
         }
 }
+
+
 
 
 

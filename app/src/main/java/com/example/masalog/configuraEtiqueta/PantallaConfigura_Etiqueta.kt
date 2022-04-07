@@ -67,13 +67,25 @@ fun Despacho(){
     var horizontal : Int by remember { mutableStateOf(0)}
     var vertical : Int by remember { mutableStateOf(0)}
     var sentidoNormal: Boolean by remember { mutableStateOf(true)}
+    var barras: Boolean by remember {mutableStateOf(true)}
 
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(PADDING_HORIZONTAL),
         horizontalAlignment = Alignment.CenterHorizontally)
     {
-        Spacer(modifier = Modifier.size(espaciado))
+        Row(){
+            Column{
+                Row(modifier = Modifier.fillMaxWidth()){
+                    Text(text="Horizontal : ", fontSize = 18.sp, style = TextStyle(fontWeight = FontWeight.Bold))
+                    Text(horizontal.toString(), fontSize = 18.sp)
+                }
+                Row(){
+                    Text(text="Vertical : ", fontSize = 18.sp, style = TextStyle(fontWeight = FontWeight.Bold))
+                    Text(vertical.toString(), fontSize = 18.sp)
+                }
+            }
+        }
         FlechaArriba(vertical,onClick = { vertical = it })
         Row(modifier= Modifier.padding(5.dp)) {
             FlechaIzquierda(horizontal, onClick = {horizontal = it})
@@ -81,19 +93,11 @@ fun Despacho(){
             FlechaDerecha(horizontal,onClick = { horizontal = it })
         }
         FlechaAbajo(vertical,onClick = { vertical = it })
-        Spacer(modifier = Modifier.size(espaciado))
+        Spacer(modifier = Modifier.size(espaciado/2))
         Row(modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically){
-            Column{
-                Row(){
-                    Text(text="Horizontal : ", fontSize = 18.sp, style = TextStyle(fontWeight = FontWeight.Bold))
-                    Text(horizontal.toString(), fontSize = 18.sp)
-                }
-                Spacer(modifier = Modifier.size(5.dp))
-                Row(){
-                    Text(text="Vertical : ", fontSize = 18.sp, style = TextStyle(fontWeight = FontWeight.Bold))
-                    Text(vertical.toString(), fontSize = 18.sp)
-                }
+            Column(horizontalAlignment = Alignment.Start) {
+                ToggleVertical(normal = barras, onClick = {barras = it}, textoA= "C.Barras", textoB="QR")
             }
             Spacer(modifier = Modifier.size(espaciado))
             Column(modifier = Modifier.fillMaxWidth(),
@@ -101,20 +105,21 @@ fun Despacho(){
                 ToggleVertical(normal = sentidoNormal, onClick = {sentidoNormal = it}, textoA= "Normal", textoB="Invertida")
             }
         }
-        Spacer(modifier = Modifier.size(espaciado*2))
-        BotonStandard(texto = "Despacho Pack / G.Volumen",
-                    onClick = { cargarFormatoDespacho(vertical,horizontal, sentidoNormal)
+        //BOTONES
+        Spacer(modifier = Modifier.size(espaciado))
+        BotonStandard(texto = "Ejemplo Pack / G.Volumen",
+                    onClick = { cargarFormatoDespacho(vertical,horizontal, sentidoNormal,barras)
                                 BTHandler.imprimir(etiquetaPack)}
         )
         Spacer(modifier = Modifier.size(espaciado))
-        BotonStandard(texto = "Despacho IOMA",
-                    onClick = { cargarFormatoDespacho(vertical,horizontal, sentidoNormal)
+        BotonStandard(texto = "Ejemplo IOMA",
+                    onClick = { cargarFormatoDespacho(vertical,horizontal, sentidoNormal,barras)
                                 BTHandler.imprimir(etiquetaIOMA) }
         )
 
         Spacer(modifier = Modifier.size(espaciado))
-        BotonStandard(texto = "Despacho Refrigerados",
-                    onClick = { cargarFormatoDespacho(vertical,horizontal, sentidoNormal)
+        BotonStandard(texto = "Ejemplo Refrigerados",
+                    onClick = { cargarFormatoDespacho(vertical,horizontal, sentidoNormal,barras)
                                 BTHandler.imprimir(etiquetaRefrigerados) }
         )
     }
@@ -155,18 +160,18 @@ fun Predespacho(){
             }
         }
         Spacer(modifier = Modifier.size(espaciado*2))
-        BotonStandard(texto = "Predespacho Papel Continuo",
+        BotonStandard(texto = "Formulario Papel Continuo",
             onClick = { cargarFormatoPredespacho(vertical,horizontal, 225)
                 BTHandler.imprimir(etiquetaPredespacho)}
         )
         Spacer(modifier = Modifier.size(espaciado))
-        BotonStandard(texto = "Predespacho Etiqueta",
+        BotonStandard(texto = "Formulario Etiqueta",
             onClick = { cargarFormatoPredespacho(vertical,horizontal, 0)
                 BTHandler.imprimir(etiquetaPredespacho) }
         )
 
         Spacer(modifier = Modifier.size(espaciado))
-        BotonStandard(texto = "Predespacho Emergencia",
+        BotonStandard(texto = "Formulario Emergencia",
             onClick = { cargarFormatoPredespacho(vertical,horizontal, 825)
                 BTHandler.imprimir(etiquetaPredespacho) }
         )
@@ -242,49 +247,65 @@ fun FlechaAbajo(variable: Int, onClick: (Int) -> Unit){
 }
 
 
-fun cargarFormatoDespacho(vertical: Int, horizontal: Int, sentidoNormal: Boolean){
+fun cargarFormatoDespacho(vertical: Int, horizontal: Int, sentidoNormal: Boolean, barras: Boolean){
 
     BTHandler.mandarLogo()
     lateinit var posicionesEnX:IntArray
     lateinit var posicionesEnY:IntArray
-    lateinit var tamanioTexto:IntArray
     lateinit var orientacion:IntArray
 
+    var tamanioTexto:Int = 17
     val multiplicador = 4
+
+    var matrizOpcionesX = Array(2){Array(2){IntArray(19)} }
+    var matrizOpcionesY = Array(2){Array(2){IntArray(19)} }
+
+
+    //NORMAL - BARRAS
+    matrizOpcionesX[0][0] = intArrayOf(460,460,480,450,420,420,475,425,370,330,260,220,160,160,160,160,145,68,30)
+    matrizOpcionesY[0][0] = intArrayOf(130, 162, 185, 185, 185, 290, 585, 612, 185, 185, 310, 40, 70, 260, 470, 680, 40, 50, 50)
+
+    //NORMAL - QR
+    matrizOpcionesX[0][1] = intArrayOf(470,450,480,450,420,420,475,425,370,330,260,220,160,160,160,160,145,68,30)
+    matrizOpcionesY[0][1] = intArrayOf( 40,  40, 190, 190, 190, 290, 590, 617, 190, 190, 310, 40, 70, 260, 470, 680, 40, 50, 50)
+
+    //INVERTIDA - BARRAS
+    matrizOpcionesX[1][0] = intArrayOf(30, 30, 10, 40, 70, 70, 15, 65, 120, 160, 230, 270, 330, 330, 330, 330, 345, 412, 450)
+    matrizOpcionesY[1][0] = intArrayOf(670, 638, 610, 610, 610, 500, 215, 188, 610, 610, 490, 760, 730, 540, 340, 110, 760, 750, 750)
+
+    //INVERTIDA - QR
+    matrizOpcionesX[1][1] = intArrayOf(20, 80, 10, 40, 70, 70, 15, 65, 120, 160, 230, 270, 330, 330, 330, 330, 345, 412, 450)
+    matrizOpcionesY[1][1] = intArrayOf(750, 750, 605, 605, 605, 500, 210, 183, 605, 605, 490, 760, 730, 540, 340, 110, 760, 750, 750)
+
 
     var modificadorPosicionX:Int
     var modificadorPosicionY:Int
 
+    var matrizDimension0 = 0
+    var matrizDimension1 = 0
+
     if(sentidoNormal){
+        modificadorPosicionX = + vertical * multiplicador
+        modificadorPosicionY = + horizontal * multiplicador
+        orientacion = intArrayOf(2,3)
+    }else{
+        matrizDimension0 = 1
         modificadorPosicionX = - vertical * multiplicador
         modificadorPosicionY = - horizontal * multiplicador
         orientacion = intArrayOf(4,1)
-    }else{
-        modificadorPosicionX = + vertical * multiplicador
-        modificadorPosicionY = + vertical * multiplicador
-        orientacion = intArrayOf(2,3)
     }
+
 
     if (BTHandler.btDevice?.name?.take(3).equals("RP4")) {
-        tamanioTexto = intArrayOf(18)
-        if (sentidoNormal) {
-            posicionesEnX = intArrayOf(30, 30, 10, 45, 80, 80, 15, 65, 125, 165, 230, 270, 328, 328, 328, 328, 345, 422, 460)
-            posicionesEnY = intArrayOf(670, 638, 610, 610, 610, 500, 230, 203, 610, 610, 490, 760, 730, 540, 340, 115, 765, 750, 750)
-        }else{
-            posicionesEnX = intArrayOf(460,460,480,445,410,410,475,425,365,325,260,220,162,162,162,162,145,68,30)
-            posicionesEnY = intArrayOf(130,162,185,185,185,290,600,627,185,185,310,40,60,250,450,685,35,50,50)
-        }
-
-    } else {
-        tamanioTexto = intArrayOf(17)
-        if (sentidoNormal) {
-            posicionesEnX = intArrayOf(30, 30, 10, 40, 70, 70, 15, 65, 120, 160, 230, 270, 330, 330, 330, 330, 345, 422, 460)
-            posicionesEnY = intArrayOf(670, 638, 610, 610, 610, 500, 215, 188, 610, 610, 490, 760, 730, 540, 340, 110, 760, 750, 750)
-        } else {
-            posicionesEnX = intArrayOf(460, 460, 480, 450, 420, 420, 475, 425, 370, 330, 260, 220, 160, 160, 160, 160, 145, 68, 30)
-            posicionesEnY = intArrayOf(130, 162, 185, 185, 185, 290, 585, 612, 185, 185, 310, 40, 70, 260, 470, 680, 40, 50, 50)
-        }
+        tamanioTexto = 18
     }
+
+    if (!barras){
+        matrizDimension1 = 1
+    }
+
+    posicionesEnX = matrizOpcionesX[matrizDimension0][matrizDimension1]
+    posicionesEnY = matrizOpcionesY[matrizDimension0][matrizDimension1]
 
     for (posicion in posicionesEnX.indices) {
         posicionesEnX[posicion] = posicionesEnX[posicion] + modificadorPosicionX
@@ -293,11 +314,18 @@ fun cargarFormatoDespacho(vertical: Int, horizontal: Int, sentidoNormal: Boolean
         posicionesEnY[posicion] = posicionesEnY[posicion] + modificadorPosicionY
     }
 
+    var codigoBarras = "<STX>B11;f" + orientacion[0] + ";o" + posicionesEnX[0] + "," + posicionesEnY[0] + ";c2,0;w2;h90;i1;d0,10;<ETX>\n" +
+            "<STX>I11;f" + orientacion[0] + ";o" + posicionesEnX[1] + "," + posicionesEnY[1] + ";c20;h1;w1;b0;<ETX>\n"
+
+    if (!barras){
+        codigoBarras = "<STX>B11;f" + orientacion[1] + ";o" + posicionesEnX[0] + "," + posicionesEnY[0] + ";c17,0;w10;h10;i1;d0,10;<ETX>\n" +
+        "<STX>I11;f" + orientacion[1] + ";o" + posicionesEnX[1] + "," + posicionesEnY[1] + ";c20;h1;w1;b0;<ETX>\n"
+    }
+
     BTHandler.imprimir("<STX><ESC>C<ETX>\n" +
             "<STX><ESC>P<ETX>\n" +
             "<STX>E1;F1;<ETX>\n" +
-            "<STX>B11;f" + orientacion[0] + ";o" + posicionesEnX[0] + "," + posicionesEnY[0] + ";c2,0;w2;h90;i1;d0,10;<ETX>\n" +
-            "<STX>I11;f" + orientacion[0] + ";o" + posicionesEnX[1] + "," + posicionesEnY[1] + ";c20;h1;w1;b0;<ETX>\n" +
+            codigoBarras +
             "<STX>H6;f" + orientacion[1] + ";o" + posicionesEnX[2] + "," + posicionesEnY[2] + ";c26;b0;k11;d0,18;<ETX>\n" +
             "<STX>H8;f" + orientacion[1] + ";o" + posicionesEnX[3] + "," + posicionesEnY[3] + ";c26;k12;d0,10;<ETX>\n" +
             "<STX>H5;f" + orientacion[1] + ";o" + posicionesEnX[4] + "," + posicionesEnY[4] + ";c26;b0;k11;d3,Ped:<ETX>\n" +
@@ -312,7 +340,7 @@ fun cargarFormatoDespacho(vertical: Int, horizontal: Int, sentidoNormal: Boolean
             "<STX>H32;f" + orientacion[1] + ";o" + posicionesEnX[13] + "," + posicionesEnY[13] + ";c26;b0;k8;d3,Turno<ETX>\n" +
             "<STX>H34;f" + orientacion[1] + ";o" + posicionesEnX[14] + "," + posicionesEnY[14] + ";c26;b0;k8;d3,Radio<ETX>\n" +
             "<STX>H36;f" + orientacion[1] + ";o" + posicionesEnX[15] + "," + posicionesEnY[15] + ";c26;b0;k8;d3,Orden<ETX>\n" +
-            "<STX>H21;f" + orientacion[1] + ";o" + posicionesEnX[16] + "," + posicionesEnY[16] + ";c26;b0;k" + tamanioTexto[0] + ";d0,28;<ETX>\n" +
+            "<STX>H21;f" + orientacion[1] + ";o" + posicionesEnX[16] + "," + posicionesEnY[16] + ";c26;b0;k" + tamanioTexto + ";d0,28;<ETX>\n" +
             "<STX>H13;f" + orientacion[1] + ";o" + posicionesEnX[17] + "," + posicionesEnY[17] + ";c26;b0;k14;d0,30;<ETX>\n" +
             "<STX>H12;f" + orientacion[1] + ";o" + posicionesEnX[18] + "," + posicionesEnY[18] + ";c26;b0;k10;d0,10;<ETX>\n" +
             "<STX>R<ETX>")

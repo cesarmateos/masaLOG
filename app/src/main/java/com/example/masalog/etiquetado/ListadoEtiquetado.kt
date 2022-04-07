@@ -70,4 +70,8 @@ object ListadoEtiquetado {
         }
     }
 
+    fun descargarArchivo(){
+        archivoCargado = false
+        productos.clear()
+    }
 }

@@ -26,18 +26,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             MasaLOGTheme {
                 Surface(color = MaterialTheme.colors.background) {
-                    MasaLOG()
+                    val navController = rememberNavController()
+                    MasaNavHost(navController)
                 }
             }
         }
     }
 }
 
-@Composable
-fun MasaLOG(){
-        val navController = rememberNavController()
-        MasaNavHost(navController)
-}
 
 @Composable
 fun MasaNavHost(navController: NavHostController,modifier: Modifier = Modifier) {
@@ -95,12 +91,8 @@ fun MasaNavHost(navController: NavHostController,modifier: Modifier = Modifier) 
 
         composable(Pantallas.EtiquetadoPlantaInicio.name) {
             PantallaEtiquetado_Inicio(
-                onClickEtiquetadoPlantaEscaneado = {navController.navigate(Pantallas.EtiquetadoPlantaEscaneado.name)}
+                onClickFinEtiquetado = {navController.navigate(Pantallas.Inicio.name)}
             )
-        }
-
-        composable(Pantallas.EtiquetadoPlantaEscaneado.name){
-            PantallaEtiquetado_Escaneado()
         }
 
     }

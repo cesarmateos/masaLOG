@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">masaLOG</string>
+    <string name="app_name">MASApp 2.0</string>
+    <string name="envia_configuracion">Enviar Configuración</string>
+    <string name="app_name_version">MASApp 2.0</string>
 </resources>
