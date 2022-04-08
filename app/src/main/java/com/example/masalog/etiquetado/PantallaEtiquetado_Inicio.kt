@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -17,85 +16,102 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.masalog.*
 import com.example.masalog.ui.theme.*
 import java.nio.charset.StandardCharsets
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun PantallaEtiquetado_Inicio(onClickFinEtiquetado: () -> Unit = {}) {
+fun PantallaEtiquetado_Inicio(navController: NavHostController) {
     var archivo: Boolean by remember { mutableStateOf(ListadoEtiquetado.archivoCargado) }
 
-    Scaffold(
-        topBar = { barraTOP() },
-        content = {
-            EstructuraTituloCuerpo("Etiquetado Planta")
-            {
-                Column(){
-                    if(archivo){ //Archivo Ya Cargado
+    EstructuraTituloCuerpo("Etiquetado Planta")
+    {
+        Column {
+            if (archivo) { //Archivo Ya Cargado
 
-                        Column(modifier= Modifier.fillMaxWidth()){
-                            Text(text="Se han cargado "+ ListadoEtiquetado.productos.size.toString()+" registros",
-                                textAlign = TextAlign.Center,
-                                color = MaterialTheme.colors.secondary,
-                                modifier= Modifier
-                                    .padding(5.dp)
-                                    .fillMaxWidth())
-                            Spacer(modifier= Modifier.size(10.dp))
-                            Row(
-                                Modifier
-                                    .height(40.dp)
-                                    .padding(horizontal = 10.dp, vertical = 3.dp)
-                                    .fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text("Producto:")
-                                Spacer(modifier= Modifier.size(5.dp))
-                                InputTexto(onClick = {texto: String -> ListadoEtiquetado.imprimeLocalizador(texto) }, keyboardType =KeyboardType.Number )
-                            }
-                            Spacer(modifier= Modifier.size(10.dp))
-                            BotonStandard(texto = "Terminar Etiquetado", onClick = {ListadoEtiquetado.descargarArchivo()
-                                onClickFinEtiquetado()})
-                        }
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        text = "Se han cargado " + ListadoEtiquetado.productos.size.toString() + " registros",
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colors.secondary,
+                        modifier = Modifier
+                            .padding(5.dp)
+                            .fillMaxWidth()
+                    )
+                    Spacer(modifier = Modifier.size(10.dp))
+                    Row(
+                        Modifier
+                            .height(40.dp)
+                            .padding(horizontal = 10.dp, vertical = 3.dp)
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text("Producto:")
+                        Spacer(modifier = Modifier.size(5.dp))
+                        InputTexto(onClick = { texto: String ->
+                            ListadoEtiquetado.imprimeLocalizador(
+                                texto
+                            )
+                        }, keyboardType = KeyboardType.Number)
+                    }
+                    Spacer(modifier = Modifier.size(10.dp))
+                    BotonStandard(texto = "Terminar Etiquetado", onClick = {
+                        ListadoEtiquetado.descargarArchivo()
+                        navController.navigate(Pantallas.Inicio.name)
+                    })
+                }
 
-                    }else{ //Cargar Archivo
-                        //Formato del Archivo CSV
-                        Column(
-                            Modifier
-                                .fillMaxWidth()
-                                .weight(1.0f)){
-                            Text(text="Formato del archivo CSV",
-                                textAlign = TextAlign.Center,
-                                fontWeight = FontWeight.Bold,
-                                modifier= Modifier
-                                    .padding(5.dp)
-                                    .fillMaxWidth())
-                            Row(modifier = Modifier
-                                .border(3.dp, MaterialTheme.colors.onSecondary)
-                                .height(60.dp)
-                                .background(GrisClaro),
-                                verticalAlignment = Alignment.CenterVertically
-                            ){
-                                CajaTextoGris(text = "Código Barras", modifier = Modifier
-                                    .weight(1.0f)
-                                    .padding(5.dp))
-                                CajaTextoGris(text = "Localizador", modifier = Modifier
-                                    .weight(1.0f)
-                                    .padding(5.dp))
-                                CajaTextoGris(text = "Nombre Producto", modifier = Modifier
-                                    .weight(1.0f)
-                                    .padding(5.dp))
-                            }
-
-                        }
-                        //Boton Carga CSV
-                        elegirArchivoEtiquetado(archivoCargado = archivo,  modificaArchivoCargado = {archivo= it}
+            } else { //Cargar Archivo
+                //Formato del Archivo CSV
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .weight(1.0f)
+                ) {
+                    Text(
+                        text = "Formato del archivo CSV",
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .padding(5.dp)
+                            .fillMaxWidth()
+                    )
+                    Row(
+                        modifier = Modifier
+                            .border(3.dp, MaterialTheme.colors.onSecondary)
+                            .height(60.dp)
+                            .background(GrisClaro),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        CajaTextoGris(
+                            text = "Código Barras", modifier = Modifier
+                                .weight(1.0f)
+                                .padding(5.dp)
+                        )
+                        CajaTextoGris(
+                            text = "Localizador", modifier = Modifier
+                                .weight(1.0f)
+                                .padding(5.dp)
+                        )
+                        CajaTextoGris(
+                            text = "Nombre Producto", modifier = Modifier
+                                .weight(1.0f)
+                                .padding(5.dp)
                         )
                     }
+
                 }
+                //Boton Carga CSV
+                elegirArchivoEtiquetado(
+                    archivoCargado = archivo,
+                    modificaArchivoCargado = { archivo = it }
+                )
             }
         }
-    )
+    }
+
 }
 
 

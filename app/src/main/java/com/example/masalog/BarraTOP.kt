@@ -21,17 +21,19 @@ import androidx.lifecycle.MutableLiveData
 
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.res.stringResource
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 
 @Composable
-fun barraTOP(){
+fun barraTOP(scope: CoroutineScope, scaffoldState: ScaffoldState){
     TopAppBar (
-        /*navigationIcon =  {
-            IconButton(onClick = { /* scope.launch{ scaffoldState.drawerState.open()}*/ }) {
+        navigationIcon =  {
+            IconButton(onClick = {  scope.launch{ scaffoldState.drawerState.open()} }) {
                 Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
             }
                           },
-         */
+
         title = {
             Image(
                 painterResource(R.drawable.logo),

@@ -3,7 +3,6 @@ package com.example.masalog
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -29,9 +28,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.masalog.configuraEtiqueta.redondeoFlechas
 import com.example.masalog.ui.theme.GrisClaro
 import com.example.masalog.ui.theme.GrisOscuro
-import com.example.masalog.ui.theme.Naranja
 import com.example.masalog.ui.theme.NaranjaMuySuave
 
 import kotlin.math.min
@@ -49,7 +48,7 @@ fun BotonStandard(texto: String, onClick: () -> Unit){
 }
 
 @Composable
-fun flechita(intLimitado: IntLimitado, intMostrable: Int, rotacion: Float, onClick: (Int) -> Unit, operacion: (IntLimitado)-> Unit){
+fun Flechita(intLimitado: IntLimitado, intMostrable: Int, rotacion: Float, onClick: (Int) -> Unit, operacion: (IntLimitado)-> Unit){
     Button(onClick = { operacion(intLimitado)
                      onClick(intLimitado.valor)
                      },
@@ -72,7 +71,7 @@ fun flechita(intLimitado: IntLimitado, intMostrable: Int, rotacion: Float, onCli
 fun ToggleHorizontal(estadoA:Boolean, onClick: (Boolean) -> Unit, textoA: String, textoB:String){
     if(estadoA){
         //Clickeado
-        Row(){
+        Row{
             //Clickeado
             OutlinedButton(onClick = {},
                 colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary ),
@@ -139,7 +138,7 @@ fun ToggleHorizontal(estadoA:Boolean, onClick: (Boolean) -> Unit, textoA: String
 @Composable
 fun ToggleVertical(normal:Boolean, onClick: (Boolean) -> Unit, textoA: String, textoB:String){
     if(normal){
-        Column(){
+        Column{
             //Clickeado
             OutlinedButton(onClick = {},
                 colors =ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary ),
@@ -224,7 +223,7 @@ fun EsctructuraTituloCuerpoBoton(textoTitulo: String,
                                  textoBoton:String,
                                  onClick: () -> Unit,
                                  cuerpo: @Composable() () -> Unit){
-    Column(){
+    Column{
         TituloSeccion(texto = textoTitulo)
         Row(modifier= Modifier
             .fillMaxWidth()
@@ -243,11 +242,9 @@ fun EsctructuraTituloCuerpoBoton(textoTitulo: String,
 @Composable
 fun EstructuraTituloCuerpo(textoTitulo: String,
                            cuerpo: @Composable() () -> Unit){
-    Column(){
+    Column{
         TituloSeccion(texto = textoTitulo)
-        Row(modifier= Modifier
-            .fillMaxWidth()
-            .padding(PADDING_HORIZONTAL)){
+        Row(modifier= Modifier.fillMaxWidth().padding(PADDING_HORIZONTAL)){
             cuerpo()
         }
     }
@@ -305,15 +302,11 @@ fun InputTexto(onClick: (texto: String) -> Unit,keyboardType: KeyboardType){
 
 class IntLimitado(ValorIncial:Int,LimiteInferior:Int, LimiteSuperior: Int){
     var valor:Int = ValorIncial
-    val limiteSuperior = LimiteSuperior
-    val limiteInferior = LimiteInferior
+    private val limiteSuperior = LimiteSuperior
+    private val limiteInferior = LimiteInferior
 
     fun sumar(unidades:Int){
         this.valor = min(this.valor+unidades,limiteSuperior)
-    }
-
-    fun nuevoValor(nuevoValor:Int){
-        this.valor = nuevoValor.coerceIn(limiteInferior, limiteSuperior)
     }
 
     fun restar(unidades:Int){

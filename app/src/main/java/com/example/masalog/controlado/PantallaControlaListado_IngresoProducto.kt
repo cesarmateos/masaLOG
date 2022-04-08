@@ -37,7 +37,7 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
     val estadoCheckBox = remember { mutableStateOf(ControlProductos.etiqueta) }
     val interlineado = 6.dp
     Scaffold(
-        topBar = {barraTOP()},
+        //topBar = {barraTOP()},
         content = {
             Column(modifier= Modifier.fillMaxWidth()){
 

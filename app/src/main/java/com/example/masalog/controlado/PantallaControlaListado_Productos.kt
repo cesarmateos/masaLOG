@@ -39,7 +39,7 @@ fun  PantallaControlaListadoProductos(onClickControladorIngreso: () -> Unit = {}
     val estadoCheckBox = remember { mutableStateOf(ControlProductos.etiqueta) }
 
     Scaffold(
-        topBar = {barraTOP()},
+        //topBar = {barraTOP()},
         content = {
 
             //Columna General

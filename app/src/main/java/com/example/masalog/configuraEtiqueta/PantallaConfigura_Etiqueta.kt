@@ -1,6 +1,5 @@
-package com.example.masalog
+package com.example.masalog.configuraEtiqueta
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -14,7 +13,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.masalog.ui.theme.*
+import com.example.masalog.BTHandler
+import com.example.masalog.BotonStandard
+import com.example.masalog.PADDING_HORIZONTAL
+import com.example.masalog.ToggleVertical
 
 
 val redondeoFlechas = 20.dp
@@ -23,16 +25,6 @@ val espaciado = 20.dp
 
 @Composable
 fun  PantallaConfiguraEtiqueta() {
-    Scaffold(
-        topBar = {barraTOP()},
-        content = {
-            Tabs()
-        }
-    )
-}
-
-@Composable
-fun Tabs() {
     var state by remember { mutableStateOf(0) }
     val titles = listOf("Despacho", "Predespacho")
     Column {
@@ -42,7 +34,7 @@ fun Tabs() {
             contentColor = MaterialTheme.colors.primary,
             backgroundColor = MaterialTheme.colors.primaryVariant,
 
-        ) {
+            ) {
             titles.forEachIndexed { index, title ->
                 Tab(
                     text = { Text(text= title,
@@ -93,7 +85,7 @@ fun Despacho(){
             FlechaDerecha(horizontal,onClick = { horizontal = it })
         }
         FlechaAbajo(vertical,onClick = { vertical = it })
-        Spacer(modifier = Modifier.size(espaciado/2))
+        Spacer(modifier = Modifier.size(espaciado /2))
         Row(modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically){
             Column(horizontalAlignment = Alignment.Start) {
@@ -109,7 +101,8 @@ fun Despacho(){
         Spacer(modifier = Modifier.size(espaciado))
         BotonStandard(texto = "Ejemplo Pack / G.Volumen",
                     onClick = { cargarFormatoDespacho(vertical,horizontal, sentidoNormal,barras)
-                                BTHandler.imprimir(etiquetaPack)}
+                                BTHandler.imprimir(etiquetaPack)
+                    }
         )
         Spacer(modifier = Modifier.size(espaciado))
         BotonStandard(texto = "Ejemplo IOMA",
@@ -159,10 +152,11 @@ fun Predespacho(){
                 }
             }
         }
-        Spacer(modifier = Modifier.size(espaciado*2))
+        Spacer(modifier = Modifier.size(espaciado *2))
         BotonStandard(texto = "Formulario Papel Continuo",
             onClick = { cargarFormatoPredespacho(vertical,horizontal, 225)
-                BTHandler.imprimir(etiquetaPredespacho)}
+                BTHandler.imprimir(etiquetaPredespacho)
+            }
         )
         Spacer(modifier = Modifier.size(espaciado))
         BotonStandard(texto = "Formulario Etiqueta",
@@ -254,7 +248,7 @@ fun cargarFormatoDespacho(vertical: Int, horizontal: Int, sentidoNormal: Boolean
     lateinit var posicionesEnY:IntArray
     lateinit var orientacion:IntArray
 
-    var tamanioTexto:Int = 17
+    var tamanioTexto = 17
     val multiplicador = 4
 
     var matrizOpcionesX = Array(2){Array(2){IntArray(19)} }
@@ -322,28 +316,30 @@ fun cargarFormatoDespacho(vertical: Int, horizontal: Int, sentidoNormal: Boolean
         "<STX>I11;f" + orientacion[1] + ";o" + posicionesEnX[1] + "," + posicionesEnY[1] + ";c20;h1;w1;b0;<ETX>\n"
     }
 
-    BTHandler.imprimir("<STX><ESC>C<ETX>\n" +
-            "<STX><ESC>P<ETX>\n" +
-            "<STX>E1;F1;<ETX>\n" +
-            codigoBarras +
-            "<STX>H6;f" + orientacion[1] + ";o" + posicionesEnX[2] + "," + posicionesEnY[2] + ";c26;b0;k11;d0,18;<ETX>\n" +
-            "<STX>H8;f" + orientacion[1] + ";o" + posicionesEnX[3] + "," + posicionesEnY[3] + ";c26;k12;d0,10;<ETX>\n" +
-            "<STX>H5;f" + orientacion[1] + ";o" + posicionesEnX[4] + "," + posicionesEnY[4] + ";c26;b0;k11;d3,Ped:<ETX>\n" +
-            "<STX>H10;f" + orientacion[1] + ";o" + posicionesEnX[5] + "," + posicionesEnY[5] + ";c26;b0;k11;d0,8;<ETX>\n" +
-            "<STX>U31;f" + orientacion[1] + ";o" + posicionesEnX[6] + "," + posicionesEnY[6] + ";c2;w1;h1;<ETX>\n" +
-            "<STX>H26;f" + orientacion[1] + ";o" + posicionesEnX[7] + "," + posicionesEnY[7] + ";c26;b0;k6;d3,Monroe Americana<ETX>\n" +
-            "<STX>H15;f" + orientacion[1] + ";o" + posicionesEnX[8] + "," + posicionesEnY[8] + ";c26;b0;k14;d0,26;<ETX>\n" +
-            "<STX>H16;f" + orientacion[1] + ";o" + posicionesEnX[9] + "," + posicionesEnY[9] + ";c26;b0;k14;d0,26;<ETX>\n" +
-            "<STX>H25;f" + orientacion[1] + ";o" + posicionesEnX[10] + "," + posicionesEnY[10] + ";c26;b0;k12;d0,15;<ETX>\n" +
-            "<STX>H17;f" + orientacion[1] + ";o" + posicionesEnX[11] + "," + posicionesEnY[11] + ";c26;b0;k10;d0,50;<ETX>\n" +
-            "<STX>H30;f" + orientacion[1] + ";o" + posicionesEnX[12] + "," + posicionesEnY[12] + ";c26;b0;k8;d3,Bulto<ETX>\n" +
-            "<STX>H32;f" + orientacion[1] + ";o" + posicionesEnX[13] + "," + posicionesEnY[13] + ";c26;b0;k8;d3,Turno<ETX>\n" +
-            "<STX>H34;f" + orientacion[1] + ";o" + posicionesEnX[14] + "," + posicionesEnY[14] + ";c26;b0;k8;d3,Radio<ETX>\n" +
-            "<STX>H36;f" + orientacion[1] + ";o" + posicionesEnX[15] + "," + posicionesEnY[15] + ";c26;b0;k8;d3,Orden<ETX>\n" +
-            "<STX>H21;f" + orientacion[1] + ";o" + posicionesEnX[16] + "," + posicionesEnY[16] + ";c26;b0;k" + tamanioTexto + ";d0,28;<ETX>\n" +
-            "<STX>H13;f" + orientacion[1] + ";o" + posicionesEnX[17] + "," + posicionesEnY[17] + ";c26;b0;k14;d0,30;<ETX>\n" +
-            "<STX>H12;f" + orientacion[1] + ";o" + posicionesEnX[18] + "," + posicionesEnY[18] + ";c26;b0;k10;d0,10;<ETX>\n" +
-            "<STX>R<ETX>")
+    BTHandler.imprimir(
+        "<STX><ESC>C<ETX>\n" +
+                "<STX><ESC>P<ETX>\n" +
+                "<STX>E1;F1;<ETX>\n" +
+                codigoBarras +
+                "<STX>H6;f" + orientacion[1] + ";o" + posicionesEnX[2] + "," + posicionesEnY[2] + ";c26;b0;k11;d0,18;<ETX>\n" +
+                "<STX>H8;f" + orientacion[1] + ";o" + posicionesEnX[3] + "," + posicionesEnY[3] + ";c26;k12;d0,10;<ETX>\n" +
+                "<STX>H5;f" + orientacion[1] + ";o" + posicionesEnX[4] + "," + posicionesEnY[4] + ";c26;b0;k11;d3,Ped:<ETX>\n" +
+                "<STX>H10;f" + orientacion[1] + ";o" + posicionesEnX[5] + "," + posicionesEnY[5] + ";c26;b0;k11;d0,8;<ETX>\n" +
+                "<STX>U31;f" + orientacion[1] + ";o" + posicionesEnX[6] + "," + posicionesEnY[6] + ";c2;w1;h1;<ETX>\n" +
+                "<STX>H26;f" + orientacion[1] + ";o" + posicionesEnX[7] + "," + posicionesEnY[7] + ";c26;b0;k6;d3,Monroe Americana<ETX>\n" +
+                "<STX>H15;f" + orientacion[1] + ";o" + posicionesEnX[8] + "," + posicionesEnY[8] + ";c26;b0;k14;d0,26;<ETX>\n" +
+                "<STX>H16;f" + orientacion[1] + ";o" + posicionesEnX[9] + "," + posicionesEnY[9] + ";c26;b0;k14;d0,26;<ETX>\n" +
+                "<STX>H25;f" + orientacion[1] + ";o" + posicionesEnX[10] + "," + posicionesEnY[10] + ";c26;b0;k12;d0,15;<ETX>\n" +
+                "<STX>H17;f" + orientacion[1] + ";o" + posicionesEnX[11] + "," + posicionesEnY[11] + ";c26;b0;k10;d0,50;<ETX>\n" +
+                "<STX>H30;f" + orientacion[1] + ";o" + posicionesEnX[12] + "," + posicionesEnY[12] + ";c26;b0;k8;d3,Bulto<ETX>\n" +
+                "<STX>H32;f" + orientacion[1] + ";o" + posicionesEnX[13] + "," + posicionesEnY[13] + ";c26;b0;k8;d3,Turno<ETX>\n" +
+                "<STX>H34;f" + orientacion[1] + ";o" + posicionesEnX[14] + "," + posicionesEnY[14] + ";c26;b0;k8;d3,Radio<ETX>\n" +
+                "<STX>H36;f" + orientacion[1] + ";o" + posicionesEnX[15] + "," + posicionesEnY[15] + ";c26;b0;k8;d3,Orden<ETX>\n" +
+                "<STX>H21;f" + orientacion[1] + ";o" + posicionesEnX[16] + "," + posicionesEnY[16] + ";c26;b0;k" + tamanioTexto + ";d0,28;<ETX>\n" +
+                "<STX>H13;f" + orientacion[1] + ";o" + posicionesEnX[17] + "," + posicionesEnY[17] + ";c26;b0;k14;d0,30;<ETX>\n" +
+                "<STX>H12;f" + orientacion[1] + ";o" + posicionesEnX[18] + "," + posicionesEnY[18] + ";c26;b0;k10;d0,10;<ETX>\n" +
+                "<STX>R<ETX>"
+    )
 
 }
 
@@ -359,30 +355,32 @@ fun cargarFormatoPredespacho(vertical: Int, horizontal: Int,margen:Int){
         modificadorMargen = "<STX>H38;f3;o" + (475+margen + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k6;d3,.<ETX>\n"
     }
 
-    BTHandler.imprimir("<STX><ESC>C<ETX>\n" +
-            "<STX><ESC>P<ETX>\n" +
-            "<STX>E11;F11;<ETX>\n" +
-            modificadorMargen+
-            "<STX>U31;f3;o" + (475 + vertical * multiplicador) + "," + (35 + horizontal * multiplicador) + ";c2;w1;h1;<ETX>\n" +
-            "<STX>H26;f3;o" + (425 + vertical * multiplicador) + "," + (62 + horizontal * multiplicador) + ";c26;b0;k6;d3,Monroe Americana<ETX>\n" +
-            "<STX>H4;f3;o" + (465 + vertical * multiplicador) + "," + (250 + horizontal * multiplicador) + ";c26;b0;k15;d3,Ped:<ETX>\n" +
-            "<STX>H10;f3;o" + (465 + vertical * multiplicador) + "," + (345 + horizontal * multiplicador) + ";c26;b0;k15;d0,10;<ETX>\n" +
-            "<STX>H8;f3;o" + (465 + vertical * multiplicador) + "," + (570 + horizontal * multiplicador) + ";c26;b0;k12;d0,10;<ETX>n" +
-            "<STX>H17;f3;o" + (370 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k10;d0,50;<ETX>n" +
-            "<STX>H27;f3;o" + (290 + vertical * multiplicador) + "," + (55 + horizontal * multiplicador) + ";c26;b0;k7;d3,Entrega<ETX>n" +
-            "<STX>H28;f3;o" + (290 + vertical * multiplicador) + "," + (235 + horizontal * multiplicador) + ";c26;b0;k7;d3,Radio<ETX>n" +
-            "<STX>H29;f3;o" + (290 + vertical * multiplicador) + "," + (440 + horizontal * multiplicador) + ";c26;b0;k7;d3,Salida<ETX>n" +
-            "<STX>H30;f3;o" + (290 + vertical * multiplicador) + "," + (680 + horizontal * multiplicador) + ";c26;b0;k7;d3,Orden<ETX>n" +
-            "<STX>H21;f3;o" + (285 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k29;d0,30;<ETX>n" +
-            "<STX>H13;f3;o" + (160 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k12;d0,26;<ETX>n" +
-            "<STX>H15;f3;o" + (120 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k9;d0,26;<ETX>n" +
-            "<STX>H16;f3;o" + (90 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k9;d0,26;<ETX>n" +
-            "<STX>H12;f3;o" + (100 + vertical * multiplicador) + "," + (420 + horizontal * multiplicador) + ";c26;b0;k12;d0,10;<ETX>n" +
-            "<STX>H6;f3;o" + (55 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k18;d0,16;<ETX>n" +
-            "<STX>B11;f3;o" + (170 + vertical * multiplicador) + "," + (620 + horizontal * multiplicador) + ";c17,200,0;w11;h11;i1;d0,10;<ETX>n" +
-            "<STX>I11;f3;o" + (30 + vertical * multiplicador) + "," + (620 + horizontal * multiplicador) + ";c20;h1;w1;b0<ETX>n" +
-            "<STX>H25;f3;o" + (40 + vertical * multiplicador) + "," + (640 + horizontal * multiplicador) + ";c26;b0;k7;d0,30;<ETX>n" +
-            "<STX>R<ETX>")
+    BTHandler.imprimir(
+        "<STX><ESC>C<ETX>\n" +
+                "<STX><ESC>P<ETX>\n" +
+                "<STX>E11;F11;<ETX>\n" +
+                modificadorMargen +
+                "<STX>U31;f3;o" + (475 + vertical * multiplicador) + "," + (35 + horizontal * multiplicador) + ";c2;w1;h1;<ETX>\n" +
+                "<STX>H26;f3;o" + (425 + vertical * multiplicador) + "," + (62 + horizontal * multiplicador) + ";c26;b0;k6;d3,Monroe Americana<ETX>\n" +
+                "<STX>H4;f3;o" + (465 + vertical * multiplicador) + "," + (250 + horizontal * multiplicador) + ";c26;b0;k15;d3,Ped:<ETX>\n" +
+                "<STX>H10;f3;o" + (465 + vertical * multiplicador) + "," + (345 + horizontal * multiplicador) + ";c26;b0;k15;d0,10;<ETX>\n" +
+                "<STX>H8;f3;o" + (465 + vertical * multiplicador) + "," + (570 + horizontal * multiplicador) + ";c26;b0;k12;d0,10;<ETX>n" +
+                "<STX>H17;f3;o" + (370 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k10;d0,50;<ETX>n" +
+                "<STX>H27;f3;o" + (290 + vertical * multiplicador) + "," + (55 + horizontal * multiplicador) + ";c26;b0;k7;d3,Entrega<ETX>n" +
+                "<STX>H28;f3;o" + (290 + vertical * multiplicador) + "," + (235 + horizontal * multiplicador) + ";c26;b0;k7;d3,Radio<ETX>n" +
+                "<STX>H29;f3;o" + (290 + vertical * multiplicador) + "," + (440 + horizontal * multiplicador) + ";c26;b0;k7;d3,Salida<ETX>n" +
+                "<STX>H30;f3;o" + (290 + vertical * multiplicador) + "," + (680 + horizontal * multiplicador) + ";c26;b0;k7;d3,Orden<ETX>n" +
+                "<STX>H21;f3;o" + (285 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k29;d0,30;<ETX>n" +
+                "<STX>H13;f3;o" + (160 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k12;d0,26;<ETX>n" +
+                "<STX>H15;f3;o" + (120 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k9;d0,26;<ETX>n" +
+                "<STX>H16;f3;o" + (90 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k9;d0,26;<ETX>n" +
+                "<STX>H12;f3;o" + (100 + vertical * multiplicador) + "," + (420 + horizontal * multiplicador) + ";c26;b0;k12;d0,10;<ETX>n" +
+                "<STX>H6;f3;o" + (55 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k18;d0,16;<ETX>n" +
+                "<STX>B11;f3;o" + (170 + vertical * multiplicador) + "," + (620 + horizontal * multiplicador) + ";c17,200,0;w11;h11;i1;d0,10;<ETX>n" +
+                "<STX>I11;f3;o" + (30 + vertical * multiplicador) + "," + (620 + horizontal * multiplicador) + ";c20;h1;w1;b0<ETX>n" +
+                "<STX>H25;f3;o" + (40 + vertical * multiplicador) + "," + (640 + horizontal * multiplicador) + ";c26;b0;k7;d0,30;<ETX>n" +
+                "<STX>R<ETX>"
+    )
 }
 
 

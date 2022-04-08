@@ -16,7 +16,7 @@ fun PantallaControlaListadoInput(
     onClickControladorProductos: () -> Unit = {}
 ) {
     Scaffold(
-        topBar = {barraTOP()},
+        //topBar = {barraTOP()},
         content = {
             EstructuraTituloCuerpo(textoTitulo = "Seleccione origen de datos") {
                 Column(

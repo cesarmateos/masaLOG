@@ -11,9 +11,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.masalog.etiquetado.PantallaEtiquetado_Escaneado
+import com.example.masalog.configuraEtiqueta.PantallaConfiguraEtiqueta
+import com.example.masalog.configuraImpresora.PantallaConfiguraImpresora
+import com.example.masalog.configuraImpresora.PantallaConfiguraImpresoraRP4
+import com.example.masalog.configuraImpresora.PantallaConfiguraImpresoraSATO
 import com.example.masalog.etiquetado.PantallaEtiquetado_Inicio
 import com.example.masalog.ui.theme.MasaLOGTheme
+import com.example.masalog.ui.theme.MoradoMuySuave
 
 
 class MainActivity : ComponentActivity() {
@@ -26,8 +30,19 @@ class MainActivity : ComponentActivity() {
         setContent {
             MasaLOGTheme {
                 Surface(color = MaterialTheme.colors.background) {
+                    val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
+                    val scope = rememberCoroutineScope()
                     val navController = rememberNavController()
-                    MasaNavHost(navController)
+                    Scaffold(
+                        scaffoldState = scaffoldState,
+                        topBar = { barraTOP(scope = scope, scaffoldState = scaffoldState)},
+                        drawerBackgroundColor =MoradoMuySuave,
+                        drawerContent = {
+                            Drawer(scope = scope, scaffoldState = scaffoldState, navController = navController)
+                       },
+                    ) {
+                        Navegador(navController = navController)
+                    }
                 }
             }
         }
@@ -36,19 +51,14 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun MasaNavHost(navController: NavHostController,modifier: Modifier = Modifier) {
+fun Navegador(navController: NavHostController,modifier: Modifier = Modifier) {
     NavHost(
         navController = navController,
         startDestination = Pantallas.Inicio.name,
         modifier = modifier
     ) {
         composable(Pantallas.Inicio.name) {
-            PantallaInicio(
-                onClickEtiquetas = { navController.navigate(Pantallas.Etiquetas.name) },
-                onClickControladorInput = { navController.navigate(Pantallas.ControladorInput.name) },
-                onClickImpresoras = {navController.navigate(Pantallas.Impresoras.name)},
-                onClickEtiquetado = {navController.navigate(Pantallas.EtiquetadoPlantaInicio.name)}
-            )
+            PantallaInicio(navController)
         }
 
         composable(Pantallas.Etiquetas.name) {
@@ -56,10 +66,7 @@ fun MasaNavHost(navController: NavHostController,modifier: Modifier = Modifier) 
         }
 
         composable(Pantallas.Impresoras.name) {
-            PantallaConfiguraImpresora(
-                onClickConfiguraRP4 = {navController.navigate(Pantallas.ConfiguraRP4.name)},
-                onClickConfiguraSATO = {navController.navigate(Pantallas.ConfiguraSATO.name)}
-            )
+            PantallaConfiguraImpresora(navController)
         }
 
         composable(Pantallas.ConfiguraRP4.name) {
@@ -70,6 +77,10 @@ fun MasaNavHost(navController: NavHostController,modifier: Modifier = Modifier) 
             PantallaConfiguraImpresoraSATO()
         }
 
+        composable(Pantallas.EtiquetadoPlantaInicio.name) {
+            PantallaEtiquetado_Inicio(navController)
+        }
+    /*
         composable(Pantallas.ControladorInput.name){
             PantallaControlaListadoInput(
                 //onClickControladorProductos = {control -> navController.navigate(Pantallas.ControladorProductos.name+"/{control}")}
@@ -89,11 +100,6 @@ fun MasaNavHost(navController: NavHostController,modifier: Modifier = Modifier) 
             )
         }
 
-        composable(Pantallas.EtiquetadoPlantaInicio.name) {
-            PantallaEtiquetado_Inicio(
-                onClickFinEtiquetado = {navController.navigate(Pantallas.Inicio.name)}
-            )
-        }
-
+    */
     }
 }
