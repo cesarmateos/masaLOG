@@ -87,6 +87,10 @@ fun  PantallaConfiguraImpresoraSATO() {
                             Text(text="Modificar",fontSize = sizeFuente, modifier= Modifier.clickable{modificaOscuridad=true}, color = MaterialTheme.colors.secondary)
                         }
                     }
+
+                    Spacer(Modifier.size(10.dp))
+                    //Reiniciar
+                    BotonStandard(texto = "Reiniciar", onClick = {BTHandler.imprimir("DC")})
                 }
             }
 
@@ -122,9 +126,6 @@ fun cambiarConfiguracionSATO(papel: Boolean, modificaPapel: Boolean,
             tipoPapel +
             setOscuridad +
             setVelocidad +
-            "Z"+
-            "A"+
-            "*"+
             "Z"
     )
 }
