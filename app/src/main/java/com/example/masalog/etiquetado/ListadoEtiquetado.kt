@@ -55,11 +55,11 @@ object ListadoEtiquetado {
 
     fun cargarProductos(stream:String) {
 
-        var lineas = stream.lines()
+        val lineas = stream.lines()
 
         try {
             lineas.forEach {
-                var lista = it.split(";")
+                val lista = it.split(";")
                 if (lista.isNotEmpty() && lista[0]!="") {
                     val producto = Producto(lista[0].toLong(), lista[1], lista[2])
                     productos.add(producto)

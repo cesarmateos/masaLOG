@@ -24,7 +24,7 @@ fun PantallaControlaListadoInput(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
-                    elegirArchivo(onClickControladorProductos)
+                    ElegirArchivo(onClickControladorProductos)
                 }
             }
         }
@@ -33,7 +33,7 @@ fun PantallaControlaListadoInput(
 }
 
 @Composable
-private fun elegirArchivo(onClickControladorProductos: () -> Unit = {}) {
+private fun ElegirArchivo(onClickControladorProductos: () -> Unit = {}) {
     val context = LocalContext.current
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -73,12 +73,12 @@ fun construirControlProductosDesdeString(texto:String){
 
     ControlProductos.limpiar()
 
-    var lineas = texto.lines()
+    val lineas = texto.lines()
 
     print(texto)
     try {
         lineas.forEach {
-            var lista = it.split(";")
+            val lista = it.split(";")
             if (lista.isNotEmpty()){
                 val producto = ProductoComplejo(lista[0].toLong(),lista[1],lista[2],lista[3],lista[4].toInt(),lista[5])
                 ControlProductos.productos.add(producto)

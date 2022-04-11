@@ -222,7 +222,7 @@ fun TituloSeccion(texto:String){
 fun EsctructuraTituloCuerpoBoton(textoTitulo: String,
                                  textoBoton:String,
                                  onClick: () -> Unit,
-                                 cuerpo: @Composable() () -> Unit){
+                                 cuerpo: @Composable () -> Unit){
     Column{
         TituloSeccion(texto = textoTitulo)
         Row(modifier= Modifier
@@ -241,7 +241,7 @@ fun EsctructuraTituloCuerpoBoton(textoTitulo: String,
 
 @Composable
 fun EstructuraTituloCuerpo(textoTitulo: String,
-                           cuerpo: @Composable() () -> Unit){
+                           cuerpo: @Composable () -> Unit){
     Column{
         TituloSeccion(texto = textoTitulo)
         Row(modifier= Modifier.fillMaxWidth().padding(PADDING_HORIZONTAL)){

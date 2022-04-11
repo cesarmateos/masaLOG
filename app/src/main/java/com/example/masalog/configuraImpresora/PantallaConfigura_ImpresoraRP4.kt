@@ -19,9 +19,9 @@ import com.example.masalog.R
 fun  PantallaConfiguraImpresoraRP4() {
     val sizeFuente = 18.sp
 
-    var velocidadLimitada : IntLimitado by remember { mutableStateOf(IntLimitado(8,2,10)) }
-    var oscuridadLimitada : IntLimitado by remember { mutableStateOf(IntLimitado(32,1,64)) }
-    var bluetoothLimitado : IntLimitado by remember { mutableStateOf(IntLimitado(300,30,300)) }
+    val velocidadLimitada : IntLimitado by remember { mutableStateOf(IntLimitado(8,2,10)) }
+    val oscuridadLimitada : IntLimitado by remember { mutableStateOf(IntLimitado(32,1,64)) }
+    val bluetoothLimitado : IntLimitado by remember { mutableStateOf(IntLimitado(300,30,300)) }
     var modificaBluetooth : Boolean by remember{ mutableStateOf(false) }
     var modificaVelocidad: Boolean by remember { mutableStateOf(false) }
     var modificaOscuridad: Boolean by remember { mutableStateOf(false) }

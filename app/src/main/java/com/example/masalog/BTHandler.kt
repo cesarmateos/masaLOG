@@ -14,24 +14,24 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import androidx.lifecycle.MutableLiveData
 
-private const val TAG = "MainActivity"
+//private const val TAG = "MainActivity"
 
 object BTHandler {
 
 
-    var bluetoothAdapter: BluetoothAdapter? = null
-    lateinit var pairedDevices: Set<BluetoothDevice>
+    private var bluetoothAdapter: BluetoothAdapter? = null
+    private lateinit var pairedDevices: Set<BluetoothDevice>
     private var bluetoothManager: BluetoothManager? = null
-    var bluetoothSocket: BluetoothSocket? = null
+    private var bluetoothSocket: BluetoothSocket? = null
 
     var btDevice : BluetoothDevice? = null
-    var dispositivosEmparejados: MutableList<String> = mutableListOf()
+    private var dispositivosEmparejados: MutableList<String> = mutableListOf()
 
-    var existeBT: Boolean = false
+    private var existeBT: Boolean = false
 
     //Variable de estado que accederá la UI
     val estadoBT = MutableLiveData<EstadoDispositivo>()
-    val alerta = MutableLiveData<Boolean>(false)
+    val alerta = MutableLiveData(false)
 
     private var logoCargado: Boolean = false
     private var outputStream: OutputStream? = null
@@ -64,7 +64,7 @@ object BTHandler {
     }
 
     private fun evaluoConexion() : Boolean{
-        val retorno: Boolean = bluetoothSocket?.isConnected() ==true
+        val retorno: Boolean = bluetoothSocket?.isConnected ==true
 
         if (retorno){
             estadoBT.postValue(EstadoDispositivo.CONECTADO)
@@ -99,6 +99,13 @@ object BTHandler {
 
     fun dispositivos(): MutableList<String>{
         return dispositivosEmparejados
+    }
+
+    fun nombreDispositivoConectado(): String?{
+        if(existeBT && evaluoConexion()){
+            return btDevice?.name
+        }
+       return ""
     }
 
     fun imprimir(datos: String){

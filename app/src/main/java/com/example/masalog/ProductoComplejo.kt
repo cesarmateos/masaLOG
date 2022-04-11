@@ -17,7 +17,7 @@ class ProductoComplejo(
     private var contado : Int = 0
 
     fun agregar(cantidad: Int){
-        contado = contado + cantidad
+        contado += cantidad
     }
 
     fun contado(): Int{

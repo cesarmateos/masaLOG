@@ -66,13 +66,13 @@ fun Despacho(){
         .padding(PADDING_HORIZONTAL),
         horizontalAlignment = Alignment.CenterHorizontally)
     {
-        Row(){
+        Row{
             Column{
                 Row(modifier = Modifier.fillMaxWidth()){
                     Text(text="Horizontal : ", fontSize = 18.sp, style = TextStyle(fontWeight = FontWeight.Bold))
                     Text(horizontal.toString(), fontSize = 18.sp)
                 }
-                Row(){
+                Row{
                     Text(text="Vertical : ", fontSize = 18.sp, style = TextStyle(fontWeight = FontWeight.Bold))
                     Text(vertical.toString(), fontSize = 18.sp)
                 }
@@ -141,12 +141,12 @@ fun Predespacho(){
         Row(modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically){
             Column{
-                Row(){
+                Row{
                     Text(text="Horizontal : ", fontSize = 18.sp, style = TextStyle(fontWeight = FontWeight.Bold))
                     Text(horizontal.toString(), fontSize = 18.sp)
                 }
                 Spacer(modifier = Modifier.size(5.dp))
-                Row(){
+                Row{
                     Text(text="Vertical : ", fontSize = 18.sp, style = TextStyle(fontWeight = FontWeight.Bold))
                     Text(vertical.toString(), fontSize = 18.sp)
                 }
@@ -251,8 +251,8 @@ fun cargarFormatoDespacho(vertical: Int, horizontal: Int, sentidoNormal: Boolean
     var tamanioTexto = 17
     val multiplicador = 4
 
-    var matrizOpcionesX = Array(2){Array(2){IntArray(19)} }
-    var matrizOpcionesY = Array(2){Array(2){IntArray(19)} }
+    val matrizOpcionesX = Array(2){Array(2){IntArray(19)} }
+    val matrizOpcionesY = Array(2){Array(2){IntArray(19)} }
 
 
     //NORMAL - BARRAS
@@ -272,8 +272,8 @@ fun cargarFormatoDespacho(vertical: Int, horizontal: Int, sentidoNormal: Boolean
     matrizOpcionesY[1][1] = intArrayOf(750, 750, 605, 605, 605, 500, 210, 183, 605, 605, 490, 760, 730, 540, 340, 110, 760, 750, 750)
 
 
-    var modificadorPosicionX:Int
-    var modificadorPosicionY:Int
+    val modificadorPosicionX:Int
+    val modificadorPosicionY:Int
 
     var matrizDimension0 = 0
     var matrizDimension1 = 0
@@ -290,7 +290,7 @@ fun cargarFormatoDespacho(vertical: Int, horizontal: Int, sentidoNormal: Boolean
     }
 
 
-    if (BTHandler.btDevice?.name?.take(3).equals("RP4")) {
+    if (BTHandler.nombreDispositivoConectado()?.take(3).equals("RP4")) {
         tamanioTexto = 18
     }
 
@@ -384,7 +384,7 @@ fun cargarFormatoPredespacho(vertical: Int, horizontal: Int,margen:Int){
 }
 
 
-val etiquetaPack = "<STX>R<ETX> \n" +
+const val etiquetaPack = "<STX>R<ETX> \n" +
         "<STX><ESC>E1<CAN><ETX>\n" +
         "<STX><ESC>F6<DEL>Bulto 351874129<ETX>\n" +
         "<STX><ESC>F8<DEL>11/02/2021<ETX>\n" +
@@ -399,7 +399,7 @@ val etiquetaPack = "<STX>R<ETX> \n" +
         "<STX><ESC>F25<DEL>Fal. 0/ 2<ETX>\n" +
         "<STX><RS>1<ETB><FF><ETX>"
 
-val etiquetaRefrigerados = "<STX>R<ETX> \n" +
+const val etiquetaRefrigerados = "<STX>R<ETX> \n" +
         "<STX><ESC>E1<CAN><ETX>\n" +
         "<STX><ESC>F6<DEL>Etiq. de DESPACHO<ETX>\n" +
         "<STX><ESC>F8<DEL>17/03/2021<ETX>\n" +
@@ -413,7 +413,7 @@ val etiquetaRefrigerados = "<STX>R<ETX> \n" +
         "<STX><ESC>F21<DEL>0001   17/03  U7 23:40   007<ETX>\n" +
         "<STX><RS>1<ETB><FF><ETX>"
 
-val etiquetaIOMA = "<STX>R<ETX> \n" +
+const val etiquetaIOMA = "<STX>R<ETX> \n" +
         "<STX><ESC>E1<CAN><ETX>\n" +
         "<STX><ESC>F6<DEL>Etiq. de DESPACHO<ETX>\n" +
         "<STX><ESC>F8<DEL>18/03/2021<ETX>\n" +
@@ -428,7 +428,7 @@ val etiquetaIOMA = "<STX>R<ETX> \n" +
         "<STX><ESC>F25<DEL>BUSCEMI FRAN<ETX>\n" +
         "<STX><RS>1<ETB><FF><ETX>"
 
-val etiquetaPredespacho = "<STX>R<ETX>\n" +
+const val etiquetaPredespacho = "<STX>R<ETX>\n" +
         "<STX><ESC>E11<CAN><ETX>\n" +
         "<STX><ESC>F6<DEL>DESP.COPIA 734-D<ETX>\n" +
         "<STX><ESC>F8<DEL>04/11/2020<ETX>\n" +

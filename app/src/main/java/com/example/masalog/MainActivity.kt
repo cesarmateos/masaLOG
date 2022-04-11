@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     Scaffold(
                         scaffoldState = scaffoldState,
-                        topBar = { barraTOP(scope = scope, scaffoldState = scaffoldState)},
+                        topBar = { BarraTOP(scope = scope, scaffoldState = scaffoldState)},
                         drawerBackgroundColor =MoradoMuySuave,
                         drawerContent = {
                             Drawer(scope = scope, scaffoldState = scaffoldState, navController = navController)

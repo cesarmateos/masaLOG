@@ -1,10 +1,7 @@
 package com.example.masalog
 
-import android.content.Context
-import android.content.res.Resources
-import androidx.compose.foundation.BorderStroke
+
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -13,11 +10,9 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+
 
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.res.stringResource
@@ -26,7 +21,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun barraTOP(scope: CoroutineScope, scaffoldState: ScaffoldState){
+fun BarraTOP(scope: CoroutineScope, scaffoldState: ScaffoldState){
     TopAppBar (
         navigationIcon =  {
             IconButton(onClick = {  scope.launch{ scaffoldState.drawerState.open()} }) {
@@ -40,13 +35,13 @@ fun barraTOP(scope: CoroutineScope, scaffoldState: ScaffoldState){
                 contentDescription = "Masa",)
                 },
         actions = {
-            topDerecho() },
+            TopDerecho() },
         backgroundColor = Color.White
     )
 }
 
 @Composable
-fun topDerecho(){
+fun TopDerecho(){
 
     val estado: EstadoDispositivo? by BTHandler.estadoBT.observeAsState()
     val alerta: Boolean? by BTHandler.alerta.observeAsState()
@@ -80,7 +75,7 @@ fun topDerecho(){
                 SinImpresoraClickeable()
             }
             EstadoDispositivo.CONECTANDO -> {
-                Text("Conectando a "+BTHandler.btDevice!!.name.take(8))
+                Text("Conectando a "+ (BTHandler.nombreDispositivoConectado()?.take(8)))
                 BotonCierreBT()
             }
             EstadoDispositivo.LISTABT ->{
@@ -91,7 +86,7 @@ fun topDerecho(){
                 //BotonConectar(btHandler = btHandler, posicion= posicionSeleccion)
             }
             EstadoDispositivo.CONECTADO ->{
-                Text(BTHandler.btDevice!!.name.take(8))
+                BTHandler.nombreDispositivoConectado()?.let { Text(it.take(8)) }
                 BotonCierreBT()
             }
         }

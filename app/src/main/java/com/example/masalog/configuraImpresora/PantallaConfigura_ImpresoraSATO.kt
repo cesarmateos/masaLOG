@@ -19,8 +19,8 @@ import com.example.masalog.R
 fun  PantallaConfiguraImpresoraSATO() {
     val sizeFuente = 18.sp
 
-    var velocidadLimitada: IntLimitado by remember { mutableStateOf(IntLimitado(6, 1, 10)) }
-    var oscuridadLimitada: IntLimitado by remember { mutableStateOf(IntLimitado(5, 1, 10)) }
+    val velocidadLimitada: IntLimitado by remember { mutableStateOf(IntLimitado(6, 1, 10)) }
+    val oscuridadLimitada: IntLimitado by remember { mutableStateOf(IntLimitado(5, 1, 10)) }
     var modificaPapel: Boolean by remember { mutableStateOf(false) }
     var modificaVelocidad: Boolean by remember { mutableStateOf(false) }
     var modificaOscuridad: Boolean by remember { mutableStateOf(false) }

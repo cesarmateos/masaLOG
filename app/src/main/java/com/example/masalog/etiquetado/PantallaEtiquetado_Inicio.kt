@@ -104,7 +104,7 @@ fun PantallaEtiquetado_Inicio(navController: NavHostController) {
 
                 }
                 //Boton Carga CSV
-                elegirArchivoEtiquetado(
+                ElegirArchivoEtiquetado(
                     archivoCargado = archivo,
                     modificaArchivoCargado = { archivo = it }
                 )
@@ -116,7 +116,7 @@ fun PantallaEtiquetado_Inicio(navController: NavHostController) {
 
 
 @Composable
-private fun elegirArchivoEtiquetado(archivoCargado:Boolean,
+private fun ElegirArchivoEtiquetado(archivoCargado:Boolean,
                                     modificaArchivoCargado: (Boolean)->Unit = {}) {
     val context = LocalContext.current
     val launcher = rememberLauncherForActivityResult(
