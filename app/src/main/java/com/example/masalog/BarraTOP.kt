@@ -1,6 +1,5 @@
 package com.example.masalog
 
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,8 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-
-
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.res.stringResource
 import kotlinx.coroutines.CoroutineScope
@@ -30,9 +27,11 @@ fun BarraTOP(scope: CoroutineScope, scaffoldState: ScaffoldState){
                           },
 
         title = {
-            Image(
-                painterResource(R.drawable.logo),
-                contentDescription = "Masa",)
+            Row(Modifier.padding(5.dp)){
+                Image(
+                    painterResource(R.drawable.logo_grande),
+                    contentDescription = "Masa",)
+            }
                 },
         actions = {
             TopDerecho() },
@@ -79,11 +78,7 @@ fun TopDerecho(){
                 BotonCierreBT()
             }
             EstadoDispositivo.LISTABT ->{
-                //val lista = btHandler.dispositivos()
-                //var posicionSeleccion by rememberSaveable { mutableStateOf(-1)}
-                //SelectorDispositivo(dispositivos = lista,posicion = posicionSeleccion, cambiaPosicion = {posicionSeleccion = it})
                 SelectorDispositivo()
-                //BotonConectar(btHandler = btHandler, posicion= posicionSeleccion)
             }
             EstadoDispositivo.CONECTADO ->{
                 BTHandler.nombreDispositivoConectado()?.let { Text(it.take(8)) }
@@ -117,9 +112,7 @@ fun SinImpresoraClickeable(){
 
 @Composable
 fun SelectorDispositivo(){
-//fun SelectorDispositivo(dispositivos: MutableList<String>,posicion: Int, cambiaPosicion: (Int)-> Unit){
     var listaActiva by remember{mutableStateOf(false)}
-    //var elegido by remember{mutableStateOf("Seleccionar")}
     var elegido = "Seleccionar"
     val dispositivos = BTHandler.dispositivos()
 

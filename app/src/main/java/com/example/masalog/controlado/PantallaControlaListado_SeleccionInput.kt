@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.example.masalog.controlado.ControlProductos
+import com.example.masalog.controlado.ProductoComplejo
 import java.nio.charset.StandardCharsets
 
 @Composable

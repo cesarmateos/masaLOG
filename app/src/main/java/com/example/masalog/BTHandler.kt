@@ -14,10 +14,10 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import androidx.lifecycle.MutableLiveData
 
-//private const val TAG = "MainActivity"
+
+private const val TAG = "MainActivity"
 
 object BTHandler {
-
 
     private var bluetoothAdapter: BluetoothAdapter? = null
     private lateinit var pairedDevices: Set<BluetoothDevice>
@@ -102,7 +102,7 @@ object BTHandler {
     }
 
     fun nombreDispositivoConectado(): String?{
-        if(existeBT && evaluoConexion()){
+        if(estadoBT.value == EstadoDispositivo.CONECTADO || estadoBT.value == EstadoDispositivo.CONECTANDO ){
             return btDevice?.name
         }
        return ""
@@ -123,16 +123,19 @@ object BTHandler {
 
     fun conectar(posicion: Int){
         if(existeBT){
+            estadoBT.postValue(EstadoDispositivo.CONECTANDO)
+
             logoCargado = false
             btDevice = pairedDevices.elementAt(posicion)
+
             GlobalScope.launch (Dispatchers.Main) {
                 if(outputStream == null) {
-                    estadoBT.postValue(EstadoDispositivo.CONECTANDO)
                     outputStream = connect(btDevice!!)?.also {
                         estadoBT.postValue(EstadoDispositivo.CONECTADO)
                     }
                 }
             }
+
         }
     }
 

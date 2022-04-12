@@ -3,7 +3,6 @@ package com.example.masalog.controlado
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import com.example.masalog.BTHandler
-import com.example.masalog.ProductoComplejo
 import com.example.masalog.devolverListaConMatchCodigoBarras
 import java.util.*
 

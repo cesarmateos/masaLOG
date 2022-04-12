@@ -48,6 +48,16 @@ fun BotonStandard(texto: String, onClick: () -> Unit){
 }
 
 @Composable
+fun BotonColor(texto: String, onClick: () -> Unit, colors: ButtonColors){
+    Button(onClick =  onClick,
+        modifier = Modifier.fillMaxWidth(),
+        colors = colors){
+        Text(text= texto,fontSize = 18.sp)
+    }
+}
+
+
+@Composable
 fun Flechita(intLimitado: IntLimitado, intMostrable: Int, rotacion: Float, onClick: (Int) -> Unit, operacion: (IntLimitado)-> Unit){
     Button(onClick = { operacion(intLimitado)
                      onClick(intLimitado.valor)

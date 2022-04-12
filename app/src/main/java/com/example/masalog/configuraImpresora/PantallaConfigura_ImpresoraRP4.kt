@@ -1,10 +1,8 @@
 package com.example.masalog.configuraImpresora
 
-
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -13,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.masalog.*
 import com.example.masalog.R
+import com.example.masalog.ui.theme.Naranja
 
 
 @Composable
@@ -21,28 +20,65 @@ fun  PantallaConfiguraImpresoraRP4() {
 
     val velocidadLimitada : IntLimitado by remember { mutableStateOf(IntLimitado(8,2,10)) }
     val oscuridadLimitada : IntLimitado by remember { mutableStateOf(IntLimitado(32,1,64)) }
+    val calorLimitado : IntLimitado by remember { mutableStateOf(IntLimitado(15,1,30)) }
     val bluetoothLimitado : IntLimitado by remember { mutableStateOf(IntLimitado(300,30,300)) }
     var modificaBluetooth : Boolean by remember{ mutableStateOf(false) }
     var modificaVelocidad: Boolean by remember { mutableStateOf(false) }
+    var modificaCalor: Boolean by remember { mutableStateOf(false) }
     var modificaOscuridad: Boolean by remember { mutableStateOf(false) }
     var bluetooth: Int by remember { mutableStateOf(bluetoothLimitado.valor) }
     var velocidad: Int by remember { mutableStateOf(velocidadLimitada.valor) }
+    var calor: Int by remember{ mutableStateOf(calorLimitado.valor)}
     var oscuridad: Int by remember { mutableStateOf(oscuridadLimitada.valor) }
+    val alertaAbierto = remember { mutableStateOf(false)}
 
     EsctructuraTituloCuerpoBoton(
         textoTitulo = "Configurar Honeywell RP4",
         textoBoton = stringResource(R.string.envia_configuracion),
         onClick = {
-            cambiarConfiguracionRP4(
-                bluetooth,
-                modificaBluetooth,
-                oscuridad,
-                modificaOscuridad,
-                velocidad,
-                modificaVelocidad
-            )
+            if(calor>19){
+                alertaAbierto.value = true
+            }else{
+                    cambiarConfiguracionRP4(
+                        bluetooth,
+                        modificaBluetooth,
+                        oscuridad,
+                        modificaOscuridad,
+                        calor,
+                        modificaCalor,
+                        velocidad,
+                        modificaVelocidad
+                    )
+            }
         })
     {
+
+
+
+        //ALERTA DE IMPRESORA DESCONECTADA
+        if(alertaAbierto.value){
+            AlertDialog(onDismissRequest = { alertaAbierto.value = false},
+                title = { Text(text = "Alerta Calor") },
+                text = { Text(text= stringResource(R.string.alerta_calor)) },
+                confirmButton = {
+                    BotonColor(texto = stringResource(R.string.envia_configuracion),
+                        onClick = {cambiarConfiguracionRP4(
+                                    bluetooth,
+                                    modificaBluetooth,
+                                    oscuridad,
+                                    modificaOscuridad,
+                                    calor,
+                                    modificaCalor,
+                                    velocidad,
+                                    modificaVelocidad)},
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Naranja)
+                    )
+                },
+                dismissButton = {
+                    BotonStandard(texto = "No enviar", onClick = {alertaAbierto.value = false})
+                }
+            )
+        }
 
         Column { //COLUMNA GENERAL
 
@@ -151,16 +187,52 @@ fun  PantallaConfiguraImpresoraRP4() {
                     )
                 }
             }
+            Spacer(Modifier.size(10.dp))
+            //Calor
+            Row(
+                modifier = Modifier.padding(horizontal = 10.dp, vertical = 3.dp),
+                verticalAlignment = Alignment.CenterVertically
+            )
+            {
+                Text(text = "Calor:", fontSize = sizeFuente)
+                Spacer(Modifier.size(10.dp))
+                if (modificaCalor) {
+                    Text(text = calor.toString().padStart(2, '0'), fontSize = sizeFuente)
+                    Spacer(modifier = Modifier.size(20.dp))
+                    Flechita(
+                        intLimitado = calorLimitado,
+                        intMostrable = calor,
+                        rotacion = 0f,
+                        onClick = { calor = it },
+                        operacion = { a: IntLimitado -> a.restar(1) })
+                    Spacer(modifier = Modifier.size(10.dp))
+                    Flechita(
+                        intLimitado = calorLimitado,
+                        intMostrable = calor,
+                        rotacion = 180f,
+                        onClick = { calor = it },
+                        operacion = { a: IntLimitado -> a.sumar(1) })
+                } else {
+                    Text(
+                        text = "Modificar",
+                        fontSize = sizeFuente,
+                        modifier = Modifier.clickable { modificaCalor = true },
+                        color = MaterialTheme.colors.secondary
+                    )
+                }
+            }
         }
     }
 }
 
 fun cambiarConfiguracionRP4(bluetooth: Int, modificaBluetooth: Boolean,
                              oscuridad: Int, modificaOscuridad:Boolean,
+                             calor: Int, modificaCalor:Boolean,
                              velocidad: Int, modificaVelcoidad:Boolean){
     var setBluetooth = ""
     var setVelocidad = ""
     var setOscuridad = ""
+    var setCalor = ""
 
     if (modificaBluetooth){
         setBluetooth = "BT[9," + bluetooth.toString() + ":];"
@@ -168,6 +240,10 @@ fun cambiarConfiguracionRP4(bluetooth: Int, modificaBluetooth: Boolean,
 
     if (modificaOscuridad){
         setOscuridad = "DK" + oscuridad.toString() + ";"
+    }
+
+    if (modificaCalor){
+        setCalor = "HE" + calor.toString() + ";"
     }
 
     if (modificaVelcoidad){
@@ -191,6 +267,7 @@ fun cambiarConfiguracionRP4(bluetooth: Int, modificaBluetooth: Boolean,
         "Kc" +
                 setBluetooth +
                 setOscuridad +
+                setCalor +
                 setVelocidad + "\n"
     )
 }

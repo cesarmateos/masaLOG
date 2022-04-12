@@ -16,6 +16,7 @@ import com.example.masalog.configuraImpresora.PantallaConfiguraImpresora
 import com.example.masalog.configuraImpresora.PantallaConfiguraImpresoraRP4
 import com.example.masalog.configuraImpresora.PantallaConfiguraImpresoraSATO
 import com.example.masalog.etiquetado.PantallaEtiquetado_Inicio
+import com.example.masalog.ui.theme.GrisPurple
 import com.example.masalog.ui.theme.MasaLOGTheme
 import com.example.masalog.ui.theme.MoradoMuySuave
 
@@ -36,7 +37,7 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         scaffoldState = scaffoldState,
                         topBar = { BarraTOP(scope = scope, scaffoldState = scaffoldState)},
-                        drawerBackgroundColor =MoradoMuySuave,
+                        drawerBackgroundColor = GrisPurple,
                         drawerContent = {
                             Drawer(scope = scope, scaffoldState = scaffoldState, navController = navController)
                        },

@@ -1,4 +1,4 @@
-package com.example.masalog
+package com.example.masalog.etiquetado
 
 class Producto(initCodigoBarras: Long,
                initLocalizador:String,

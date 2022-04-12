@@ -1,4 +1,4 @@
-package com.example.masalog
+package com.example.masalog.controlado
 
 class ProductoComplejo(
     initCodigoBarras: Long,

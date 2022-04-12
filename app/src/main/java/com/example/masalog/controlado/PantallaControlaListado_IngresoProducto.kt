@@ -25,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.masalog.controlado.ControlProductos
+import com.example.masalog.controlado.ProductoComplejo
 import com.example.masalog.ui.theme.GrisOscuro
 import com.example.masalog.ui.theme.MoradoMuySuave
 import com.example.masalog.ui.theme.NaranjaMuySuave
@@ -174,7 +175,7 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
 }
 
 
-fun imprimirEtiquetaRecepcion(productoComplejo:ProductoComplejo, cantidad:Int){
+fun imprimirEtiquetaRecepcion(productoComplejo: ProductoComplejo, cantidad:Int){
     val etiqueta = "<STX><ESC>C<ETX>\n" +
             "<STX><ESC>P<ETX>\n" +
             "<STX>E22;F22;<ETX>      \n" +

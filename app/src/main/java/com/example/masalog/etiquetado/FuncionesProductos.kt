@@ -1,5 +1,7 @@
 package com.example.masalog
 
+import com.example.masalog.controlado.ProductoComplejo
+
 fun buscarProductoEnLista(codigo: Long, lote: String, lista: MutableList<ProductoComplejo>): ProductoComplejo? {
     val iterador = lista.listIterator()
 

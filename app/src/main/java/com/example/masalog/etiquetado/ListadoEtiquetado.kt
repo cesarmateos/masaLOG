@@ -1,7 +1,6 @@
 package com.example.masalog.etiquetado
 
 import com.example.masalog.BTHandler
-import com.example.masalog.Producto
 
 object ListadoEtiquetado {
     val productos = mutableListOf<Producto>()
