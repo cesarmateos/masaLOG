@@ -27,7 +27,7 @@ fun BarraTOP(scope: CoroutineScope, scaffoldState: ScaffoldState){
                           },
 
         title = {
-            Row(Modifier.padding(5.dp)){
+            Row(Modifier.padding(vertical=8.dp)){
                 Image(
                     painterResource(R.drawable.logo_grande),
                     contentDescription = "Masa",)

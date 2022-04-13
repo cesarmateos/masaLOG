@@ -6,6 +6,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -20,7 +21,7 @@ fun  PantallaConfiguraImpresoraRP4() {
 
     val velocidadLimitada : IntLimitado by remember { mutableStateOf(IntLimitado(8,2,10)) }
     val oscuridadLimitada : IntLimitado by remember { mutableStateOf(IntLimitado(32,1,64)) }
-    val calorLimitado : IntLimitado by remember { mutableStateOf(IntLimitado(15,1,30)) }
+    val calorLimitado : IntLimitado by remember { mutableStateOf(IntLimitado(15,1,20)) }
     val bluetoothLimitado : IntLimitado by remember { mutableStateOf(IntLimitado(300,30,300)) }
     var modificaBluetooth : Boolean by remember{ mutableStateOf(false) }
     var modificaVelocidad: Boolean by remember { mutableStateOf(false) }
@@ -36,7 +37,7 @@ fun  PantallaConfiguraImpresoraRP4() {
         textoTitulo = "Configurar Honeywell RP4",
         textoBoton = stringResource(R.string.envia_configuracion),
         onClick = {
-            if(calor>19){
+            if(calor>15){
                 alertaAbierto.value = true
             }else{
                     cambiarConfiguracionRP4(
@@ -58,7 +59,7 @@ fun  PantallaConfiguraImpresoraRP4() {
         //ALERTA DE IMPRESORA DESCONECTADA
         if(alertaAbierto.value){
             AlertDialog(onDismissRequest = { alertaAbierto.value = false},
-                title = { Text(text = "Alerta Calor") },
+                title = { Text(text = "Alerta Calor", color = Color.Red) },
                 text = { Text(text= stringResource(R.string.alerta_calor)) },
                 confirmButton = {
                     BotonColor(texto = stringResource(R.string.envia_configuracion),

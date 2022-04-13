@@ -13,32 +13,20 @@ import androidx.navigation.NavHostController
 fun PantallaInicio(navController: NavHostController ) {
 
     EstructuraTituloCuerpo(textoTitulo = "Seleccione una tarea") {
-        Column{
-            Row(modifier= Modifier
-                .fillMaxWidth()
-                .weight(1.0f)){
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ){
-                    BotonStandard("Configurar Impresora") { navController.navigate(Pantallas.Impresoras.name) }
-                    Spacer(Modifier.size(PADDING_HORIZONTAL))
-                    BotonStandard("Configurar Etiquetas") { navController.navigate((Pantallas.Etiquetas.name)) }
-                    Spacer(Modifier.size(PADDING_HORIZONTAL))
-                            //BotonStandard("Controlador",onClickControladorInput)
-                            //Spacer(Modifier.size(PADDING_HORIZONTAL))
-                    BotonStandard("Etiquetado desde Archivo") { navController.navigate(Pantallas.EtiquetadoPlantaInicio.name) }
-                    //Spacer(Modifier.size(PADDING_HORIZONTAL))
-                            //BotonStandard(texto = "Etiquetas Varias", onClick = {})
-                }
-            }
-            Row(modifier=Modifier.fillMaxWidth()) {
-                Text(text= stringResource(R.string.app_name_version),
-                    textAlign = TextAlign.End,
-                    modifier= Modifier.fillMaxWidth())
-            }
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            BotonStandard("Configurar Impresora") { navController.navigate(Pantallas.Impresoras.name) }
+            Spacer(Modifier.size(PADDING_HORIZONTAL))
+            BotonStandard("Configurar Etiquetas") { navController.navigate((Pantallas.Etiquetas.name)) }
+            Spacer(Modifier.size(PADDING_HORIZONTAL))
+            //BotonStandard("Controlador",onClickControladorInput)
+            //Spacer(Modifier.size(PADDING_HORIZONTAL))
+            BotonStandard("Etiquetado desde Archivo") { navController.navigate(Pantallas.EtiquetadoPlantaInicio.name) }
+            //Spacer(Modifier.size(PADDING_HORIZONTAL))
+            //BotonStandard(texto = "Etiquetas Varias", onClick = {})
         }
-
     }
 }
