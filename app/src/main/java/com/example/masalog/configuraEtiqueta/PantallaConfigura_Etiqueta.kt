@@ -386,15 +386,15 @@ fun cargarFormatoPredespacho(vertical: Int, horizontal: Int,margen:Int){
 
 const val etiquetaPack = "<STX>R<ETX> \n" +
         "<STX><ESC>E1<CAN><ETX>\n" +
-        "<STX><ESC>F6<DEL>Bulto 351874129<ETX>\n" +
-        "<STX><ESC>F8<DEL>11/02/2021<ETX>\n" +
+        "<STX><ESC>F6<DEL>Bulto Numero<ETX>\n" +
+        "<STX><ESC>F8<DEL>Fecha_Hoy<ETX>\n" +
         "<STX><ESC>F10<DEL>1<ETX>\n" +
-        "<STX><ESC>F11<DEL>09663168<ETX>\n" +
-        "<STX><ESC>F12<DEL>( 5113101)<ETX>\n" +
-        "<STX><ESC>F13<DEL>FCIA. NOBEL ESPERANZA<ETX>\n" +
-        "<STX><ESC>F15<DEL>TAFIROL 500MG                <ETX>\n" +
-        "<STX><ESC>F16<DEL>EXHIB. X10X40 BLISTERS<ETX>\n" +
-        "<STX><ESC>F17<DEL>2   (Desc  1) [ #E1C16]<ETX>\n" +
+        "<STX><ESC>F11<DEL>66666666<ETX>\n" +
+        "<STX><ESC>F12<DEL>(ID_CLIE)<ETX>\n" +
+        "<STX><ESC>F13<DEL>ETIQUETA EJEMPLO PACK<ETX>\n" +
+        "<STX><ESC>F15<DEL>NOMBRE PRODUCTO               <ETX>\n" +
+        "<STX><ESC>F16<DEL>PRESENTACION PRODUCTO<ETX>\n" +
+        "<STX><ESC>F17<DEL>2   (Desc  1) [LOCALIZ]<ETX>\n" +
         "<STX><ESC>F21<DEL>0001   11/02  A1 14:10   025<ETX>\n" +
         "<STX><ESC>F25<DEL>Fal. 0/ 2<ETX>\n" +
         "<STX><RS>1<ETB><FF><ETX>"
@@ -402,13 +402,13 @@ const val etiquetaPack = "<STX>R<ETX> \n" +
 const val etiquetaRefrigerados = "<STX>R<ETX> \n" +
         "<STX><ESC>E1<CAN><ETX>\n" +
         "<STX><ESC>F6<DEL>Etiq. de DESPACHO<ETX>\n" +
-        "<STX><ESC>F8<DEL>17/03/2021<ETX>\n" +
-        "<STX><ESC>F10<DEL>1169<ETX>\n" +
-        "<STX><ESC>F11<DEL>0351014150<ETX>\n" +
-        "<STX><ESC>F12<DEL>( 1472101)<ETX>\n" +
-        "<STX><ESC>F13<DEL>DESCALZI <ETX>\n" +
-        "<STX><ESC>F15<DEL>Estrada 2500              <ETX>\n" +
-        "<STX><ESC>F16<DEL>Villa Maipu<ETX>\n" +
+        "<STX><ESC>F8<DEL>Fecha_Hoy<ETX>\n" +
+        "<STX><ESC>F10<DEL>0000<ETX>\n" +
+        "<STX><ESC>F11<DEL>9999999999<ETX>\n" +
+        "<STX><ESC>F12<DEL>(ID_CLIE)<ETX>\n" +
+        "<STX><ESC>F13<DEL>FARMACIA <ETX>\n" +
+        "<STX><ESC>F15<DEL>Etiqueta Ejemplo<ETX>\n" +
+        "<STX><ESC>F16<DEL>Refrigerados<ETX>\n" +
         "<STX><ESC>F17<DEL>***PRODUCTOS A REFRIGERAR ENTRE 2 y 8 GRADOS<ETX>\n" +
         "<STX><ESC>F21<DEL>0001   17/03  U7 23:40   007<ETX>\n" +
         "<STX><RS>1<ETB><FF><ETX>"
@@ -416,28 +416,28 @@ const val etiquetaRefrigerados = "<STX>R<ETX> \n" +
 const val etiquetaIOMA = "<STX>R<ETX> \n" +
         "<STX><ESC>E1<CAN><ETX>\n" +
         "<STX><ESC>F6<DEL>Etiq. de DESPACHO<ETX>\n" +
-        "<STX><ESC>F8<DEL>18/03/2021<ETX>\n" +
-        "<STX><ESC>F10<DEL>1871<ETX>\n" +
-        "<STX><ESC>F11<DEL>0351020723<ETX>\n" +
+        "<STX><ESC>F8<DEL>Fecha_Hoy<ETX>\n" +
+        "<STX><ESC>F10<DEL>0000<ETX>\n" +
+        "<STX><ESC>F11<DEL>5555555555<ETX>\n" +
         "<STX><ESC>F12<DEL>( INIO)<ETX>\n" +
-        "<STX><ESC>F13<DEL>AMARTINO<ETX>\n" +
-        "<STX><ESC>F15<DEL>O ROARKE 2408<ETX>\n" +
-        "<STX><ESC>F16<DEL>BARADERO<ETX>\n" +
+        "<STX><ESC>F13<DEL>FARMACIA<ETX>\n" +
+        "<STX><ESC>F15<DEL>Direccion  <ETX>\n" +
+        "<STX><ESC>F16<DEL>Localidad<ETX>\n" +
         "<STX><ESC>F17<DEL>*                             <ETX>\n" +
         "<STX><ESC>F21<DEL>0001   18/03  V2 23:58   002<ETX>\n" +
-        "<STX><ESC>F25<DEL>BUSCEMI FRAN<ETX>\n" +
+        "<STX><ESC>F25<DEL>ETIQUETA IOMA<ETX>\n" +
         "<STX><RS>1<ETB><FF><ETX>"
 
 const val etiquetaPredespacho = "<STX>R<ETX>\n" +
         "<STX><ESC>E11<CAN><ETX>\n" +
-        "<STX><ESC>F6<DEL>DESP.COPIA 734-D<ETX>\n" +
-        "<STX><ESC>F8<DEL>04/11/2020<ETX>\n" +
-        "<STX><ESC>F10<DEL>125@#<ETX>\n" +
-        "<STX><ESC>F11<DEL>0408017097<ETX>\n" +
-        "<STX><ESC>F12<DEL>(2676901)<ETX>\n" +
-        "<STX><ESC>F17<DEL>Bul: 001 Fmbx.=200692  Doc.=FC 1116-05939381<ETX>\n" +
-        "<STX><ESC>F15<DEL>Av. Mitre 2471<ETX>\n" +
-        "<STX><ESC>F16<DEL>Avellaneda<ETX>\n" +
-        "<STX><ESC>F13<DEL>FCIA ANTIGUA POZUELO SCS <ETX>\n" +
+        "<STX><ESC>F6<DEL>DESP.COPIA NNN-D<ETX>\n" +
+        "<STX><ESC>F8<DEL>Fecha_Hoy<ETX>\n" +
+        "<STX><ESC>F10<DEL>Pedido<ETX>\n" +
+        "<STX><ESC>F11<DEL>4444444444<ETX>\n" +
+        "<STX><ESC>F12<DEL>(ID_CLIE)<ETX>\n" +
+        "<STX><ESC>F17<DEL>Bul: NUM Fmbx.=NUMERO  Doc.=NUMERO FACTURA<ETX>\n" +
+        "<STX><ESC>F15<DEL>Direccion Farmacia<ETX>\n" +
+        "<STX><ESC>F16<DEL>Localidad<ETX>\n" +
+        "<STX><ESC>F13<DEL>ETIQUETA EJEMPLO PREDESPACHO<ETX>\n" +
         "<STX><ESC>F21<DEL>01  A5 13:20  22<ETX>\n" +
         "<STX><RS>1<ETB><FF><ETX>"
