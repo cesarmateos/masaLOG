@@ -56,7 +56,7 @@ fun  PantallaConfiguraImpresoraRP4() {
 
 
 
-        //ALERTA DE IMPRESORA DESCONECTADA
+        //ALERTA CALOR
         if(alertaAbierto.value){
             AlertDialog(onDismissRequest = { alertaAbierto.value = false},
                 title = { Text(text = "Alerta Calor", color = Color.Red) },
@@ -71,7 +71,9 @@ fun  PantallaConfiguraImpresoraRP4() {
                                     calor,
                                     modificaCalor,
                                     velocidad,
-                                    modificaVelocidad)},
+                                    modificaVelocidad)
+                                    alertaAbierto.value = false
+                                  },
                         colors = ButtonDefaults.buttonColors(backgroundColor = Naranja)
                     )
                 },
