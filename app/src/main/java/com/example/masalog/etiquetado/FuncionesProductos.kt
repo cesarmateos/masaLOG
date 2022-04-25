@@ -1,4 +1,4 @@
-package com.example.masalog
+package com.example.masalog.etiquetado
 
 import com.example.masalog.controlado.ProductoComplejo
 

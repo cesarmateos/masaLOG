@@ -127,7 +127,6 @@ fun SelectorDispositivo(){
                         DropdownMenuItem(onClick = {
                             listaActiva = false
                             elegido = dispositivo
-                            //cambiaPosicion(index)
                             BTHandler.conectar(index)
                         }) {
                             Text(text = dispositivo)

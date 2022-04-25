@@ -85,7 +85,7 @@ fun  PantallaConfiguraImpresoraRP4() {
 
         Column { //COLUMNA GENERAL
 
-            //Blootooth
+            //Bluetooth
             Row(
                 modifier = Modifier.padding(horizontal = 10.dp, vertical = 3.dp),
                 verticalAlignment = Alignment.CenterVertically
@@ -229,27 +229,27 @@ fun  PantallaConfiguraImpresoraRP4() {
 }
 
 fun cambiarConfiguracionRP4(bluetooth: Int, modificaBluetooth: Boolean,
-                             oscuridad: Int, modificaOscuridad:Boolean,
-                             calor: Int, modificaCalor:Boolean,
-                             velocidad: Int, modificaVelcoidad:Boolean){
+                            oscuridad: Int, modificaOscuridad:Boolean,
+                            calor: Int, modificaCalor:Boolean,
+                            velocidad: Int, modificaVelocidad:Boolean){
     var setBluetooth = ""
     var setVelocidad = ""
     var setOscuridad = ""
     var setCalor = ""
 
     if (modificaBluetooth){
-        setBluetooth = "BT[9," + bluetooth.toString() + ":];"
+        setBluetooth = "BT[9,$bluetooth:];"
     }
 
     if (modificaOscuridad){
-        setOscuridad = "DK" + oscuridad.toString() + ";"
+        setOscuridad = "DK$oscuridad;"
     }
 
     if (modificaCalor){
-        setCalor = "HE" + calor.toString() + ";"
+        setCalor = "HE$calor;"
     }
 
-    if (modificaVelcoidad){
+    if (modificaVelocidad){
         var velocidadCHAR = ""
         when (velocidad.toFloat()/2) {
             1.0f -> velocidadCHAR = "A"
@@ -262,7 +262,7 @@ fun cambiarConfiguracionRP4(bluetooth: Int, modificaBluetooth: Boolean,
             4.5f -> velocidadCHAR = "H"
             5.0f -> velocidadCHAR = "I"
         }
-      setVelocidad = "pS" + velocidadCHAR + ";"
+      setVelocidad = "pS$velocidadCHAR;"
     }
 
 

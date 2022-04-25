@@ -147,8 +147,8 @@ fun  PantallaConfiguraImpresoraSATO() {
 }
 
 fun cambiarConfiguracionSATO(papel: Boolean, modificaPapel: Boolean,
-                            oscuridad: Int, modificaOscuridad:Boolean,
-                            velocidad: Int, modificaVelcoidad:Boolean){
+                             oscuridad: Int, modificaOscuridad:Boolean,
+                             velocidad: Int, modificaVelocidad:Boolean){
     var tipoPapel = ""
     var setVelocidad = ""
     var setOscuridad = ""
@@ -162,11 +162,11 @@ fun cambiarConfiguracionSATO(papel: Boolean, modificaPapel: Boolean,
     }
 
     if (modificaOscuridad){
-        setOscuridad = "#F" + oscuridad.toString()
+        setOscuridad = "#F$oscuridad"
     }
 
-    if (modificaVelcoidad){
-        setVelocidad = "CS" + velocidad.toString()
+    if (modificaVelocidad){
+        setVelocidad = "CS$velocidad"
     }
 
 
