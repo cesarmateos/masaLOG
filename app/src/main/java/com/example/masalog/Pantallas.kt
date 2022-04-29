@@ -6,7 +6,6 @@ enum class Pantallas {
     Impresoras,
     ConfiguraSATO,
     ConfiguraRP4,
-    ControladorInput,
     ControladorProductos,
     ControladorIngreso,
     EtiquetadoPlantaInicio;
@@ -19,7 +18,6 @@ enum class Pantallas {
                 Impresoras.name -> Impresoras
                 ConfiguraSATO.name -> ConfiguraSATO
                 ConfiguraRP4.name -> ConfiguraRP4
-                ControladorInput.name -> ControladorInput
                 ControladorProductos.name -> ControladorProductos
                 ControladorIngreso.name -> ControladorIngreso
                 EtiquetadoPlantaInicio.name -> EtiquetadoPlantaInicio

@@ -15,10 +15,11 @@ import com.example.masalog.configuraEtiqueta.PantallaConfiguraEtiqueta
 import com.example.masalog.configuraImpresora.PantallaConfiguraImpresora
 import com.example.masalog.configuraImpresora.PantallaConfiguraImpresoraRP4
 import com.example.masalog.configuraImpresora.PantallaConfiguraImpresoraSATO
+import com.example.masalog.controlado.ControlProductos
+import com.example.masalog.controlado.PantallaControlaListado
 import com.example.masalog.etiquetado.PantallaEtiquetado_Inicio
 import com.example.masalog.ui.theme.GrisPurple
 import com.example.masalog.ui.theme.MasaLOGTheme
-import com.example.masalog.ui.theme.MoradoMuySuave
 
 
 class MainActivity : ComponentActivity() {
@@ -34,6 +35,7 @@ class MainActivity : ComponentActivity() {
                     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
                     val scope = rememberCoroutineScope()
                     val navController = rememberNavController()
+                    ControlProductos.asignarNavController(navController)
                     Scaffold(
                         scaffoldState = scaffoldState,
                         topBar = { BarraTOP(scope = scope, scaffoldState = scaffoldState)},
@@ -81,18 +83,9 @@ fun Navegador(navController: NavHostController,modifier: Modifier = Modifier) {
         composable(Pantallas.EtiquetadoPlantaInicio.name) {
             PantallaEtiquetado_Inicio(navController)
         }
-    /*
-        composable(Pantallas.ControladorInput.name){
-            PantallaControlaListadoInput(
-                //onClickControladorProductos = {control -> navController.navigate(Pantallas.ControladorProductos.name+"/{control}")}
-                onClickControladorProductos = {navController.navigate(Pantallas.ControladorProductos.name)}
-            )
-        }
 
          composable(Pantallas.ControladorProductos.name){
-             PantallaControlaListadoProductos(
-                 onClickControladorIngreso = {navController.navigate(Pantallas.ControladorIngreso.name)},
-             )
+             PantallaControlaListado(navController)
          }
 
         composable(Pantallas.ControladorIngreso.name){
@@ -101,6 +94,5 @@ fun Navegador(navController: NavHostController,modifier: Modifier = Modifier) {
             )
         }
 
-    */
     }
 }

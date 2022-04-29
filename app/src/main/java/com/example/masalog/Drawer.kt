@@ -87,6 +87,17 @@ fun Drawer(scope: CoroutineScope, scaffoldState: ScaffoldState, navController: N
                     {
                         Text(text="Etiquetado desde Archivo", color= Color.White)
                     }
+
+                    //Control
+                    Spacer(Modifier.size(espacioEntreBotones))
+                    Row(modifier= Modifier.fillMaxWidth()
+                        .background(MaterialTheme.colors.primary)
+                        .padding(horizontal = 20.dp, vertical= 10.dp)
+                        .clickable{ navController.navigate(Pantallas.ControladorProductos.name)
+                            scope.launch{ scaffoldState.drawerState.close()} })
+                    {
+                        Text(text="Control desde Archivo", color= Color.White)
+                    }
                 }
 
             }

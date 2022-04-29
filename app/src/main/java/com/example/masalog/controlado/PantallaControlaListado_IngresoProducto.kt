@@ -25,7 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.masalog.controlado.ControlProductos
-import com.example.masalog.controlado.ProductoComplejo
+import com.example.masalog.controlado.ProductoControl
 import com.example.masalog.ui.theme.GrisOscuro
 import com.example.masalog.ui.theme.MoradoMuySuave
 import com.example.masalog.ui.theme.NaranjaMuySuave
@@ -37,33 +37,21 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
     val focusRequester = remember { FocusRequester() }
     val estadoCheckBox = remember { mutableStateOf(ControlProductos.etiqueta) }
     val interlineado = 6.dp
+
     Scaffold(
-        //topBar = {barraTOP()},
         content = {
             Column(modifier= Modifier.fillMaxWidth()){
 
                 //Nombre Producto
-                ControlProductos.productoComplejoIngresado?.let { it1 -> Text(text=it1.nombre,
+                ControlProductos.productoControlIngresado?.let { it1 -> Text(text=it1.nombre,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign=TextAlign.Center,
                     modifier= Modifier.fillMaxWidth().background(NaranjaMuySuave).padding(vertical = interlineado)) }
 
                 //Código Barras
-                Text(text= ControlProductos.productoComplejoIngresado?.codigoBarras.toString(),
+                Text(text= ControlProductos.productoControlIngresado?.codigoBarras.toString(),
                     textAlign = TextAlign.End,modifier= Modifier.fillMaxWidth().padding(interlineado))
-
-                //Lote
-                Row(modifier= Modifier.fillMaxWidth()){
-                    Text(text="Lote:  ", fontWeight = FontWeight.Bold)
-                    Text(text= ControlProductos.productoComplejoIngresado?.lote.toString())
-                }
-
-                //Vencimiento
-                Row(modifier= Modifier.fillMaxWidth()) {
-                    Text(text="Vencimiento:  ", fontWeight = FontWeight.Bold)
-                    Text(text = ControlProductos.productoComplejoIngresado?.vencimiento.toString())
-                }
 
                 //Contable
                 Row(modifier= Modifier.fillMaxWidth().padding(vertical = 10.dp)){
@@ -75,7 +63,7 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
                                 .background(MoradoMuySuave)
                                 .fillMaxWidth(),
                             textAlign=TextAlign.Center)
-                        Text(text= ControlProductos.productoComplejoIngresado?.cantidad.toString(),
+                        Text(text= ControlProductos.productoControlIngresado?.cantidad.toString(),
                             modifier=Modifier.fillMaxWidth(),
                             textAlign=TextAlign.Center)
                     }
@@ -89,7 +77,7 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
                                 .fillMaxWidth(),
                             textAlign = TextAlign.Center)
                         Text(
-                            text = ControlProductos.productoComplejoIngresado?.contado().toString(),
+                            text = ControlProductos.productoControlIngresado?.contado().toString(),
                             modifier=Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Center)
                     }
@@ -104,26 +92,12 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
                             textAlign = TextAlign.Center
                         )
                         Text(
-                            text = ControlProductos.productoComplejoIngresado?.diferencia().toString(),
+                            text = ControlProductos.productoControlIngresado?.diferencia().toString(),
                             textAlign = TextAlign.Center,
                             modifier = Modifier.fillMaxWidth())
                     }
                 }
 
-                //Localizador
-                Row(modifier=Modifier
-                        .background(NaranjaMuySuave)
-                        .padding(interlineado)
-                        .fillMaxWidth(),
-
-                    verticalAlignment = Alignment.CenterVertically){
-                    ControlProductos.productoComplejoIngresado?.let { it1 -> Text(text= it1.localizador,
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign=TextAlign.Center,
-                        modifier= Modifier.fillMaxWidth()) }
-
-                }
 
                 //Input Text
                 Row(modifier= Modifier.fillMaxWidth().padding(vertical = interlineado),
@@ -175,7 +149,7 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
 }
 
 
-fun imprimirEtiquetaRecepcion(productoComplejo: ProductoComplejo, cantidad:Int){
+fun imprimirEtiquetaRecepcion(productoControl: ProductoControl, cantidad:Int){
     val etiqueta = "<STX><ESC>C<ETX>\n" +
             "<STX><ESC>P<ETX>\n" +
             "<STX>E22;F22;<ETX>      \n" +
