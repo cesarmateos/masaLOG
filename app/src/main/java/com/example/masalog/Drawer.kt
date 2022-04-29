@@ -45,7 +45,7 @@ fun Drawer(scope: CoroutineScope, scaffoldState: ScaffoldState, navController: N
                         .clickable{ navController.navigate(Pantallas.Impresoras.name)
                             scope.launch{ scaffoldState.drawerState.close()} })
                     {
-                        Text(text="Configurar Impresora", color= Color.White)
+                        Text(text=stringResource(R.string.config_impresora), color= Color.White)
                     }
                     Row(modifier= Modifier.fillMaxWidth()
                         .background(MoradoMuySuave)
@@ -53,7 +53,7 @@ fun Drawer(scope: CoroutineScope, scaffoldState: ScaffoldState, navController: N
                         .clickable{ navController.navigate(Pantallas.ConfiguraSATO.name)
                             scope.launch{ scaffoldState.drawerState.close()} })
                     {
-                        Text(text="Configurar SATO CL4NX", color= MaterialTheme.colors.primary)
+                        Text(text=stringResource(R.string.config_impresora_CL4NX), color= MaterialTheme.colors.primary)
                     }
                     Row(modifier= Modifier.fillMaxWidth()
                         .background(MoradoMuySuave)
@@ -61,7 +61,7 @@ fun Drawer(scope: CoroutineScope, scaffoldState: ScaffoldState, navController: N
                         .clickable{ navController.navigate(Pantallas.ConfiguraRP4.name)
                             scope.launch{ scaffoldState.drawerState.close()} })
                     {
-                        Text(text="Configurar Honeywell RP4", color= MaterialTheme.colors.primary)
+                        Text(text=stringResource(R.string.config_impresora_RP4), color= MaterialTheme.colors.primary)
                     }
 
 
@@ -73,7 +73,7 @@ fun Drawer(scope: CoroutineScope, scaffoldState: ScaffoldState, navController: N
                         .clickable{ navController.navigate(Pantallas.Etiquetas.name)
                             scope.launch{ scaffoldState.drawerState.close()} })
                     {
-                        Text(text="Configurar Etiquetas", color= Color.White)
+                        Text(text=stringResource(R.string.config_etiquetas), color= Color.White)
                     }
 
 
@@ -85,7 +85,7 @@ fun Drawer(scope: CoroutineScope, scaffoldState: ScaffoldState, navController: N
                         .clickable{ navController.navigate(Pantallas.EtiquetadoPlantaInicio.name)
                             scope.launch{ scaffoldState.drawerState.close()} })
                     {
-                        Text(text="Etiquetado desde Archivo", color= Color.White)
+                        Text(text=stringResource(R.string.etiquetado_archivo), color= Color.White)
                     }
 
                     //Control
@@ -96,7 +96,7 @@ fun Drawer(scope: CoroutineScope, scaffoldState: ScaffoldState, navController: N
                         .clickable{ navController.navigate(Pantallas.ControladorProductos.name)
                             scope.launch{ scaffoldState.drawerState.close()} })
                     {
-                        Text(text="Control desde Archivo", color= Color.White)
+                        Text(text=stringResource(R.string.control_archivo), color= Color.White)
                     }
                 }
 

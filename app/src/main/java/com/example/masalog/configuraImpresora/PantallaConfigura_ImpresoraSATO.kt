@@ -139,9 +139,9 @@ fun  PantallaConfiguraImpresoraSATO() {
                 }
             }
 
-            Spacer(Modifier.size(10.dp))
+            //Spacer(Modifier.size(10.dp))
             //Reiniciar
-            BotonStandard(texto = "Reiniciar", onClick = { BTHandler.imprimir("DC") })
+            //BotonStandard(texto = "Reiniciar", onClick = { BTHandler.imprimir("DC") })
         }
     }
 }

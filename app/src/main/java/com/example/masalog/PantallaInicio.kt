@@ -1,14 +1,12 @@
 package com.example.masalog
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
-import com.example.masalog.controlado.ControlProductos
-import java.nio.charset.StandardCharsets
+
 
 
 @Composable
@@ -20,15 +18,13 @@ fun PantallaInicio(navController: NavHostController ) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ){
-            BotonStandard("Configurar Impresora") { navController.navigate(Pantallas.Impresoras.name) }
+            BotonStandard(stringResource(R.string.config_impresora)) { navController.navigate(Pantallas.Impresoras.name) }
             Spacer(Modifier.size(PADDING_HORIZONTAL))
-            BotonStandard("Configurar Etiquetas") { navController.navigate((Pantallas.Etiquetas.name)) }
+            BotonStandard(stringResource(R.string.config_etiquetas)) { navController.navigate((Pantallas.Etiquetas.name)) }
             Spacer(Modifier.size(PADDING_HORIZONTAL))
-            BotonStandard("Controlador desde Archivo"){ navController.navigate((Pantallas.ControladorProductos.name)) }
+            BotonStandard(stringResource(R.string.etiquetado_archivo)) { navController.navigate(Pantallas.EtiquetadoPlantaInicio.name) }
             Spacer(Modifier.size(PADDING_HORIZONTAL))
-            BotonStandard("Etiquetado desde Archivo") { navController.navigate(Pantallas.EtiquetadoPlantaInicio.name) }
-            //Spacer(Modifier.size(PADDING_HORIZONTAL))
-            //BotonStandard(texto = "Etiquetas Varias", onClick = {})
+            BotonStandard(stringResource(R.string.control_archivo)){ navController.navigate((Pantallas.ControladorProductos.name)) }
         }
     }
 }
