@@ -288,7 +288,11 @@ fun InputTexto(onClick: (texto: String) -> Unit,keyboardType: KeyboardType){
             onValueChange = { ingresoBarras = it },
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
             keyboardActions = KeyboardActions(onDone = {
-               onClick(ingresoBarras)
+                if(ingresoBarras != ""){
+                    if(ingresoBarras.toInt() != 0 ) {
+                        onClick(ingresoBarras)
+                    }
+                }
                 ingresoBarras = ""
             }),
             enabled = true,
@@ -296,7 +300,9 @@ fun InputTexto(onClick: (texto: String) -> Unit,keyboardType: KeyboardType){
             modifier = Modifier
                 .onKeyEvent {
                     if (it.key.keyCode == Key.Enter.keyCode) {
-                        onClick(ingresoBarras.dropLast(1))
+                        if(ingresoBarras != "\n" && ingresoBarras != "0\n"){
+                            onClick(ingresoBarras.dropLast(1))
+                        }
                         ingresoBarras = ""
                     }
                     false

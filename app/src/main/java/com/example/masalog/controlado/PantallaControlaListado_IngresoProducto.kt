@@ -29,6 +29,7 @@ import com.example.masalog.controlado.ProductoControl
 import com.example.masalog.ui.theme.GrisOscuro
 import com.example.masalog.ui.theme.MoradoMuySuave
 import com.example.masalog.ui.theme.NaranjaMuySuave
+import org.intellij.lang.annotations.JdkConstants
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -47,19 +48,27 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign=TextAlign.Center,
-                    modifier= Modifier.fillMaxWidth().background(NaranjaMuySuave).padding(vertical = interlineado)) }
+                    modifier= Modifier
+                        .fillMaxWidth()
+                        .background(NaranjaMuySuave)
+                        .padding(vertical = interlineado)) }
 
                 //Código Barras
                 Text(text= ControlProductos.productoControlIngresado?.codigoBarras.toString(),
-                    textAlign = TextAlign.End,modifier= Modifier.fillMaxWidth().padding(interlineado))
+                    textAlign = TextAlign.End,
+                    modifier= Modifier.fillMaxWidth()
+                        .padding(vertical = interlineado, horizontal = PADDING_HORIZONTAL))
 
-                //Contable
-                Row(modifier= Modifier.fillMaxWidth().padding(vertical = 10.dp)){
+                //Tabla Conteos
+                Row(modifier= Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 10.dp)){
 
                     //CONTABLE
                     Column(modifier = Modifier.weight(1.0f)){
                         Text(text="Contable",
-                            modifier=Modifier.padding(2.dp)
+                            modifier= Modifier
+                                .padding(2.dp)
                                 .background(MoradoMuySuave)
                                 .fillMaxWidth(),
                             textAlign=TextAlign.Center)
@@ -72,7 +81,8 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
                     Column(modifier = Modifier.weight(1.0f)) {
                         Text(
                             text = "Contado",
-                            modifier = Modifier.padding(2.dp)
+                            modifier = Modifier
+                                .padding(2.dp)
                                 .background(MoradoMuySuave)
                                 .fillMaxWidth(),
                             textAlign = TextAlign.Center)
@@ -86,7 +96,8 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
                     Column(modifier = Modifier.weight(1.0f)) {
                         Text(
                             text = "Diferencia",
-                            modifier = Modifier.padding(2.dp)
+                            modifier = Modifier
+                                .padding(2.dp)
                                 .background(MoradoMuySuave)
                                 .fillMaxWidth(),
                             textAlign = TextAlign.Center
@@ -99,15 +110,19 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
                 }
 
 
-                //Input Text
-                Row(modifier= Modifier.fillMaxWidth().padding(vertical = interlineado),
+                //Fila Input Text
+                Row(modifier= Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = interlineado),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ){
                     Text(text="Cantidad: ")
-                    Box(modifier= Modifier.border(2.dp, GrisOscuro, RoundedCornerShape(10))
-                        .background(color= Color.White)
-                        .size(80.dp,30.dp).padding(horizontal = 5.dp)
+                    Box(modifier= Modifier
+                        .border(2.dp, GrisOscuro, RoundedCornerShape(10))
+                        .background(color = Color.White)
+                        .size(80.dp, 30.dp)
+                        .padding(horizontal = 5.dp)
                         .focusTarget(),
                         contentAlignment = Alignment.CenterStart
                     ){
@@ -123,7 +138,7 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
                             singleLine = true,
                             modifier = Modifier
                                 .onKeyEvent {
-                                    if(it.key.keyCode == Key.Enter.keyCode) {
+                                    if (it.key.keyCode == Key.Enter.keyCode) {
                                         ControlProductos.cargarCantidad(ingresoCantidad.dropLast(1))
                                         onClickControladorProductos()
                                     }
@@ -139,6 +154,16 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
                             ControlProductos.etiqueta = estadoCheckBox.value},
                         modifier= Modifier.padding(vertical = interlineado))
                 }
+
+                Spacer(Modifier.size(10.dp))
+                Row(modifier = Modifier.fillMaxWidth().padding(horizontal = PADDING_HORIZONTAL),
+                    horizontalArrangement = Arrangement.End){
+                    Button(onClick = {onClickControladorProductos() },
+                        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary )) {
+                        Text(text="Cancelar", color = Color.White, fontWeight = FontWeight.Bold)
+                    }
+                }
+
             }
         }
     )
@@ -146,18 +171,4 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
     }
-}
-
-
-fun imprimirEtiquetaRecepcion(productoControl: ProductoControl, cantidad:Int){
-    val etiqueta = "<STX><ESC>C<ETX>\n" +
-            "<STX><ESC>P<ETX>\n" +
-            "<STX>E22;F22;<ETX>      \n" +
-            "<STX>H0;o360,55;f3;c26;d0,30;k20;<ETX>\n" +
-            "<STX>H1;o260,55;f3;c26;d0,30;k17;<ETX>\n" +
-            "<STX>H2;o210,55;f3;c26;d0,30;k14;<ETX>\n" +
-            "<STX>H3;o140,55;f3;c26;d0,20;k24;<ETX>\n" +
-            "<STX>H4;o040,55;f3;c21;d0,30;k10;<ETX>\n" +
-            "<STX>R<ETX>"
-
 }
