@@ -57,10 +57,9 @@ fun PantallaControlaListado(navController: NavHostController) {
                 Spacer(modifier = Modifier.size(5.dp))
                 InputTexto(
                     onClick = { texto: String ->
-                        ControlProductos.lectura(texto)
-                    },
-                    keyboardType = KeyboardType.Number
-                )
+                        ControlProductos.lectura(texto) },
+                    keyboardType = KeyboardType.Number,
+                    largo = 140.dp)
                 Spacer(modifier = Modifier.size(30.dp))
                 Button(onClick = { ControlProductos.terminar()},
                         modifier = Modifier.height(30.dp)) {
@@ -120,7 +119,7 @@ fun PantallaControlaListado(navController: NavHostController) {
         keyboardController?.hide()
     } else { //Cargar Archivo
         EstructuraTituloCuerpo("Control Productos") {
-            Column() {
+            Column{
                 //Formato del Archivo CSV
                 Column(Modifier.weight(1.0f)) {
                     Text(
@@ -174,7 +173,7 @@ fun PantallaControlaListado(navController: NavHostController) {
 
                     //Etiqueta Producto
                     Spacer(Modifier.size(10.dp))
-                    Row(){
+                    Row{
                         Text("Etiqueta producto: ")
                         Checkbox(checked = estadoCheckBoxEtiqueta.value,
                             onCheckedChange = { estadoCheckBoxEtiqueta.value = it
@@ -183,7 +182,7 @@ fun PantallaControlaListado(navController: NavHostController) {
 
                     //Arma Bultos
                     Spacer(Modifier.size(10.dp))
-                    Row(){
+                    Row{
                         Text("Armar Bultos: ")
                         Checkbox(checked = estadoCheckBoxBultos.value,
                             onCheckedChange = { estadoCheckBoxBultos.value = it

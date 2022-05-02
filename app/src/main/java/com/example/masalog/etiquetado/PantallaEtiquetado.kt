@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun PantallaEtiquetado_Inicio(navController: NavHostController) {
+fun PantallaEtiquetadoInicio(navController: NavHostController) {
     var archivo: Boolean by remember { mutableStateOf(ListadoEtiquetado.archivoCargado) }
 
     EstructuraTituloCuerpo("Etiquetado Planta")
@@ -51,10 +51,9 @@ fun PantallaEtiquetado_Inicio(navController: NavHostController) {
                         Text("Producto:")
                         Spacer(modifier = Modifier.size(5.dp))
                         InputTexto(onClick = { texto: String ->
-                            ListadoEtiquetado.imprimeLocalizador(
-                                texto
-                            )
-                        }, keyboardType = KeyboardType.Number)
+                                    ListadoEtiquetado.imprimeLocalizador(texto) },
+                                    keyboardType = KeyboardType.Number,
+                                    140.dp)
                     }
                     Spacer(modifier = Modifier.size(10.dp))
                     BotonStandard(texto = "Terminar Etiquetado", onClick = {

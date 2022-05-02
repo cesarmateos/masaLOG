@@ -1,5 +1,6 @@
 package com.example.masalog.controlado
 
+import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat
 import androidx.navigation.NavHostController
 import com.example.masalog.BTHandler
@@ -10,11 +11,12 @@ import kotlin.math.min
 
 object ControlProductos {
     var productoControlIngresado: ProductoControl? = null
-    val productos = mutableListOf<ProductoControl>()
-    lateinit var navController : NavHostController
+    private val productos = mutableListOf<ProductoControl>()
+    @SuppressLint("StaticFieldLeak")
+    private lateinit var navController : NavHostController
     var etiqueta = true
     var crearBulto = false
-    val bulto = mutableListOf<Pair<ProductoControl?,Int>>()
+    private val bulto = mutableListOf<Pair<ProductoControl?,Int>>()
     var nroBulto = 1
     var archivoCargado = false
 
@@ -47,7 +49,7 @@ object ControlProductos {
         if (encontrado != null){
             productoControlIngresado = encontrado
         }else{
-            val productoDesconocido = ProductoControl(codigoBarras, "****","Producto Desconocido", 0,)
+            val productoDesconocido = ProductoControl(codigoBarras, "****","Producto Desconocido", 0)
             productos.add(productoDesconocido)
             productoControlIngresado = productoDesconocido
         }
@@ -58,16 +60,16 @@ object ControlProductos {
         val cantidadInt = cantidad.toInt()
         productoControlIngresado?.agregar(cantidadInt)
 
-        if(cantidadInt>0){
-            bulto.add(Pair(productoControlIngresado,cantidadInt))
-        }
+        bulto.add(Pair(productoControlIngresado,cantidadInt))
 
         if(etiqueta){
             imprimirEtiquetaRecepcion(cantidad)
         }
+
+        navController.navigate((Pantallas.ControladorProductos.name))
     }
 
-    fun limpiar() {
+    private fun limpiar() {
         productos.clear()
         archivoCargado = false
         productoControlIngresado = null
@@ -75,7 +77,7 @@ object ControlProductos {
         bulto.clear()
     }
 
-    fun imprimirEtiquetaRecepcion(cantidad:String){
+    private fun imprimirEtiquetaRecepcion(cantidad:String){
 
         val etiqueta = "<STX><ESC>P;E32;F32;<ETX>\n" +
                 "<STX>H0;o360,55;f3;c26;d0,30;k20;<ETX>\n" +
@@ -98,7 +100,7 @@ object ControlProductos {
         BTHandler.imprimir(etiqueta)
     }
 
-    fun fechaActual(formato: String): String {
+    private fun fechaActual(formato: String): String {
         val formatoFecha = SimpleDateFormat(formato)
         return formatoFecha.format(Date())
     }
@@ -133,15 +135,15 @@ object ControlProductos {
         val cantidadEtiquetas = ceil(itemsEnBulto().toDouble() / 16).toInt()
 
         for (j in 0 until cantidadEtiquetas){
-            var piso = j * 16
-            var techo = min(16,itemsEnBulto()-piso)
+            val piso = j * 16
+            val techo = min(16,itemsEnBulto()-piso)
             var stringProductos = ""
 
             for ( i in 0 until techo){
                 stringProductos = stringProductos +
                         "<STX>H" + (3 + i * 3 ).toString() + ";o"+ (baseY - i*renglon).toString() +",040;f3;c26;k9;d3,"+ bulto[piso + i].first?.codigoBarras+"<ETX>\n" +
                         "<STX>H" + (4 + i * 3 ).toString() + ";o"+ (baseY - i*renglon).toString() +",230;f3;c26;k9;d3,"+ bulto[piso + i].first?.nombre?.take(33)+"<ETX>\n" +
-                        "<STX>H" + (5 + i * 3 ).toString() + ";o"+ (baseY - i*renglon).toString() +",720;f3;c26;k9;d3,"+ bulto[piso + i].second?.toString() +"<ETX>\n"
+                        "<STX>H" + (5 + i * 3 ).toString() + ";o"+ (baseY - i*renglon).toString() +",720;f3;c26;k9;d3,"+ bulto[piso + i].second.toString() +"<ETX>\n"
             }
             BTHandler.imprimir(
                 "<STX><ESC>C<ETX>\n" +

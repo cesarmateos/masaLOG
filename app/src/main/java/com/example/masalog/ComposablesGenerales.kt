@@ -26,6 +26,7 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.masalog.configuraEtiqueta.redondeoFlechas
@@ -270,7 +271,7 @@ fun CajaTextoGris(text:String,modifier: Modifier){
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun InputTexto(onClick: (texto: String) -> Unit,keyboardType: KeyboardType){
+fun InputTexto(onClick: (texto: String) -> Unit,keyboardType: KeyboardType, largo: Dp){
 
     var ingresoBarras by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
@@ -279,7 +280,7 @@ fun InputTexto(onClick: (texto: String) -> Unit,keyboardType: KeyboardType){
         modifier = Modifier
             .border(2.dp, GrisOscuro, RoundedCornerShape(10))
             .background(color = Color.White)
-            .size(140.dp, 30.dp)
+            .size(largo, 30.dp)
             .padding(horizontal = 5.dp)
             .focusTarget(),
         contentAlignment = Alignment.CenterStart

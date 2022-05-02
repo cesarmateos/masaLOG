@@ -3,7 +3,6 @@ package com.example.masalog
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -16,8 +15,9 @@ import com.example.masalog.configuraImpresora.PantallaConfiguraImpresora
 import com.example.masalog.configuraImpresora.PantallaConfiguraImpresoraRP4
 import com.example.masalog.configuraImpresora.PantallaConfiguraImpresoraSATO
 import com.example.masalog.controlado.ControlProductos
+import com.example.masalog.controlado.PantallaControlaListadoIngresoProducto
 import com.example.masalog.controlado.PantallaControlaListado
-import com.example.masalog.etiquetado.PantallaEtiquetado_Inicio
+import com.example.masalog.etiquetado.PantallaEtiquetadoInicio
 import com.example.masalog.ui.theme.GrisPurple
 import com.example.masalog.ui.theme.MasaLOGTheme
 
@@ -81,7 +81,7 @@ fun Navegador(navController: NavHostController,modifier: Modifier = Modifier) {
         }
 
         composable(Pantallas.EtiquetadoPlantaInicio.name) {
-            PantallaEtiquetado_Inicio(navController)
+            PantallaEtiquetadoInicio(navController)
         }
 
          composable(Pantallas.ControladorProductos.name){
