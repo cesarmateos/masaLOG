@@ -7,12 +7,9 @@ import android.content.Intent
 import android.util.Log
 import java.io.OutputStream
 import java.util.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.IOException
 import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.*
 
 
 private const val TAG = "MainActivity"
@@ -21,10 +18,10 @@ object BTHandler {
 
     private var bluetoothAdapter: BluetoothAdapter? = null
     private lateinit var pairedDevices: Set<BluetoothDevice>
-    private var bluetoothManager: BluetoothManager? = null
-    private var bluetoothSocket: BluetoothSocket? = null
+    private lateinit var bluetoothManager: BluetoothManager
+    private lateinit var bluetoothSocket: BluetoothSocket
 
-    var btDevice : BluetoothDevice? = null
+    private var btDevice : BluetoothDevice? = null
     private var dispositivosEmparejados: MutableList<String> = mutableListOf()
 
     private var existeBT: Boolean = false
@@ -37,7 +34,8 @@ object BTHandler {
     private var outputStream: OutputStream? = null
 
     fun iniciar(activity: MainActivity){
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+        bluetoothManager = activity.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        bluetoothAdapter = bluetoothManager.adapter
         existeBT = bluetoothAdapter != null
         estadoBT.postValue(EstadoDispositivo.SINHARDWARE)
 
@@ -45,26 +43,23 @@ object BTHandler {
             estadoBT.postValue(EstadoDispositivo.DESCONECTADO)
 
             //Habilita el adaptador si está deshabilitado
-            if (bluetoothAdapter?.isEnabled == false) {
+            if (!(bluetoothAdapter?.isEnabled)!!) {
                 val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
                 val REQUEST_ENABLE_BT = 1
                 activity.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
             }
-            bluetoothManager = activity.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-
 
             //Obtengo la lista de los dispositivos apareados
             pairedDevices = bluetoothAdapter?.bondedDevices as Set<BluetoothDevice>
             pairedDevices.forEach { device ->
                 dispositivosEmparejados.add(device.name)
             }
-        }else{
-            estadoBT.postValue(EstadoDispositivo.SINHARDWARE)
         }
     }
 
     private fun evaluoConexion() : Boolean{
-        val retorno: Boolean = bluetoothSocket?.isConnected ==true
+
+        val retorno: Boolean =  bluetoothSocket.isConnected
 
         if (retorno){
             estadoBT.postValue(EstadoDispositivo.CONECTADO)
@@ -84,9 +79,9 @@ object BTHandler {
                         UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
                     )
                     bluetoothAdapter!!.cancelDiscovery()
-                    bluetoothSocket?.connect()
-                    if (bluetoothSocket!!.isConnected) {
-                        outputStream = bluetoothSocket!!.outputStream
+                    bluetoothSocket.connect()
+                    if (bluetoothSocket.isConnected) {
+                        outputStream = bluetoothSocket.outputStream
                     }
                 } catch (e: Exception){
                     Log.d(TAG, "connect: ${e.message}")
@@ -111,16 +106,21 @@ object BTHandler {
     fun imprimir(datos: String){
         if (existeBT && evaluoConexion()) {
             estadoBT.postValue(EstadoDispositivo.IMPRIMIENDO)
-            outputStream?.run {
-                write(datos.toByteArray())
-                write(byteArrayOf(10))                  // Feed line
-                estadoBT.postValue(EstadoDispositivo.CONECTADO)
+            try{
+                outputStream?.run {
+                    write(datos.toByteArray())
+                    write(byteArrayOf(10))                  // Feed line
+                    estadoBT.postValue(EstadoDispositivo.CONECTADO)
+                }
+            }catch(e: Exception){
+                desconectar()
             }
         }else{
             alerta.postValue(true)
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     fun conectar(posicion: Int){
         if(existeBT){
             estadoBT.postValue(EstadoDispositivo.CONECTANDO)
@@ -149,13 +149,12 @@ object BTHandler {
             }
 
             try {
-                bluetoothSocket?.close()
+                bluetoothSocket.close()
+                logoCargado = false
+                estadoBT.postValue(EstadoDispositivo.DESCONECTADO)
             } catch (e: IOException) {
             }
-
-            bluetoothSocket = null
-            logoCargado = false
-            estadoBT.postValue(EstadoDispositivo.DESCONECTADO)
+            //bluetoothSocket = null
         }
     }
 
