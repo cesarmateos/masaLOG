@@ -35,7 +35,7 @@ fun BarraTOP(scope: CoroutineScope, scaffoldState: ScaffoldState){
                 },
         actions = {
             TopDerecho() },
-        backgroundColor = Color.White
+        backgroundColor = MaterialTheme.colors.background
     )
 }
 

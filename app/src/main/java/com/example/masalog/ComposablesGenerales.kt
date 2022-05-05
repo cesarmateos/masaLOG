@@ -19,7 +19,6 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusTarget
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
@@ -30,8 +29,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.masalog.configuraEtiqueta.redondeoFlechas
-import com.example.masalog.ui.theme.GrisClaro
-import com.example.masalog.ui.theme.GrisOscuro
 import com.example.masalog.ui.theme.NaranjaMuySuave
 
 import kotlin.math.min
@@ -278,8 +275,8 @@ fun InputTexto(onClick: (texto: String) -> Unit,keyboardType: KeyboardType, larg
 
     Box(
         modifier = Modifier
-            .border(2.dp, GrisOscuro, RoundedCornerShape(10))
-            .background(color = Color.White)
+            .border(2.dp, MaterialTheme.colors.onBackground, RoundedCornerShape(10))
+            .background(color = MaterialTheme.colors.background)
             .size(largo, 30.dp)
             .padding(horizontal = 5.dp)
             .focusTarget(),

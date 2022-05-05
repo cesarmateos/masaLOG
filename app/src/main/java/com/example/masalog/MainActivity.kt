@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -94,5 +95,13 @@ fun Navegador(navController: NavHostController,modifier: Modifier = Modifier) {
             )
         }
 
+    }
+}
+
+@Preview(name = "Inicio")
+@Composable
+fun InicioDark(){
+    MasaLOGTheme(darkTheme=  true) {
+        PantallaInicio(navController = rememberNavController())
     }
 }
