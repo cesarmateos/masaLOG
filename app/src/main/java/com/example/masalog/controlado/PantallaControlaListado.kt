@@ -48,7 +48,7 @@ fun PantallaControlaListado(navController: NavHostController) {
             Row(
                 modifier = Modifier
                     .height(40.dp)
-                    .background(NaranjaMuySuave)
+                    .background(MaterialTheme.colors.surface)
                     .padding(horizontal = 10.dp, vertical = 4.dp)
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -95,7 +95,7 @@ fun PantallaControlaListado(navController: NavHostController) {
                 Row(
                     modifier = Modifier
                         .height(40.dp)
-                        .background(NaranjaMuySuave)
+                        .background(MaterialTheme.colors.surface)
                         .padding(horizontal = 10.dp, vertical = 4.dp)
                         .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -132,31 +132,27 @@ fun PantallaControlaListado(navController: NavHostController) {
                     )
                     Row(
                         modifier = Modifier
-                            .border(3.dp, MaterialTheme.colors.onSecondary)
+                            .border(3.dp, MaterialTheme.colors.onBackground)
                             .height(60.dp)
-                            .background(GrisClaro),
+                            .background(MaterialTheme.colors.secondaryVariant),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         CajaTextoGris(
                             text = "Código Barras", modifier = Modifier
                                 .weight(1.0f)
-                                .padding(5.dp)
-                        )
+                                .padding(5.dp))
                         CajaTextoGris(
                             text = "Localiz.", modifier = Modifier
                                 .weight(1.0f)
-                                .padding(5.dp)
-                        )
+                                .padding(5.dp))
                         CajaTextoGris(
                             text = "Nombre Producto", modifier = Modifier
                                 .weight(1.0f)
-                                .padding(5.dp)
-                        )
+                                .padding(5.dp))
                         CajaTextoGris(
                             text = "Cantidad", modifier = Modifier
                                 .weight(1.0f)
-                                .padding(5.dp)
-                        )
+                                .padding(5.dp))
                     }
 
 
@@ -221,24 +217,22 @@ fun CajaScrolleable(productoControls:List<ProductoControl>,
                 fontWeight = FontWeight.Bold,
                 modifier= Modifier
                     .weight(1.0f)
-                    .border(3.dp, VioletaOscuro)
-                    .background(
-                        MoradoMuySuave
-                    )
+                    .border(3.dp, MaterialTheme.colors.primary)
+                    .background(MoradoMuySuave)
                     .padding(5.dp))
 
             //Celda Derecha
             Row(modifier = Modifier
                 .width(200.dp)
-                .background(GrisClaro)
-                .border(3.dp, GrisOscuro)
+                .background(MaterialTheme.colors.secondaryVariant)
+                .border(3.dp, MaterialTheme.colors.onBackground)
                 .padding(5.dp)){
 
                 //Líneas
                 Row(modifier = Modifier.width(100.dp)){
-                    Text(text= "L: ", color= GrisOscuro,fontWeight = FontWeight.Bold,
+                    Text(text= "L: ", color= MaterialTheme.colors.onBackground,fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(start =10.dp))
-                    Text(text= productoControls.size.toString(), color= GrisOscuro,
+                    Text(text= productoControls.size.toString(), color= MaterialTheme.colors.onBackground,
                         modifier = Modifier
                             .padding(start = 10.dp)
                             .fillMaxWidth())
@@ -246,9 +240,9 @@ fun CajaScrolleable(productoControls:List<ProductoControl>,
 
                 //Unidades
                 Row(modifier = Modifier.width(100.dp)) {
-                    Text(text = "U: ", color = GrisOscuro, fontWeight = FontWeight.Bold,
+                    Text(text = "U: ", color = MaterialTheme.colors.onBackground, fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(start =10.dp))
-                    Text(text = sumador(productoControls),color= GrisOscuro,
+                    Text(text = sumador(productoControls),color= MaterialTheme.colors.onBackground,
                         modifier = Modifier
                             .padding(start = 10.dp)
                             .fillMaxWidth())
@@ -259,7 +253,7 @@ fun CajaScrolleable(productoControls:List<ProductoControl>,
         LazyColumn(
             Modifier
                 .fillMaxSize()
-                .border(3.dp, GrisOscuro)){
+                .border(3.dp, MaterialTheme.colors.onBackground)){
             items(items=productoControls, itemContent = {
                     item ->
                 var color = Color.Red

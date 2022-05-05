@@ -22,6 +22,7 @@ import androidx.compose.ui.focus.focusTarget
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -265,7 +266,7 @@ fun EstructuraTituloCuerpo(textoTitulo: String,
 fun CajaTextoGris(text:String,modifier: Modifier){
     Text(text= text,
         textAlign = TextAlign.Center,
-        color = MaterialTheme.colors.onSecondary,
+        color = MaterialTheme.colors.onBackground,
         modifier = modifier)
 }
 
@@ -286,6 +287,7 @@ fun InputTexto(onClick: (texto: String) -> Unit,keyboardType: KeyboardType, larg
         contentAlignment = Alignment.CenterStart
     ) {
         BasicTextField(value = ingresoBarras,
+            textStyle = TextStyle(color = MaterialTheme.colors.onBackground),
             onValueChange = { ingresoBarras = it },
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
             keyboardActions = KeyboardActions(onDone = {

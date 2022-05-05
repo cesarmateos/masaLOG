@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.sp
 import com.example.masalog.InputTexto
 import com.example.masalog.PADDING_HORIZONTAL
 import com.example.masalog.ui.theme.MoradoMuySuave
-import com.example.masalog.ui.theme.NaranjaMuySuave
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -36,7 +35,7 @@ fun PantallaControlaListadoIngresoProducto (onClickControladorProductos: () -> U
                     textAlign=TextAlign.Center,
                     modifier= Modifier
                         .fillMaxWidth()
-                        .background(NaranjaMuySuave)
+                        .background(MaterialTheme.colors.surface)
                         .padding(vertical = interlineado)) }
 
                 //Código Barras

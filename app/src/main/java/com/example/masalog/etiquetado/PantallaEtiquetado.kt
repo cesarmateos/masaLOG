@@ -79,16 +79,15 @@ fun PantallaEtiquetadoInicio(navController: NavHostController) {
                     )
                     Row(
                         modifier = Modifier
-                            .border(3.dp, MaterialTheme.colors.onSecondary)
+                            .border(3.dp, MaterialTheme.colors.onBackground)
                             .height(60.dp)
-                            .background(GrisClaro),
+                            .background(MaterialTheme.colors.secondaryVariant),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         CajaTextoGris(
                             text = "Código Barras", modifier = Modifier
                                 .weight(1.0f)
-                                .padding(5.dp)
-                        )
+                                .padding(5.dp))
                         CajaTextoGris(
                             text = "Localizador", modifier = Modifier
                                 .weight(1.0f)
