@@ -96,7 +96,7 @@ fun ToggleHorizontal(estadoA:Boolean, onClick: (Boolean) -> Unit, textoA: String
                     .height(23.dp),
                 contentPadding = PaddingValues(1.dp)
             ){
-                Text(textoA, color = Color.White, fontWeight = FontWeight.Bold)
+                Text(textoA, color = MaterialTheme.colors.onPrimary, fontWeight = FontWeight.Bold)
             }
             //No Clickeado
             OutlinedButton(onClick = {onClick(!estadoA)},
@@ -104,13 +104,13 @@ fun ToggleHorizontal(estadoA:Boolean, onClick: (Boolean) -> Unit, textoA: String
                     topEnd = redondeoFlechas,
                     bottomEnd = redondeoFlechas
                 ),
-                border = BorderStroke(1.dp, GrisClaro),
+                border = BorderStroke(1.dp, MaterialTheme.colors.secondaryVariant),
                 modifier = Modifier
                     .width(90.dp)
                     .height(23.dp),
                 contentPadding = PaddingValues(1.dp)
             ){
-                Text(text= textoB,color = GrisClaro)
+                Text(text= textoB,color = MaterialTheme.colors.secondaryVariant)
             }
         }
     }else{
@@ -120,13 +120,13 @@ fun ToggleHorizontal(estadoA:Boolean, onClick: (Boolean) -> Unit, textoA: String
                 topStart = redondeoFlechas,
                 bottomStart = redondeoFlechas
             ),
-            border = BorderStroke(1.dp, GrisClaro),
+            border = BorderStroke(1.dp, MaterialTheme.colors.secondaryVariant),
             modifier = Modifier
                 .width(90.dp)
                 .height(23.dp),
             contentPadding = PaddingValues(1.dp)
         ){
-            Text(text= textoA, color = GrisClaro)
+            Text(text= textoA, color = MaterialTheme.colors.secondaryVariant)
         }
         //Clickeado
         OutlinedButton(onClick = {},
@@ -141,7 +141,7 @@ fun ToggleHorizontal(estadoA:Boolean, onClick: (Boolean) -> Unit, textoA: String
                 .height(23.dp),
             contentPadding = PaddingValues(1.dp)
         ){
-            Text(text= textoB, color= Color.White, fontWeight = FontWeight.Bold)
+            Text(text= textoB, color= MaterialTheme.colors.onPrimary, fontWeight = FontWeight.Bold)
         }
     }
 }
@@ -163,7 +163,7 @@ fun ToggleVertical(normal:Boolean, onClick: (Boolean) -> Unit, textoA: String, t
                     .height(27.dp),
                 contentPadding = PaddingValues(1.dp)
             ){
-                Text(textoA, color = Color.White, fontWeight = FontWeight.Bold)
+                Text(textoA, color = MaterialTheme.colors.onPrimary , fontWeight = FontWeight.Bold)
             }
             //No Clickeado
             OutlinedButton(onClick = {onClick(!normal)},
@@ -171,13 +171,13 @@ fun ToggleVertical(normal:Boolean, onClick: (Boolean) -> Unit, textoA: String, t
                     bottomEnd = redondeoFlechas,
                     bottomStart = redondeoFlechas
                 ),
-                border = BorderStroke(1.dp, GrisClaro),
+                border = BorderStroke(1.dp, MaterialTheme.colors.secondaryVariant),
                 modifier = Modifier
                     .width(110.dp)
                     .height(27.dp),
                 contentPadding = PaddingValues(1.dp)
             ){
-                Text(text= textoB,color = GrisClaro)
+                Text(text= textoB,color = MaterialTheme.colors.secondaryVariant)
             }
         }
     }else{
@@ -187,13 +187,13 @@ fun ToggleVertical(normal:Boolean, onClick: (Boolean) -> Unit, textoA: String, t
                 topStart = redondeoFlechas,
                 topEnd = redondeoFlechas
             ),
-            border = BorderStroke(1.dp, GrisClaro),
+            border = BorderStroke(1.dp, MaterialTheme.colors.secondaryVariant),
             modifier = Modifier
                 .width(110.dp)
                 .height(27.dp),
             contentPadding = PaddingValues(1.dp)
         ){
-            Text(text= textoA, color = GrisClaro)
+            Text(text= textoA, color = MaterialTheme.colors.secondaryVariant)
         }
         //Clickeado
         OutlinedButton(onClick = {},
@@ -208,7 +208,7 @@ fun ToggleVertical(normal:Boolean, onClick: (Boolean) -> Unit, textoA: String, t
                 .height(27.dp),
             contentPadding = PaddingValues(1.dp)
         ){
-            Text(text= textoB, color=Color.White, fontWeight = FontWeight.Bold)
+            Text(text= textoB, color=MaterialTheme.colors.onPrimary, fontWeight = FontWeight.Bold)
         }
     }
 }

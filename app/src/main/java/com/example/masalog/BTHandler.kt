@@ -63,69 +63,6 @@ object BTHandler {
         }
     }
 
-    private fun evaluoConexion() : Boolean{
-
-        val retorno: Boolean =  bluetoothSocket.isConnected
-
-        if (retorno){
-            estadoBT.postValue(EstadoDispositivo.CONECTADO)
-        } else{
-            estadoBT.postValue(EstadoDispositivo.DESCONECTADO)
-            logoCargado = false
-        }
-        return retorno
-    }
-
-    private suspend fun connect(device:BluetoothDevice): OutputStream? {
-        return withContext(Dispatchers.IO) {
-            var outputStream: OutputStream? = null
-            if (existeBT && bluetoothAdapter!!.isEnabled) {
-                try {
-                    bluetoothSocket = device.createRfcommSocketToServiceRecord(
-                        UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
-                    )
-                    bluetoothAdapter!!.cancelDiscovery()
-                    bluetoothSocket.connect()
-                    if (bluetoothSocket.isConnected) {
-                        outputStream = bluetoothSocket.outputStream
-                    }
-                } catch (e: Exception){
-                    Log.d(TAG, "connect: ${e.message}")
-                    estadoBT.postValue(EstadoDispositivo.DESCONECTADO)
-                }
-            }
-            outputStream
-        }
-    }
-
-    fun dispositivos(): MutableList<String>{
-        return dispositivosEmparejados
-    }
-
-    fun nombreDispositivoConectado(): String?{
-        if(estadoBT.value == EstadoDispositivo.CONECTADO || estadoBT.value == EstadoDispositivo.CONECTANDO ){
-            return btDevice?.name
-        }
-       return ""
-    }
-
-    fun imprimir(datos: String){
-        if (existeBT && evaluoConexion()) {
-            estadoBT.postValue(EstadoDispositivo.IMPRIMIENDO)
-            try{
-                outputStream?.run {
-                    write(datos.toByteArray())
-                    write(byteArrayOf(10))                  // Feed line
-                    estadoBT.postValue(EstadoDispositivo.CONECTADO)
-                }
-            }catch(e: Exception){
-                desconectar()
-            }
-        }else{
-            alerta.postValue(true)
-        }
-    }
-
     @OptIn(DelicateCoroutinesApi::class)
     fun conectar(posicion: Int){
         if(existeBT){
@@ -145,6 +82,27 @@ object BTHandler {
         }
     }
 
+    private suspend fun connect(device:BluetoothDevice): OutputStream? {
+        return withContext(Dispatchers.IO) {
+            val uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
+            var outputStream: OutputStream? = null
+            if (existeBT && bluetoothAdapter!!.isEnabled) {
+                try {
+                    bluetoothSocket = device.createRfcommSocketToServiceRecord(uuid)
+                    bluetoothAdapter!!.cancelDiscovery()
+                    bluetoothSocket.connect()
+                    if (bluetoothSocket.isConnected) {
+                        outputStream = bluetoothSocket.outputStream
+                    }
+                } catch (e: Exception){
+                    Log.d(TAG, "connect: ${e.message}")
+                    estadoBT.postValue(EstadoDispositivo.DESCONECTADO)
+                }
+            }
+            outputStream
+        }
+    }
+
     fun desconectar(){
         if(existeBT) {
             outputStream = null
@@ -161,6 +119,47 @@ object BTHandler {
             } catch (e: IOException) {
             }
             //bluetoothSocket = null
+        }
+    }
+
+    private fun evaluoConexion() : Boolean{
+
+        val retorno: Boolean =  bluetoothSocket.isConnected
+
+        if (retorno){
+            estadoBT.postValue(EstadoDispositivo.CONECTADO)
+        } else{
+            estadoBT.postValue(EstadoDispositivo.DESCONECTADO)
+            logoCargado = false
+        }
+        return retorno
+    }
+
+    fun dispositivos(): MutableList<String>{
+        return dispositivosEmparejados
+    }
+
+    fun nombreDispositivoConectado(): String?{
+        if(estadoBT.value == EstadoDispositivo.CONECTADO || estadoBT.value == EstadoDispositivo.CONECTANDO ){
+            return btDevice?.name
+        }
+       return ""
+    }
+
+    fun imprimir(datos: String){
+        if (existeBT && estadoBT.value == EstadoDispositivo.CONECTADO && evaluoConexion()) {
+            estadoBT.postValue(EstadoDispositivo.IMPRIMIENDO)
+            try{
+                outputStream?.run {
+                    write(datos.toByteArray())
+                    write(byteArrayOf(10))                  // Feed line
+                    estadoBT.postValue(EstadoDispositivo.CONECTADO)
+                }
+            }catch(e: Exception){
+                desconectar()
+            }
+        }else{
+            alerta.postValue(true)
         }
     }
 
