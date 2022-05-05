@@ -5,6 +5,7 @@ import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import androidx.core.app.ActivityCompat.startActivityForResult
 import java.io.OutputStream
 import java.util.*
 import java.io.IOException
@@ -46,10 +47,15 @@ object BTHandler {
             if (!(bluetoothAdapter?.isEnabled)!!) {
                 val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
                 val REQUEST_ENABLE_BT = 1
-                activity.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
+                startActivityForResult(activity,enableBtIntent, REQUEST_ENABLE_BT,null)
+                //activity.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
             }
+        }
+    }
 
-            //Obtengo la lista de los dispositivos apareados
+    fun obtenerListaDispositivos(){
+        //Carga la lista de dispositivos si no está vacía
+        if (dispositivosEmparejados.isEmpty()){
             pairedDevices = bluetoothAdapter?.bondedDevices as Set<BluetoothDevice>
             pairedDevices.forEach { device ->
                 dispositivosEmparejados.add(device.name)
@@ -347,6 +353,7 @@ object BTHandler {
     }
 
     fun listando(){
+        obtenerListaDispositivos()
         estadoBT.postValue(EstadoDispositivo.LISTABT)
     }
 
