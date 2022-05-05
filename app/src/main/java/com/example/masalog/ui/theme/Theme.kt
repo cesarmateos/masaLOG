@@ -4,7 +4,6 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
-import androidx.compose.material.primarySurface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
@@ -16,8 +15,8 @@ private val DarkColorPalette = darkColors(
     secondary = GrisClaro,
     onSecondary = Color.White,
     background = Color.Black,
-    onBackground = Color.White
-
+    onBackground = Color.White,
+    surface = NaranjaOscuro
 )
 
 private val LightColorPalette = lightColors(
@@ -27,16 +26,8 @@ private val LightColorPalette = lightColors(
     secondary = Naranja,
     onSecondary = GrisOscuro,
     secondaryVariant = GrisClaro,
-    onBackground = GrisOscuro
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+    onBackground = GrisOscuro,
+    surface = NaranjaMuySuave
 )
 
 @Composable

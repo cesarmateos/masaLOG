@@ -27,7 +27,7 @@ fun Drawer(scope: CoroutineScope, scaffoldState: ScaffoldState, navController: N
     Column(modifier= Modifier.fillMaxWidth()){
 
         //Encabezado
-        Row(modifier= Modifier.background(Color.White).padding(start= 10.dp, end= 40.dp, top= 20.dp, bottom = 30.dp)){
+        Row(modifier= Modifier.background(MaterialTheme.colors.background).padding(start= 10.dp, end= 40.dp, top= 20.dp, bottom = 30.dp)){
             Image(painter= painterResource(id = R.drawable.logo_grande), contentDescription = "Masa")
         }
 

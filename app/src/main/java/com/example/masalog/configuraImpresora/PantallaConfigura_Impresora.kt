@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,7 +30,9 @@ fun  PantallaConfiguraImpresora(navController: NavHostController) {
             horizontalArrangement = Arrangement.Center
         ){
             Card(elevation = 4.dp,
-                onClick = {navController.navigate(Pantallas.ConfiguraSATO.name)}){
+                onClick = {navController.navigate(Pantallas.ConfiguraSATO.name)},
+                backgroundColor = MaterialTheme.colors.background)
+            {
                 Column(horizontalAlignment = Alignment.CenterHorizontally){
                     Image(painter= painterResource(id = R.drawable.sato),
                         contentDescription = "SATO CL4NX",
@@ -42,7 +45,9 @@ fun  PantallaConfiguraImpresora(navController: NavHostController) {
             }
             Spacer(modifier = Modifier.size(15.dp))
             Card(elevation = 4.dp,
-                onClick = { navController.navigate(Pantallas.ConfiguraRP4.name) }){
+                onClick = { navController.navigate(Pantallas.ConfiguraRP4.name) },
+                backgroundColor = MaterialTheme.colors.background)
+            {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Image(
                         painter = painterResource(id = R.drawable.rp4),

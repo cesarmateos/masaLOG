@@ -29,7 +29,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.masalog.configuraEtiqueta.redondeoFlechas
-import com.example.masalog.ui.theme.NaranjaMuySuave
 
 import kotlin.math.min
 import kotlin.math.max
@@ -97,6 +96,7 @@ fun ToggleHorizontal(estadoA:Boolean, onClick: (Boolean) -> Unit, textoA: String
             }
             //No Clickeado
             OutlinedButton(onClick = {onClick(!estadoA)},
+                colors =ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background ),
                 shape = RoundedCornerShape(
                     topEnd = redondeoFlechas,
                     bottomEnd = redondeoFlechas
@@ -113,6 +113,7 @@ fun ToggleHorizontal(estadoA:Boolean, onClick: (Boolean) -> Unit, textoA: String
     }else{
         //No Clickeado
         OutlinedButton(onClick = {onClick(!estadoA)},
+            colors =ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background ),
             shape = RoundedCornerShape(
                 topStart = redondeoFlechas,
                 bottomStart = redondeoFlechas
@@ -164,6 +165,7 @@ fun ToggleVertical(normal:Boolean, onClick: (Boolean) -> Unit, textoA: String, t
             }
             //No Clickeado
             OutlinedButton(onClick = {onClick(!normal)},
+                colors =ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background ),
                 shape = RoundedCornerShape(
                     bottomEnd = redondeoFlechas,
                     bottomStart = redondeoFlechas
@@ -180,6 +182,7 @@ fun ToggleVertical(normal:Boolean, onClick: (Boolean) -> Unit, textoA: String, t
     }else{
         //No Clickeado
         OutlinedButton(onClick = {onClick(!normal)},
+            colors =ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background ),
             shape = RoundedCornerShape(
                 topStart = redondeoFlechas,
                 topEnd = redondeoFlechas
@@ -216,7 +219,7 @@ fun TituloSeccion(texto:String){
     Row(horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
         modifier= Modifier
-            .background(NaranjaMuySuave)
+            .background(MaterialTheme.colors.surface)
             .padding(10.dp)
             .fillMaxWidth()
     ){
