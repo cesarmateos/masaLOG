@@ -260,7 +260,7 @@ fun cargarFormatoDespacho(vertical: Int, horizontal: Int, sentidoNormal: Boolean
     matrizOpcionesY[0][0] = intArrayOf(130, 162, 185, 185, 185, 290, 585, 612, 185, 185, 310, 40, 70, 260, 470, 680, 40, 50, 50)
 
     //NORMAL - QR
-    matrizOpcionesX[0][1] = intArrayOf(470,450,480,450,420,420,475,425,370,330,260,220,160,160,160,160,145,68,30)
+    matrizOpcionesX[0][1] = intArrayOf(470,350,480,450,420,420,475,425,370,330,260,220,160,160,160,160,145,68,30)
     matrizOpcionesY[0][1] = intArrayOf( 40,  40, 190, 190, 190, 290, 590, 617, 190, 190, 310, 40, 70, 260, 470, 680, 40, 50, 50)
 
     //INVERTIDA - BARRAS
@@ -269,7 +269,7 @@ fun cargarFormatoDespacho(vertical: Int, horizontal: Int, sentidoNormal: Boolean
 
     //INVERTIDA - QR
     matrizOpcionesX[1][1] = intArrayOf(20, 80, 10, 40, 70, 70, 15, 65, 120, 160, 230, 270, 330, 330, 330, 330, 345, 412, 450)
-    matrizOpcionesY[1][1] = intArrayOf(750, 750, 605, 605, 605, 500, 210, 183, 605, 605, 490, 760, 730, 540, 340, 110, 760, 750, 750)
+    matrizOpcionesY[1][1] = intArrayOf(750, 650, 605, 605, 605, 500, 210, 183, 605, 605, 490, 760, 730, 540, 340, 110, 760, 750, 750)
 
 
     val modificadorPosicionX:Int

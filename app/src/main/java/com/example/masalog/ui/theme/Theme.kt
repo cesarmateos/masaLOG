@@ -10,8 +10,8 @@ import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
     primary = GrisOscuro,
-    onPrimary= Color.White,
     primaryVariant = MoradoMuyOscuro,
+    onPrimary= Color.White,
     secondary = MoradoSuave,
     secondaryVariant = VioletaOscuro,
     onSecondary = MoradoMuySuave,
@@ -22,11 +22,11 @@ private val DarkColorPalette = darkColors(
 
 private val LightColorPalette = lightColors(
     primary = VioletaOscuro,
-    onPrimary = Color.White,
     primaryVariant = VioletaClaro,
+    onPrimary = Color.White,
     secondary = Naranja,
-    onSecondary = GrisOscuro,
     secondaryVariant = GrisClaro,
+    onSecondary = GrisOscuro,
     onBackground = GrisOscuro,
     surface = NaranjaMuySuave
 )
