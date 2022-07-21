@@ -74,11 +74,11 @@ fun Navegador(navController: NavHostController,modifier: Modifier = Modifier) {
         }
 
         composable(Pantallas.ConfiguraRP4.name) {
-            PantallaConfiguraImpresoraRP4()
+            PantallaConfiguraImpresoraRP4(navController)
         }
 
         composable(Pantallas.ConfiguraSATO.name) {
-            PantallaConfiguraImpresoraSATO()
+            PantallaConfiguraImpresoraSATO(navController)
         }
 
         composable(Pantallas.EtiquetadoPlantaInicio.name) {

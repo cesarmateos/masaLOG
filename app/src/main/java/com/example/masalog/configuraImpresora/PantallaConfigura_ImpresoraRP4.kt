@@ -10,13 +10,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.masalog.*
 import com.example.masalog.R
 import com.example.masalog.ui.theme.Naranja
 
 
 @Composable
-fun  PantallaConfiguraImpresoraRP4() {
+fun  PantallaConfiguraImpresoraRP4(navController: NavHostController) {
     val sizeFuente = 18.sp
 
     val velocidadLimitada : IntLimitado by remember { mutableStateOf(IntLimitado(8,2,10)) }
@@ -50,6 +51,7 @@ fun  PantallaConfiguraImpresoraRP4() {
                         velocidad,
                         modificaVelocidad
                     )
+                    navController.navigate(Pantallas.Etiquetas.name)
             }
         })
     {

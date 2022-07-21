@@ -11,12 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.masalog.*
 import com.example.masalog.R
 
 
 @Composable
-fun  PantallaConfiguraImpresoraSATO() {
+fun  PantallaConfiguraImpresoraSATO(navController: NavHostController) {
     val sizeFuente = 18.sp
 
     val velocidadLimitada: IntLimitado by remember { mutableStateOf(IntLimitado(6, 1, 10)) }
@@ -40,6 +41,7 @@ fun  PantallaConfiguraImpresoraSATO() {
                 velocidad,
                 modificaVelocidad
             )
+            navController.navigate(Pantallas.Etiquetas.name)
         }) {
 
         Column { //COLUMNA GENERAL
