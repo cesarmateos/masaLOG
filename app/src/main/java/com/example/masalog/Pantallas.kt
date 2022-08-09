@@ -8,7 +8,8 @@ enum class Pantallas {
     ConfiguraRP4,
     ControladorProductos,
     ControladorIngreso,
-    EtiquetadoPlantaInicio;
+    EtiquetadoPlantaInicio,
+    EtiquetaHeladeras;
 
     companion object {
         fun fromRoute(route: String?): Pantallas =
@@ -21,6 +22,7 @@ enum class Pantallas {
                 ControladorProductos.name -> ControladorProductos
                 ControladorIngreso.name -> ControladorIngreso
                 EtiquetadoPlantaInicio.name -> EtiquetadoPlantaInicio
+                EtiquetaHeladeras.name ->EtiquetaHeladeras
                 null -> Inicio
                 else -> throw IllegalArgumentException("La ruta $route no es reconocida.")
             }

@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun Drawer(scope: CoroutineScope, scaffoldState: ScaffoldState, navController: NavHostController) {
 
-    val espacioEntreBotones = 20.dp
+    val espacioEntreBotones = 10.dp
 
     Column(modifier= Modifier.fillMaxWidth()){
 
@@ -76,6 +76,16 @@ fun Drawer(scope: CoroutineScope, scaffoldState: ScaffoldState, navController: N
                         Text(text=stringResource(R.string.config_etiquetas), color= Color.White)
                     }
 
+                    //EtiquetaHeladera
+                    Spacer(Modifier.size(espacioEntreBotones))
+                    Row(modifier= Modifier.fillMaxWidth()
+                        .background(MaterialTheme.colors.primary)
+                        .padding(horizontal = 20.dp, vertical= 10.dp)
+                        .clickable{ navController.navigate(Pantallas.EtiquetaHeladeras.name)
+                            scope.launch{ scaffoldState.drawerState.close()} })
+                    {
+                        Text(text=stringResource(R.string.etiqueta_heladeras), color= Color.White)
+                    }
 
                     //Etiquetado
                     Spacer(Modifier.size(espacioEntreBotones))

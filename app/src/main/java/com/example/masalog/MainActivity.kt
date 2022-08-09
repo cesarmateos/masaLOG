@@ -18,6 +18,7 @@ import com.example.masalog.configuraImpresora.PantallaConfiguraImpresoraSATO
 import com.example.masalog.controlado.ControlProductos
 import com.example.masalog.controlado.PantallaControlaListadoIngresoProducto
 import com.example.masalog.controlado.PantallaControlaListado
+import com.example.masalog.etiquetaRefrigerados.PantallaEtiquetaHeladeras
 import com.example.masalog.etiquetado.PantallaEtiquetadoInicio
 import com.example.masalog.ui.theme.GrisPurple
 import com.example.masalog.ui.theme.MasaLOGTheme
@@ -83,6 +84,10 @@ fun Navegador(navController: NavHostController,modifier: Modifier = Modifier) {
 
         composable(Pantallas.EtiquetadoPlantaInicio.name) {
             PantallaEtiquetadoInicio(navController)
+        }
+
+        composable(Pantallas.EtiquetaHeladeras.name) {
+            PantallaEtiquetaHeladeras()
         }
 
          composable(Pantallas.ControladorProductos.name){

@@ -30,7 +30,6 @@ fun  PantallaConfiguraEtiqueta() {
     Column {
         TabRow(
             selectedTabIndex = state,
-            //unselectedContentColor = MaterialTheme.colors.onBackground,
             contentColor = MaterialTheme.colors.primary,
             backgroundColor = MaterialTheme.colors.primaryVariant,
 

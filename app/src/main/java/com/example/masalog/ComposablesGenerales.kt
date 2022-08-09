@@ -11,6 +11,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -29,7 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.masalog.configuraEtiqueta.redondeoFlechas
+import com.example.masalog.configuraEtiqueta.*
 
 import kotlin.math.min
 import kotlin.math.max
@@ -68,10 +69,83 @@ fun Flechita(intLimitado: IntLimitado, intMostrable: Int, rotacion: Float, onCli
         contentPadding = PaddingValues(1.dp)
     ) {
         Icon(imageVector = Icons.Filled.KeyboardArrowDown,
-            contentDescription = "Abajo",
+            contentDescription = "Modificar",
             modifier = Modifier
                 .size(20.dp)
                 .rotate(rotacion))
+    }
+}
+
+@Composable
+fun BotonFlechaHorizontal(variable: Int, rotacion: Float, onClick: (Int) -> Unit, operacion: (Int) -> Int){
+    Button(onClick = { onClick(operacion(variable)) },
+        shape = RoundedCornerShape(
+            topStart = redondeoFlechas,
+            bottomStart = redondeoFlechas,
+        ),
+        colors =ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
+        modifier = Modifier
+            .height(40.dp)
+            .rotate(rotacion),
+        contentPadding = PaddingValues(1.dp)
+    ) {
+        Icon(imageVector = Icons.Filled.KeyboardArrowLeft,
+            contentDescription = "Modificar",
+            modifier = Modifier.size(50.dp))
+    }
+}
+
+@Composable
+fun BotonFlechaVertical(variable: Int, rotacion: Float, onClick: (Int) -> Unit, operacion: (Int) -> Int) {
+    Button(
+        onClick = { onClick(operacion(variable)) },
+        shape = RoundedCornerShape(
+            bottomEnd = redondeoFlechas,
+            bottomStart = redondeoFlechas
+        ),
+        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
+        modifier = Modifier
+            .height(35.dp)
+            .rotate(rotacion),
+        contentPadding = PaddingValues(1.dp)
+    ) {
+        Icon(
+            imageVector = Icons.Filled.KeyboardArrowDown,
+            contentDescription = "Modificar",
+            modifier = Modifier.size(50.dp)
+        )
+    }
+}
+
+@Composable
+fun BotoneraDireccion(ejeX : Int, ejeY: Int, onClickX: (Int) -> Unit, onClickY: (Int) -> Unit){
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally)
+    {
+        BotonFlechaVertical(ejeY,180f,onClick = onClickY, operacion = {valor:Int -> valor + 1})
+        Row(modifier= Modifier.padding(5.dp)) {
+            BotonFlechaHorizontal(ejeX, 0f,onClick = onClickX, operacion = {valor:Int -> valor - 1})
+            Spacer(modifier = Modifier.size(5.dp))
+            BotonFlechaHorizontal(ejeX, 180f,onClick = onClickX, operacion = {valor:Int -> valor + 1})
+        }
+        BotonFlechaVertical(ejeY,0f,onClick = onClickY, operacion = {valor:Int -> valor - 1})
+    }
+}
+
+@Composable
+fun BotoneraDireccionConIndicadores(ejeX : Int, ejeY: Int, onClickX: (Int) -> Unit, onClickY: (Int) -> Unit){
+    Column() {
+        Row(modifier = Modifier.fillMaxWidth()){
+            Text(text="Horizontal : ", fontSize = 18.sp, style = TextStyle(fontWeight = FontWeight.Bold))
+            Text(ejeX.toString(), fontSize = 18.sp)
+        }
+        Row{
+            Text(text="Vertical : ", fontSize = 18.sp, style = TextStyle(fontWeight = FontWeight.Bold))
+            Text(ejeY.toString(), fontSize = 18.sp)
+        }
+        BotoneraDireccion(ejeX = ejeX, ejeY = ejeY, onClickX = onClickX, onClickY = onClickY )
     }
 }
 
@@ -256,7 +330,9 @@ fun EstructuraTituloCuerpo(textoTitulo: String,
                            cuerpo: @Composable () -> Unit){
     Column{
         TituloSeccion(texto = textoTitulo)
-        Row(modifier= Modifier.fillMaxWidth().padding(PADDING_HORIZONTAL)){
+        Row(modifier= Modifier
+            .fillMaxWidth()
+            .padding(PADDING_HORIZONTAL)){
             cuerpo()
         }
     }
@@ -303,7 +379,7 @@ fun InputTexto(onClick: (texto: String) -> Unit,keyboardType: KeyboardType, larg
             modifier = Modifier
                 .onKeyEvent {
                     if (it.key.keyCode == Key.Enter.keyCode) {
-                        if(ingresoBarras != "\n" && ingresoBarras != "0\n"){
+                        if (ingresoBarras != "\n" && ingresoBarras != "0\n") {
                             onClick(ingresoBarras.dropLast(1))
                         }
                         ingresoBarras = ""

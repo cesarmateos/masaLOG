@@ -22,6 +22,8 @@ fun PantallaInicio(navController: NavHostController ) {
             Spacer(Modifier.size(PADDING_HORIZONTAL))
             BotonStandard(stringResource(R.string.config_etiquetas)) { navController.navigate((Pantallas.Etiquetas.name)) }
             Spacer(Modifier.size(PADDING_HORIZONTAL))
+            BotonStandard(stringResource(R.string.etiqueta_heladeras)) { navController.navigate(Pantallas.EtiquetaHeladeras.name) }
+            Spacer(Modifier.size(PADDING_HORIZONTAL))
             BotonStandard(stringResource(R.string.etiquetado_archivo)) { navController.navigate(Pantallas.EtiquetadoPlantaInicio.name) }
             Spacer(Modifier.size(PADDING_HORIZONTAL))
             BotonStandard(stringResource(R.string.control_archivo)){ navController.navigate((Pantallas.ControladorProductos.name)) }
