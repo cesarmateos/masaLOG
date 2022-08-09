@@ -55,7 +55,6 @@ fun BotonColor(texto: String, onClick: () -> Unit, colors: ButtonColors){
     }
 }
 
-
 @Composable
 fun Flechita(intLimitado: IntLimitado, intMostrable: Int, rotacion: Float, onClick: (Int) -> Unit, operacion: (IntLimitado)-> Unit){
     Button(onClick = { operacion(intLimitado)
@@ -136,7 +135,7 @@ fun BotoneraDireccion(ejeX : Int, ejeY: Int, onClickX: (Int) -> Unit, onClickY: 
 
 @Composable
 fun BotoneraDireccionConIndicadores(ejeX : Int, ejeY: Int, onClickX: (Int) -> Unit, onClickY: (Int) -> Unit){
-    Column() {
+    Column {
         Row(modifier = Modifier.fillMaxWidth()){
             Text(text="Horizontal : ", fontSize = 18.sp, style = TextStyle(fontWeight = FontWeight.Bold))
             Text(ejeX.toString(), fontSize = 18.sp)
@@ -305,27 +304,6 @@ fun TituloSeccion(texto:String){
 }
 
 @Composable
-fun EsctructuraTituloCuerpoBoton(textoTitulo: String,
-                                 textoBoton:String,
-                                 onClick: () -> Unit,
-                                 cuerpo: @Composable () -> Unit){
-    Column{
-        TituloSeccion(texto = textoTitulo)
-        Row(modifier= Modifier
-            .fillMaxWidth()
-            .weight(1.0f)
-            .padding(PADDING_HORIZONTAL)){
-            cuerpo()
-        }
-        Row(modifier= Modifier
-            .fillMaxWidth()
-            .padding(PADDING_HORIZONTAL)) {
-            BotonStandard(texto = textoBoton, onClick)
-        }
-    }
-}
-
-@Composable
 fun EstructuraTituloCuerpo(textoTitulo: String,
                            cuerpo: @Composable () -> Unit){
     Column{
@@ -337,6 +315,27 @@ fun EstructuraTituloCuerpo(textoTitulo: String,
         }
     }
 }
+
+@Composable
+fun EsctructuraTituloCuerpoBoton(textoTitulo: String,
+                                 textoBoton:String,
+                                 onClick: () -> Unit,
+                                 cuerpo: @Composable () -> Unit){
+    EstructuraTituloCuerpo(textoTitulo){
+        Column{
+            Row(modifier= Modifier
+                .fillMaxWidth()
+                .weight(1.0f)){
+                cuerpo()
+            }
+            Row(modifier= Modifier
+                .fillMaxWidth()) {
+                BotonStandard(texto = textoBoton, onClick)
+            }
+        }
+    }
+}
+
 
 @Composable
 fun CajaTextoGris(text:String,modifier: Modifier){
