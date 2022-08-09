@@ -287,7 +287,6 @@ fun ToggleVertical(normal:Boolean, onClick: (Boolean) -> Unit, textoA: String, t
     }
 }
 
-
 @Composable
 fun TituloSeccion(texto:String){
     Row(horizontalArrangement = Arrangement.Center,

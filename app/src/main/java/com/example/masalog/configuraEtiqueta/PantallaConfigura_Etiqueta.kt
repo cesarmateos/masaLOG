@@ -1,22 +1,13 @@
 package com.example.masalog.configuraEtiqueta
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.example.masalog.BTHandler
-import com.example.masalog.BotonStandard
-import com.example.masalog.PADDING_HORIZONTAL
-import com.example.masalog.ToggleVertical
+import com.example.masalog.*
 
 
 val redondeoFlechas = 20.dp
@@ -62,28 +53,10 @@ fun Despacho(){
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .padding(PADDING_HORIZONTAL),
+        .padding(horizontal = PADDING_HORIZONTAL, vertical = 15.dp),
         horizontalAlignment = Alignment.CenterHorizontally)
     {
-        Row{
-            Column{
-                Row(modifier = Modifier.fillMaxWidth()){
-                    Text(text="Horizontal : ", fontSize = 18.sp, style = TextStyle(fontWeight = FontWeight.Bold))
-                    Text(horizontal.toString(), fontSize = 18.sp)
-                }
-                Row{
-                    Text(text="Vertical : ", fontSize = 18.sp, style = TextStyle(fontWeight = FontWeight.Bold))
-                    Text(vertical.toString(), fontSize = 18.sp)
-                }
-            }
-        }
-        FlechaArriba(vertical,onClick = { vertical = it })
-        Row(modifier= Modifier.padding(5.dp)) {
-            FlechaIzquierda(horizontal, onClick = {horizontal = it})
-            Spacer(modifier = Modifier.size(5.dp))
-            FlechaDerecha(horizontal,onClick = { horizontal = it })
-        }
-        FlechaAbajo(vertical,onClick = { vertical = it })
+        BotoneraDireccionConIndicadores(horizontal,vertical,{horizontal= it}, {vertical= it})
         Spacer(modifier = Modifier.size(espaciado /2))
         Row(modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically){
@@ -125,32 +98,10 @@ fun Predespacho(){
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .padding(PADDING_HORIZONTAL),
+        .padding(horizontal = PADDING_HORIZONTAL, vertical = 15.dp),
         horizontalAlignment = Alignment.CenterHorizontally)
     {
-        Spacer(modifier = Modifier.size(espaciado))
-        FlechaArriba(vertical,onClick = { vertical = it })
-        Row(modifier= Modifier.padding(5.dp)) {
-            FlechaIzquierda(horizontal, onClick = {horizontal = it})
-            Spacer(modifier = Modifier.size(5.dp))
-            FlechaDerecha(horizontal,onClick = { horizontal = it })
-        }
-        FlechaAbajo(vertical,onClick = { vertical = it })
-        Spacer(modifier = Modifier.size(espaciado))
-        Row(modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically){
-            Column{
-                Row{
-                    Text(text="Horizontal : ", fontSize = 18.sp, style = TextStyle(fontWeight = FontWeight.Bold))
-                    Text(horizontal.toString(), fontSize = 18.sp)
-                }
-                Spacer(modifier = Modifier.size(5.dp))
-                Row{
-                    Text(text="Vertical : ", fontSize = 18.sp, style = TextStyle(fontWeight = FontWeight.Bold))
-                    Text(vertical.toString(), fontSize = 18.sp)
-                }
-            }
-        }
+        BotoneraDireccionConIndicadores(horizontal,vertical,{horizontal= it}, {vertical= it})
         Spacer(modifier = Modifier.size(espaciado *2))
         BotonStandard(texto = "Formulario Papel Continuo",
             onClick = { cargarFormatoPredespacho(vertical,horizontal, 225)
@@ -170,75 +121,6 @@ fun Predespacho(){
         )
     }
 }
-
-@Composable
-fun FlechaDerecha(variable: Int, onClick: (Int) -> Unit){
-    Button(onClick = { onClick(variable+1) },
-        shape = RoundedCornerShape(
-            topEnd = redondeoFlechas,
-            bottomEnd = redondeoFlechas
-        ),
-        colors =ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
-        modifier = Modifier.height(40.dp),
-        contentPadding = PaddingValues(1.dp)
-        ) {
-        Icon(imageVector = Icons.Filled.KeyboardArrowRight,
-            contentDescription = "",
-            modifier = Modifier.size(50.dp))
-    }
-}
-
-@Composable
-fun FlechaIzquierda(variable: Int, onClick: (Int) -> Unit){
-    Button(onClick = { onClick(variable -1) },
-        shape = RoundedCornerShape(
-            topStart = redondeoFlechas,
-            bottomStart = redondeoFlechas,
-        ),
-        colors =ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
-        modifier = Modifier.height(40.dp),
-        contentPadding = PaddingValues(1.dp)
-        ) {
-        Icon(imageVector = Icons.Filled.KeyboardArrowLeft,
-            contentDescription = "",
-            modifier = Modifier.size(50.dp))
-    }
-}
-
-@Composable
-fun FlechaArriba(variable: Int, onClick: (Int) -> Unit){
-    Button(onClick = { onClick(variable+1) },
-        shape = RoundedCornerShape(
-            topStart = redondeoFlechas,
-            topEnd = redondeoFlechas
-        ),
-        colors =ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
-        modifier = Modifier.height(35.dp),
-        contentPadding = PaddingValues(1.dp)
-        ) {
-        Icon(imageVector = Icons.Filled.KeyboardArrowUp,
-            contentDescription = "Arriba",
-            modifier = Modifier.size(50.dp))
-    }
-}
-
-@Composable
-fun FlechaAbajo(variable: Int, onClick: (Int) -> Unit){
-    Button(onClick = { onClick(variable-1) },
-        shape = RoundedCornerShape(
-            bottomEnd = redondeoFlechas,
-            bottomStart = redondeoFlechas
-        ),
-        colors =ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
-        modifier = Modifier.height(35.dp),
-        contentPadding = PaddingValues(1.dp)
-        ) {
-        Icon(imageVector = Icons.Filled.KeyboardArrowDown,
-            contentDescription = "Abajo",
-            modifier = Modifier.size(50.dp))
-    }
-}
-
 
 fun cargarFormatoDespacho(vertical: Int, horizontal: Int, sentidoNormal: Boolean, barras: Boolean){
 
