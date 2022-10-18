@@ -69,13 +69,16 @@ fun Despacho(lenguaje: Lenguaje){
     {
         BotoneraDireccionConIndicadores(horizontal,vertical,{horizontal= it}, {vertical= it},lenguaje)
         Spacer(modifier = Modifier.size(espaciado /2))
+
         Row(modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically){
-            Column(horizontalAlignment = Alignment.Start) {
-                ToggleVertical(normal = barras, onClick = {barras = it}, textoA= "C.Barras", textoB="QR")
-            }
-            if(lenguaje.adminteGiro()){
+            if(lenguaje.admiteBarrasPack()){
+                Column(horizontalAlignment = Alignment.Start) {
+                    ToggleVertical(normal = barras, onClick = {barras = it}, textoA= "C.Barras", textoB="QR")
+                }
                 Spacer(modifier = Modifier.size(espaciado))
+            }
+            if(lenguaje.admiteGiro()){
                 Column(modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.End) {
                     ToggleVertical(normal = sentidoNormal, onClick = {sentidoNormal = it}, textoA= "Normal", textoB="Invertida")
@@ -123,28 +126,32 @@ fun Predespacho(lenguaje: Lenguaje){
         Spacer(modifier = Modifier.size(espaciado /2))
         Row(modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically){
-            Column(horizontalAlignment = Alignment.Start) {
-                ToggleVertical(normal = barras, onClick = {barras = it}, textoA= "C.Barras", textoB="QR")
+            if(lenguaje.admiteBarrasTapadora()){
+                Column(horizontalAlignment = Alignment.Start) {
+                    ToggleVertical(normal = barras, onClick = {barras = it}, textoA= "C.Barras", textoB="QR")
+                }
+                Spacer(modifier = Modifier.size(espaciado))
             }
         }
+
         Spacer(modifier = Modifier.size(espaciado))
 
         //BOTONES
         BotonStandard(texto = "Formulario Papel Continuo",
-            onClick = { lenguaje.cargarFormatoPredespacho(vertical,horizontal, 225)
+            onClick = { lenguaje.cargarFormatoPredespacho(vertical,horizontal, 225, barras)
                         lenguaje.imprimirPredespacho()
             }
         )
         Spacer(modifier = Modifier.size(espaciado))
         BotonStandard(texto = "Formulario Etiqueta",
-            onClick = { lenguaje.cargarFormatoPredespacho(vertical,horizontal, 0)
+            onClick = { lenguaje.cargarFormatoPredespacho(vertical,horizontal, 0,barras)
                         lenguaje.imprimirPredespacho()
             }
         )
 
         Spacer(modifier = Modifier.size(espaciado))
         BotonStandard(texto = "Formulario Emergencia",
-            onClick = { lenguaje.cargarFormatoPredespacho(vertical,horizontal, 825)
+            onClick = { lenguaje.cargarFormatoPredespacho(vertical,horizontal, 825,barras)
                         lenguaje.imprimirPredespacho() }
         )
     }

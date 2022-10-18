@@ -10,12 +10,12 @@ class ZPL : Lenguaje{
         sentidoNormal: Boolean,
         barras: Boolean
     ) {
-        val multiplicador = 10
+        val multiplicador = 5
 
         val origenX = intArrayOf(560,580,40,190,190,190,250,190,190,340, 40, 90,270,480,670, 55, 40, 40)
         val origenY = intArrayOf( 40,100,40, 40, 70,100,100,145,185,243,283,335,335,335,335,360,435,470)
 
-        val finalX = origenX.map({coordenada -> (coordenada + vertical * multiplicador) })
+        val finalX = origenX.map({coordenada -> (coordenada + horizontal * multiplicador) })
         val finalY = origenY.map({coordenada -> (coordenada + vertical * multiplicador) })
 
         val scaneable = if(barras){
@@ -23,7 +23,6 @@ class ZPL : Lenguaje{
         }else{
             "^FO" +  finalX[2] + "," + finalY[2] + "^BXN,10,200,,,1,^FN1^FS\n" +
                     "^FO" +  finalX[2] + "," + (180+ vertical * multiplicador) + "^A0,25,25^FN1^FS\n"
-
         }
 
         val etiqueta = "^XA\n" +
@@ -51,36 +50,50 @@ class ZPL : Lenguaje{
         BTHandler.imprimir(etiqueta)
     }
 
-    override fun cargarFormatoPredespacho(vertical: Int, horizontal: Int, margen: Int) {
+    override fun cargarFormatoPredespacho(vertical: Int, horizontal: Int, margen: Int, barras :Boolean) {
         var modificadorMargen =""
-        val multiplicador = 10
+        val multiplicador = 5
 
 
         if (margen>0){
             modificadorMargen = "^F020,20^FD.^FS<ETX>\n"
         }
 
+        val origenX = intArrayOf(40, 65,310,390,590, 40, 80,250,440,655, 60, 40, 50, 50,420, 40,595,565)
+        val origenY = intArrayOf(40,100, 50, 50, 50,150,210,210,210,210,235,340,375,400,400,445,335,365)
+
+        val finalX = origenX.map({coordenada -> (coordenada + horizontal * multiplicador) })
+        val finalY = origenY.map({coordenada -> ((coordenada + margen) + (vertical * multiplicador)) })
+
+        val scaneable = if(barras){
+            "^BY2,2.7,50\n" +
+                    "^FO"+ ( 620 + horizontal * multiplicador) + "," + ( 310 + margen + (vertical * multiplicador))+"^B2B,110,Y,N^FN10^FS"
+        }else{
+            "^FO" +  finalX[16] + "," + finalY[16] + "^BXN,12,200,,,1,^FN10^FS\n"+
+                    "^FO" +  finalX[17] + "," + finalY[17] + "^A0B,25,25^FN10^FS\n"
+        }
+
+
         val etiqueta = "^XA\n" +
                 "^DFR:TAPADORA.ZPL^FS\n" +
                 modificadorMargen +
-                "^FO" +  (40 + horizontal * multiplicador) + "," + ((40 + margen) + (vertical * multiplicador) ) + ZPLLogo + "^FS\n"+
-                "^FO" +  (65 + horizontal * multiplicador) + "," + ((100 + margen) + (vertical * multiplicador) ) + "^A0N,20,23^FDMonroe Americana^FS\n"+
-                "^FO" +  (310 + horizontal * multiplicador) + "," + ((50 + margen) + (vertical * multiplicador) ) + "^A0N,35,35^FDPed:^FS\n"+
-                "^FO" +  (390 + horizontal * multiplicador) + "," + ((50 + margen) + (vertical * multiplicador) ) + "^A0N,35,35^FN1^FS\n"+
-                "^FO" +  (590 + horizontal * multiplicador) + "," + ((50 + margen) + (vertical * multiplicador) ) + "^A0N,35,35^FN2^FS\n"+
-                "^FO" +  (40 + horizontal * multiplicador) + "," + ((150 + margen) + (vertical * multiplicador) ) + "^A0N,30,33^FN3^FS\n"+
-                "^FO" +  (80 + horizontal * multiplicador) + "," + ((210 + margen) + (vertical * multiplicador) ) + "^A0N,20,20^FDEntrega^FS\n"+
-                "^FO" +  (250 + horizontal * multiplicador) + "," + ((210 + margen) + (vertical * multiplicador) ) + "^A0N,20,20^FDRadio^FS\n"+
-                "^FO" +  (440 + horizontal * multiplicador) + "," + ((210 + margen) + (vertical * multiplicador) ) + "^A0N,20,20^FDSalida^FS\n"+
-                "^FO" +  (655 + horizontal * multiplicador) + "," + ((210 + margen) + (vertical * multiplicador) ) + "^A0N,20,20^FDOrden^FS\n"+
-                "^FO" +  (60 + horizontal * multiplicador) + "," + ((235 + margen) + (vertical * multiplicador) ) + "^A0N,90,100^FN4^FS\n"+
-                "^FO" +  (40 + horizontal * multiplicador) + "," + ((340 + margen) + (vertical * multiplicador) ) + "^A0N,28,33^FN5^FS\n"+
-                "^FO" +  (50 + horizontal * multiplicador) + "," + ((375 + margen) + (vertical * multiplicador) ) + "^A0N,25,25^FN6^FS\n"+
-                "^FO" +  (50 + horizontal * multiplicador) + "," + ((400 + margen) + (vertical * multiplicador) ) + "^A0N,25,25^FN7^FS\n"+
-                "^FO" +  (420 + horizontal * multiplicador) + "," + ((400 + margen) + (vertical * multiplicador) ) + "^A0N,25,25^FN8^FS\n"+
-                "^FO" +  (40 + horizontal * multiplicador) + "," + ((445 + margen) + (vertical * multiplicador) ) + "^A0N,45,50^FN9^FS\n"+
-                "^FO" +  (595 + horizontal * multiplicador) + "," + ((335 + margen) + (vertical * multiplicador) ) + "^BXN,12,200,,,1,^FN10^FS\n"+
-                "^FO" +  (565 + horizontal * multiplicador) + "," + ((365 + margen) + (vertical * multiplicador) ) + "^A0B,25,25^FN10^FS\n"+
+                "^FO" +  finalX[0] + "," + finalY[0] + ZPLLogo + "^FS\n"+
+                "^FO" +  finalX[1] + "," + finalY[1] + "^A0N,20,23^FDMonroe Americana^FS\n"+
+                "^FO" +  finalX[2] + "," + finalY[2] + "^A0N,35,35^FDPed:^FS\n"+
+                "^FO" +  finalX[3] + "," + finalY[3] + "^A0N,35,35^FN1^FS\n"+
+                "^FO" +  finalX[4] + "," + finalY[4] + "^A0N,35,35^FN2^FS\n"+
+                "^FO" +  finalX[5] + "," + finalY[5] + "^A0N,30,33^FN3^FS\n"+
+                "^FO" +  finalX[6] + "," + finalY[6] + "^A0N,20,20^FDEntrega^FS\n"+
+                "^FO" +  finalX[7] + "," + finalY[7] + "^A0N,20,20^FDRadio^FS\n"+
+                "^FO" +  finalX[8] + "," + finalY[8] + "^A0N,20,20^FDSalida^FS\n"+
+                "^FO" +  finalX[9] + "," + finalY[9] + "^A0N,20,20^FDOrden^FS\n"+
+                "^FO" +  finalX[10] + "," + finalY[10] + "^A0N,90,100^FN4^FS\n"+
+                "^FO" +  finalX[11]+ "," + finalY[11] + "^A0N,28,33^FN5^FS\n"+
+                "^FO" +  finalX[12] + "," + finalY[12]+ "^A0N,25,25^FN6^FS\n"+
+                "^FO" +  finalX[13] + "," + finalY[13] + "^A0N,25,25^FN7^FS\n"+
+                "^FO" +  finalX[14] + "," + finalY[14]+ "^A0N,25,25^FN8^FS\n"+
+                "^FO" +  finalX[15]+ "," + finalY[15]+ "^A0N,45,50^FN9^FS\n"+
+                scaneable+
                 "^XZ"
 
         BTHandler.imprimir(etiqueta)
@@ -101,12 +114,20 @@ class ZPL : Lenguaje{
         BTHandler.imprimir(ZPLetiquetaPredespacho)
     }
 
-    override fun adminteGiro(): Boolean {
+    override fun admiteGiro(): Boolean {
         return false
     }
 
     override fun nombreLenguaje(): String {
         return "ZPL"
+    }
+
+    override fun admiteBarrasPack(): Boolean {
+        return true
+    }
+
+    override fun admiteBarrasTapadora(): Boolean {
+        return true
     }
 }
 

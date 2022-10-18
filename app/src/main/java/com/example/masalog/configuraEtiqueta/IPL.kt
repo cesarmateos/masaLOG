@@ -109,7 +109,7 @@ class IPL : Lenguaje{
         )
     }
 
-    override fun cargarFormatoPredespacho(vertical: Int, horizontal: Int, margen: Int) {
+    override fun cargarFormatoPredespacho(vertical: Int, horizontal: Int, margen: Int, barras :Boolean) {
         var modificadorMargen =""
 
         BTHandler.imprimir(LogoIPL)
@@ -163,12 +163,20 @@ class IPL : Lenguaje{
         BTHandler.imprimir(IPLetiquetaPredespacho)
     }
 
-    override fun adminteGiro(): Boolean {
+    override fun admiteGiro(): Boolean {
         return true
     }
 
     override fun nombreLenguaje(): String {
         return "IPL"
+    }
+
+    override fun admiteBarrasPack(): Boolean {
+        return true
+    }
+
+    override fun admiteBarrasTapadora(): Boolean {
+        return false
     }
 }
 

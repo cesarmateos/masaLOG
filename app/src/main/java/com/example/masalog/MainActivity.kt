@@ -1,18 +1,12 @@
 package com.example.masalog
 
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -29,12 +23,6 @@ import com.example.masalog.etiquetaRefrigerados.PantallaEtiquetaHeladeras
 import com.example.masalog.etiquetado.PantallaEtiquetadoInicio
 import com.example.masalog.ui.theme.GrisPurple
 import com.example.masalog.ui.theme.MasaLOGTheme
-
-
-
-private const val CONFIGURACION = "configuracion"
-
-private val Context.dataStore by preferencesDataStore(name = CONFIGURACION)
 
 
 class MainActivity() : ComponentActivity() {
