@@ -1,12 +1,18 @@
 package com.example.masalog
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,6 +21,7 @@ import com.example.masalog.configuraEtiqueta.PantallaConfiguraEtiqueta
 import com.example.masalog.configuraImpresora.PantallaConfiguraImpresora
 import com.example.masalog.configuraImpresora.PantallaConfiguraImpresoraRP4
 import com.example.masalog.configuraImpresora.PantallaConfiguraImpresoraSATO
+import com.example.masalog.configuracion.PantallaConfiguracion
 import com.example.masalog.controlado.ControlProductos
 import com.example.masalog.controlado.PantallaControlaListadoIngresoProducto
 import com.example.masalog.controlado.PantallaControlaListado
@@ -24,7 +31,13 @@ import com.example.masalog.ui.theme.GrisPurple
 import com.example.masalog.ui.theme.MasaLOGTheme
 
 
-class MainActivity : ComponentActivity() {
+
+private const val CONFIGURACION = "configuracion"
+
+private val Context.dataStore by preferencesDataStore(name = CONFIGURACION)
+
+
+class MainActivity() : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +65,8 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+
 }
 
 
@@ -98,6 +113,10 @@ fun Navegador(navController: NavHostController,modifier: Modifier = Modifier) {
             PantallaControlaListadoIngresoProducto(
                 onClickControladorProductos = {navController.navigate(Pantallas.ControladorProductos.name)}
             )
+        }
+
+        composable(Pantallas.Configuracion.name){
+            PantallaConfiguracion()
         }
 
     }

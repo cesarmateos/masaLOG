@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -15,6 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.masalog.*
 import com.example.masalog.R
+import com.example.masalog.configuraEtiqueta.IPL
+import com.example.masalog.configuraEtiqueta.LogoIPL
 
 @Composable
 fun PantallaEtiquetaHeladeras() {
@@ -25,30 +26,9 @@ fun PantallaEtiquetaHeladeras() {
 
     EsctructuraTituloCuerpoBoton(textoTitulo= stringResource(R.string.etiqueta_heladeras),"Imprimir Etiquetas",{imprimirEtiquetasHeladera(ejeX,ejeY,cantidad)}){
         Column{
-            BotoneraDireccionConIndicadores(ejeX,ejeY,{ejeX= it}, {ejeY= it})
+            BotoneraDireccionConIndicadores(ejeX,ejeY,{ejeX= it}, {ejeY= it}, IPL())
             Spacer(Modifier.size(10.dp))
-            Row(
-                modifier = Modifier.padding(vertical = 10.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                Text(text = "Cantidad:",style = TextStyle(fontWeight = FontWeight.Bold),fontSize =18.sp)
-                Spacer(Modifier.size(10.dp))
-                Text(cantidad.toString().padStart(3, '0'),fontSize =18.sp)
-                Spacer(Modifier.size(20.dp))
-                Flechita(
-                    intLimitado = cantidadLimitada,
-                    intMostrable = cantidad,
-                    rotacion = 0f,
-                    onClick = { cantidad = it },
-                    operacion = { a: IntLimitado -> a.restar(1) })
-                Spacer(modifier = Modifier.size(10.dp))
-                Flechita(
-                    intLimitado = cantidadLimitada,
-                    intMostrable = cantidad,
-                    rotacion = 180f,
-                    onClick = { cantidad = it },
-                    operacion = { a: IntLimitado -> a.sumar(1) })
-            }
+            ParDeFlechitasConTexto("Cantidad:",cantidadLimitada,cantidad,{cantidad=it},1,3)
             Spacer(Modifier.size(10.dp))
             Row(modifier = Modifier.fillMaxWidth().background(Color.Yellow).padding(vertical=8.dp),
                 horizontalArrangement = Arrangement.Center)
@@ -64,7 +44,7 @@ fun PantallaEtiquetaHeladeras() {
 }
 
 fun imprimirEtiquetasHeladera(modificaX : Int, modificaY: Int, cantidad: Int){
-    BTHandler.mandarLogo()
+    BTHandler.imprimir(LogoIPL)
     BTHandler.imprimir(etiquetaHeladera(modificaX, modificaY, cantidad))
 }
 

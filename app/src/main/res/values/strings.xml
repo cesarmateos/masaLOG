@@ -1,14 +1,15 @@
 <resources>
     <string name="app_name">MASApp 2</string>
     <string name="envia_configuracion">Enviar Configuración</string>
-    <string name="app_name_version">MASApp 2.0.3</string>
+    <string name="app_name_version">MASApp 2.1.0</string>
     <string name="alerta_impresora_no_activa">No se encontró una impresora conectada o lista para imprimir</string>
     <string name="alerta_calor">Tenga en cuenta que a mayor calor menos vida útil del cabezal. \n  ¿Es necesario configurar el calor por encima de 15? </string>
     <string name="config_impresora">Configurar Impresora</string>
     <string name="config_impresora_CL4NX">Configurar SATO CL4NX</string>
     <string name="config_impresora_RP4">Configurar Honeywell RP4</string>
-    <string name="config_etiquetas">Configurar Etiquetas</string>
+    <string name="config_etiquetas">Etiquetas Preparación</string>
     <string name="etiquetado_archivo">Etiquetado desde Archivo</string>
     <string name="control_archivo">Control desde Archivo</string>
     <string name="etiqueta_heladeras">Etiqueta Heladeras</string>
+    <string name="lenguaje">Lenguaje</string>
 </resources>

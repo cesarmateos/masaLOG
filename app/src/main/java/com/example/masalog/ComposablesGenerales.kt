@@ -30,13 +30,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.masalog.configuraEtiqueta.*
+import com.example.masalog.configuraEtiqueta.Lenguaje
 
 import kotlin.math.min
 import kotlin.math.max
 
 
 val PADDING_HORIZONTAL = 20.dp
+val redondeoFlechas = 20.dp
 
 @Composable
 fun BotonStandard(texto: String, onClick: () -> Unit){
@@ -72,6 +73,34 @@ fun Flechita(intLimitado: IntLimitado, intMostrable: Int, rotacion: Float, onCli
             modifier = Modifier
                 .size(20.dp)
                 .rotate(rotacion))
+    }
+}
+
+@Composable
+fun ParDeFlechitas(cantidadLimitada: IntLimitado,cantidad:Int,onClick: (Int) -> Unit,modificador : Int) {
+    Flechita(
+        intLimitado = cantidadLimitada,
+        intMostrable = cantidad,
+        rotacion = 0f,
+        onClick = onClick,
+        operacion = { a: IntLimitado -> a.restar(modificador) })
+    Spacer(modifier = Modifier.size(10.dp))
+    Flechita(
+        intLimitado = cantidadLimitada,
+        intMostrable = cantidad,
+        rotacion = 180f,
+        onClick = onClick,
+        operacion = { a: IntLimitado -> a.sumar(modificador) })
+}
+
+@Composable
+fun ParDeFlechitasConTexto(texto: String, cantidadLimitada: IntLimitado, cantidad:Int, onClick: (Int) -> Unit, modificador : Int, largoCifra:Int){
+    Row{
+        Text(text = texto,style = TextStyle(fontWeight = FontWeight.Bold),fontSize =18.sp)
+        Spacer(Modifier.size(10.dp))
+        Text(cantidad.toString().padStart(largoCifra, '0'),fontSize =18.sp)
+        Spacer(Modifier.size(20.dp))
+        ParDeFlechitas(cantidadLimitada = cantidadLimitada, cantidad = cantidad, onClick = onClick, modificador = modificador)
     }
 }
 
@@ -134,16 +163,34 @@ fun BotoneraDireccion(ejeX : Int, ejeY: Int, onClickX: (Int) -> Unit, onClickY: 
 }
 
 @Composable
-fun BotoneraDireccionConIndicadores(ejeX : Int, ejeY: Int, onClickX: (Int) -> Unit, onClickY: (Int) -> Unit){
+fun BotoneraDireccionConIndicadores(ejeX : Int, ejeY: Int, onClickX: (Int) -> Unit, onClickY: (Int) -> Unit,lenguaje: Lenguaje){
     Column {
         Row(modifier = Modifier.fillMaxWidth()){
-            Text(text="Horizontal : ", fontSize = 18.sp, style = TextStyle(fontWeight = FontWeight.Bold))
-            Text(ejeX.toString(), fontSize = 18.sp)
-        }
-        Row{
-            Text(text="Vertical : ", fontSize = 18.sp, style = TextStyle(fontWeight = FontWeight.Bold))
-            Text(ejeY.toString(), fontSize = 18.sp)
-        }
+            Column() {
+                Row{
+                    Text(
+                        text = "Horizontal : ",
+                        fontSize = 18.sp,
+                        style = TextStyle(fontWeight = FontWeight.Bold)
+                    )
+                    Text(ejeX.toString(), fontSize = 18.sp)
+                }
+                Row {
+                    Text(
+                        text = "Vertical : ",
+                        fontSize = 18.sp,
+                        style = TextStyle(fontWeight = FontWeight.Bold)
+                    )
+                    Text(ejeY.toString(), fontSize = 18.sp)
+                }
+            }
+            Text(text=lenguaje.nombreLenguaje(),
+                modifier = Modifier.fillMaxWidth(),
+                fontSize = 36.sp,
+                textAlign = TextAlign.Right)
+
+    }
+
         BotoneraDireccion(ejeX = ejeX, ejeY = ejeY, onClickX = onClickX, onClickY = onClickY )
     }
 }

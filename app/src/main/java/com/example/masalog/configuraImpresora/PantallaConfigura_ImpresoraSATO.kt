@@ -82,19 +82,7 @@ fun  PantallaConfiguraImpresoraSATO(navController: NavHostController) {
                 if (modificaVelocidad) {
                     Text(text = velocidad.toString().padStart(2, '0'), fontSize = sizeFuente)
                     Spacer(modifier = Modifier.size(20.dp))
-                    Flechita(
-                        intLimitado = velocidadLimitada,
-                        intMostrable = velocidad,
-                        rotacion = 0f,
-                        onClick = { velocidad = it },
-                        operacion = { a: IntLimitado -> a.restar(1) })
-                    Spacer(modifier = Modifier.size(10.dp))
-                    Flechita(
-                        intLimitado = velocidadLimitada,
-                        intMostrable = velocidad,
-                        rotacion = 180f,
-                        onClick = { velocidad = it },
-                        operacion = { a: IntLimitado -> a.sumar(1) })
+                    ParDeFlechitas(cantidadLimitada = velocidadLimitada, cantidad = velocidad, onClick = { velocidad = it }, modificador = 1)
                 } else {
                     Text(
                         text = "Modificar",
@@ -118,19 +106,7 @@ fun  PantallaConfiguraImpresoraSATO(navController: NavHostController) {
                 if (modificaOscuridad) {
                     Text(text = oscuridad.toString().padStart(2, '0'), fontSize = sizeFuente)
                     Spacer(modifier = Modifier.size(20.dp))
-                    Flechita(
-                        intLimitado = oscuridadLimitada,
-                        intMostrable = oscuridad,
-                        rotacion = 0f,
-                        onClick = { oscuridad = it },
-                        operacion = { a: IntLimitado -> a.restar(1) })
-                    Spacer(modifier = Modifier.size(10.dp))
-                    Flechita(
-                        intLimitado = oscuridadLimitada,
-                        intMostrable = oscuridad,
-                        rotacion = 180f,
-                        onClick = { oscuridad = it },
-                        operacion = { a: IntLimitado -> a.sumar(1) })
+                    ParDeFlechitas(cantidadLimitada = oscuridadLimitada, cantidad = oscuridad, onClick = { oscuridad = it }, modificador = 1)
                 } else {
                     Text(
                         text = "Modificar",

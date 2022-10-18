@@ -56,8 +56,6 @@ fun  PantallaConfiguraImpresoraRP4(navController: NavHostController) {
         })
     {
 
-
-
         //ALERTA CALOR
         if(alertaAbierto.value){
             AlertDialog(onDismissRequest = { alertaAbierto.value = false},
@@ -98,19 +96,7 @@ fun  PantallaConfiguraImpresoraRP4(navController: NavHostController) {
                 if (modificaBluetooth) {
                     Text(text = bluetooth.toString().padStart(3, '0'), fontSize = sizeFuente)
                     Spacer(modifier = Modifier.size(20.dp))
-                    Flechita(
-                        intLimitado = bluetoothLimitado,
-                        intMostrable = bluetooth,
-                        rotacion = 0f,
-                        onClick = { bluetooth = it },
-                        operacion = { a: IntLimitado -> a.restar(30) })
-                    Spacer(modifier = Modifier.size(10.dp))
-                    Flechita(
-                        intLimitado = bluetoothLimitado,
-                        intMostrable = bluetooth,
-                        rotacion = 180f,
-                        onClick = { bluetooth = it },
-                        operacion = { a: IntLimitado -> a.sumar(30) })
+                    ParDeFlechitas(bluetoothLimitado,bluetooth,{bluetooth=it},30)
                 } else {
                     Text(
                         text = "Modificar",
@@ -134,19 +120,7 @@ fun  PantallaConfiguraImpresoraRP4(navController: NavHostController) {
                 if (modificaVelocidad) {
                     Text(text = (velocidad.toFloat() / 2).toString(), fontSize = sizeFuente)
                     Spacer(modifier = Modifier.size(20.dp))
-                    Flechita(
-                        intLimitado = velocidadLimitada,
-                        intMostrable = velocidad,
-                        rotacion = 0f,
-                        onClick = { velocidad = it },
-                        operacion = { a: IntLimitado -> a.restar(1) })
-                    Spacer(modifier = Modifier.size(10.dp))
-                    Flechita(
-                        intLimitado = velocidadLimitada,
-                        intMostrable = velocidad,
-                        rotacion = 180f,
-                        onClick = { velocidad = it },
-                        operacion = { a: IntLimitado -> a.sumar(1) })
+                    ParDeFlechitas(velocidadLimitada,velocidad,{ velocidad = it },1)
                 } else {
                     Text(
                         text = "Modificar",
@@ -170,19 +144,7 @@ fun  PantallaConfiguraImpresoraRP4(navController: NavHostController) {
                 if (modificaOscuridad) {
                     Text(text = oscuridad.toString().padStart(2, '0'), fontSize = sizeFuente)
                     Spacer(modifier = Modifier.size(20.dp))
-                    Flechita(
-                        intLimitado = oscuridadLimitada,
-                        intMostrable = oscuridad,
-                        rotacion = 0f,
-                        onClick = { oscuridad = it },
-                        operacion = { a: IntLimitado -> a.restar(1) })
-                    Spacer(modifier = Modifier.size(10.dp))
-                    Flechita(
-                        intLimitado = oscuridadLimitada,
-                        intMostrable = oscuridad,
-                        rotacion = 180f,
-                        onClick = { oscuridad = it },
-                        operacion = { a: IntLimitado -> a.sumar(1) })
+                    ParDeFlechitas(oscuridadLimitada,oscuridad,{oscuridad=it},1)
                 } else {
                     Text(
                         text = "Modificar",
@@ -204,19 +166,7 @@ fun  PantallaConfiguraImpresoraRP4(navController: NavHostController) {
                 if (modificaCalor) {
                     Text(text = calor.toString().padStart(2, '0'), fontSize = sizeFuente)
                     Spacer(modifier = Modifier.size(20.dp))
-                    Flechita(
-                        intLimitado = calorLimitado,
-                        intMostrable = calor,
-                        rotacion = 0f,
-                        onClick = { calor = it },
-                        operacion = { a: IntLimitado -> a.restar(1) })
-                    Spacer(modifier = Modifier.size(10.dp))
-                    Flechita(
-                        intLimitado = calorLimitado,
-                        intMostrable = calor,
-                        rotacion = 180f,
-                        onClick = { calor = it },
-                        operacion = { a: IntLimitado -> a.sumar(1) })
+                    ParDeFlechitas(calorLimitado,calor,{calor=it},1)
                 } else {
                     Text(
                         text = "Modificar",
