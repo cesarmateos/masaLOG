@@ -91,20 +91,20 @@ fun Despacho(lenguaje: Lenguaje){
         Spacer(modifier = Modifier.size(espaciado))
         BotonStandard(texto = "Ejemplo Pack / G.Volumen",
                     onClick = { lenguaje.cargarFormatoDespacho(vertical,horizontal, sentidoNormal,barras)
-                                lenguaje.imprimirDespachoPack()
+                                lenguaje.imprimirEjemploPack()
                     }
         )
         Spacer(modifier = Modifier.size(espaciado))
         BotonStandard(texto = "Ejemplo IOMA",
                     onClick = { lenguaje.cargarFormatoDespacho(vertical,horizontal, sentidoNormal,barras)
-                                lenguaje.imprimirDespachoIOMA()
+                                lenguaje.imprimirEjemploIOMA()
                     }
         )
 
         Spacer(modifier = Modifier.size(espaciado))
         BotonStandard(texto = "Ejemplo Refrigerados",
                     onClick = { lenguaje.cargarFormatoDespacho(vertical,horizontal, sentidoNormal,barras)
-                                lenguaje.imprimirDespachoRefrigerado()
+                                lenguaje.imprimirEjemploRefrigerado()
                     }
         )
     }
@@ -139,20 +139,20 @@ fun Predespacho(lenguaje: Lenguaje){
         //BOTONES
         BotonStandard(texto = "Formulario Papel Continuo",
             onClick = { lenguaje.cargarFormatoPredespacho(vertical,horizontal, 225, barras)
-                        lenguaje.imprimirPredespacho()
+                        lenguaje.imprimirEjemploFarmabox()
             }
         )
         Spacer(modifier = Modifier.size(espaciado))
         BotonStandard(texto = "Formulario Etiqueta",
             onClick = { lenguaje.cargarFormatoPredespacho(vertical,horizontal, 0,barras)
-                        lenguaje.imprimirPredespacho()
+                        lenguaje.imprimirEjemploFarmabox()
             }
         )
 
         Spacer(modifier = Modifier.size(espaciado))
         BotonStandard(texto = "Formulario Emergencia",
             onClick = { lenguaje.cargarFormatoPredespacho(vertical,horizontal, 825,barras)
-                        lenguaje.imprimirPredespacho() }
+                        lenguaje.imprimirEjemploFarmabox() }
         )
     }
 }

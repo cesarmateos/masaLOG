@@ -2,16 +2,11 @@ package com.example.masalog.configuraEtiqueta
 
 import com.example.masalog.BTHandler
 
-class ZPL : Lenguaje{
+class ZPL : Lenguaje(){
 
-    override fun cargarFormatoDespacho(
-        vertical: Int,
-        horizontal: Int,
-        sentidoNormal: Boolean,
-        barras: Boolean
-    ) {
-        val multiplicador = 5
+    override val multiplicador = 5
 
+    override fun cargarFormatoDespacho(vertical: Int,  horizontal: Int,  sentidoNormal: Boolean,  barras: Boolean) {
         val origenX = intArrayOf(560,580,40,190,190,190,250,190,190,340, 40, 90,270,480,670, 55, 40, 40)
         val origenY = intArrayOf( 40,100,40, 40, 70,100,100,145,185,243,283,335,335,335,335,360,435,470)
 
@@ -52,8 +47,6 @@ class ZPL : Lenguaje{
 
     override fun cargarFormatoPredespacho(vertical: Int, horizontal: Int, margen: Int, barras :Boolean) {
         var modificadorMargen =""
-        val multiplicador = 5
-
 
         if (margen>0){
             modificadorMargen = "^F020,20^FD.^FS<ETX>\n"
@@ -99,95 +92,172 @@ class ZPL : Lenguaje{
         BTHandler.imprimir(etiqueta)
     }
 
-    override fun imprimirDespachoPack() {
-        BTHandler.imprimir(ZPLetiquetaPack)
+    override fun etiquetaHeladera50mm(modificaX: Int, modificaY: Int, cantidad: Int): String {
+        val origenX = intArrayOf(50,430,340, 50, 70,430, 50, 50, 70, 85,155, 70,155,245,330,245,330,245,330,418,430,430,430,430,430)
+        val origenY = intArrayOf(35, 37, 70,105,120,120,175,175,195,265,255,327,317,203,193,265,255,327,317,175,190,225,265,305,345)
+
+        val finalX = origenX.map({coordenada -> (coordenada + modificaX * multiplicador) })
+        val finalY = origenY.map({coordenada -> (coordenada + modificaY * multiplicador) })
+
+        return  "^XA\n" +
+                "^FO" + finalX[0]+ ","+ finalY[0] + "^GFA,1450,1450,25,gI03FFC07FF,Y06TFB,V037XFEC,U0gIFE,S03gLF8,R0gOFC,P01gQFE,P0SF4R0BLFC,O0PFBX01KF8,N0NFECgI05IF8,M07MF8gL01IF,L03LFEgP07FE,L0LF8gR03FC,K03KFCgT03F,J01KF8gV03C,J03JF8gX018J0JFC,I03JF,I0JF8,001IFC,003IFM0FC001F8K03FFL07F8M07FE,007FFC003FFC3FF007FFJ03JFJ03IFCK07JF,01IFI03FFCIFC1IF8001KFCI0KFJ03KFC,01FFCI07FF9IFC3IFC003LF001KFCI07KFE,03FF8I07FFBIFE7IFE00MF807KFEI0MF,07FEJ07RF01MFC07LF001MF80FFCJ07RF03MFC0MF803MF81FF8J07RF03MFE1MFC07MFC1FFK07RF07IF1IFE1FFE07FFC0IFE1IFC3FEK0SF07FFC07FFE3FFE01FF80IF80IFC3FCK0IFC1IFC3IF00FF807FFE3FFE00FJ0FF00IFC7FCK0IF81IF81IFI07007FFE3FFEN0600IFC7F8K0IF81IF01IFL07FFC3IFEP0IFC7F8K0IF01IF01IFJ07JFE3KFM06JFC7FL0IF01IF01IF001LFC1KFEJ03LFCFFK01IF01IF01IF00MFC1LF8001MFCFEK01IF01FFE03IF03MFC1LFE007MF8FEK01IF01FFE03FFE07MFC0LFE00NF8FEK01IF01FFE03FFE0NFC07LF01NF8FEK01FFE03FFE03FFE1JF9IFC03LF83JF1IF87EK03FFE03FFE03FFE3IFC1IFC01LFC7IF81IF87EK03FFE03FFE07FFE7IF01IF8007KFC7FFE01IF,7EK03FFE03FFC07FFC7FFE01IF8I0KFCIFC03IF,3EK03FFE07FFC07FFC7FFE01IF8J07IFCIFC03IF,3EK03FFE07FFC07FFCIFE03IF801400IFCIFC03IF,1EK03FFC07FFC07FFCIFE03IF0FFC007FFDIFC07IF,0FK03FFC07FFC07FFCIFE07IF1FFE007FFDIFC0JF,0FK07FFC07FFC0IFCJF1JF1IFC0IF8IFE3IFE,078J07FFC07FFC0IFCOF0NF8NFE,038J07FFC07FF80IF87NF07MF0NFE,01CJ07FFC0IF80IF87JFDIF07MF07MFE,00EJ07FFC0IF80IF83JF9IF03LFE07JFBFFE,006J07FF80IF80IF81JF3IF01LFC03IFE3FFE,001J0IF80IF01IF80IFE3IF007KF001IFE3FFE,I0CI0IF80IF80IF007FFC1IFI0JFCI07FF83FFE,I06X01FFN03FFEJ03FE,,:^FS\n" +
+                "^FO" + finalX[1]+ ","+ finalY[1] + "^A0N,30,30^FDCadena de Frio^FS\n" +
+                "^FO" + finalX[2]+ ","+ finalY[2] + "^A0N,30,30^FDMantener entre 2 y 8 grados C^FS\n" +
+                "^FO" + finalX[3]+ ","+ finalY[3] + "\n" +
+                "^GB725,60,4,B,4^FS\n" +
+                "^FO" + finalX[4]+ ","+ finalY[4] + "^A0N,38,38^FDFecha: ^FS\n" +
+                "^FO" + finalX[5]+ ","+ finalY[5] + "^A0N,38,38^FDHora: ^FS\n" +
+                "^FO" + finalX[6]+ ","+ finalY[6] + "\n" +
+                "^GB355,205,4,B,1^FS\n" +
+                "^FO" + finalX[7]+ ","+ finalY[7] + "\n" +
+                "^GB160,65,4,B,3^FS\n" +
+                "^FO" + finalX[8]+ ","+ finalY[8] + "^A0N,38,38^FDValidez ^FS\n" +
+                "^FO" + finalX[9]+ ","+ finalY[9] + "^A0N,35,35^FD6 hs^FS\n" +
+                "^FO" + finalX[10]+ ","+ finalY[10] + "\n" +
+                "^GB50,50,4^FS\n" +
+                "^FO" + finalX[11]+ ","+ finalY[11] + "^A0N,35,35^FD12 hs^FS\n" +
+                "^FO" + finalX[12]+ ","+ finalY[12] + "\n" +
+                "^GB50,50,4^FS\n" +
+                "^FO" + finalX[13]+ ","+ finalY[13] + "^A0N,35,35^FD24 hs^FS\n" +
+                "^FO" + finalX[14]+ ","+ finalY[14] + "\n" +
+                "^GB50,50,4^FS\n" +
+                "^FO" + finalX[15]+ ","+ finalY[15] + "^A0N,35,35^FD48 hs^FS\n" +
+                "^FO" + finalX[16]+ ","+ finalY[16] + "\n" +
+                "^GB50,50,4^FS\n" +
+                "^FO" + finalX[17]+ ","+ finalY[17] + "^A0N,35,35^FD72 hs^FS\n" +
+                "^FO" + finalX[18]+ ","+ finalY[18] + "\n" +
+                "^GB50,50,4^FS\n" +
+                "^FO" + finalX[19]+ ","+ finalY[19] + "\n" +
+                "^GB355,205,4,B,1^FS\n" +
+                "^FO" + finalX[20]+ ","+ finalY[20] + "^A0N,30,30^FD- Mantener lejos de^FS\n" +
+                "^FO" + finalX[21]+ ","+ finalY[21] + "^A0N,30,30^FD    fuentes de calor^FS\n" +
+                "^FO" + finalX[22]+ ","+ finalY[22] + "^A0N,30,30^FD- No Congelar^FS\n" +
+                "^FO" + finalX[23]+ ","+ finalY[23] + "^A0N,30,30^FD- Fragil^FS\n" +
+                "^FO" + finalX[24]+ ","+ finalY[24] + "^A0N,30,30^FD- No abrir^FS\n" +
+                "^PQ"+ cantidad + ",0,1,Y\n" +
+                "^XZ"
     }
 
-    override fun imprimirDespachoIOMA() {
-        BTHandler.imprimir(ZPLetiquetaIOMA)
-    }
-    override fun imprimirDespachoRefrigerado() {
-        BTHandler.imprimir(ZPLetiquetaRefrigerados)
-    }
+    override fun etiquetaHeladera65mm(modificaX: Int, modificaY: Int, cantidad: Int): String {
+        val origenX = intArrayOf(50,430,340, 50, 50,417, 70,430,170,180, 85,155, 70,150, 70,155,245,330,250,335,430,430,430,430,430)
+        val origenY = intArrayOf(35, 37, 70,110,195,195,133,133,212,250,300,290,365,355,430,420,300,290,365,355,225,265,325,380,435)
 
-    override fun imprimirPredespacho() {
-        BTHandler.imprimir(ZPLetiquetaPredespacho)
+        val finalX = origenX.map({coordenada -> (coordenada + modificaX * multiplicador) })
+        val finalY = origenY.map({coordenada -> (coordenada + modificaY * multiplicador) })
+
+        return  "^XA\n" +
+                "^FO"+ finalX[0] + "," + finalY[0] + ZPLLogo + "^FS\n" +
+                "^FO"+ finalX[1] + "," + finalY[1] + "^A0N,30,30^FDCadena de Frio^FS\n" +
+                "^FO"+ finalX[2] + "," + finalY[2] + "^A0N,30,30^FDMantener entre 2 y 8 grados C^FS\n" +
+                "^FO"+ finalX[3] + "," + finalY[3] + "\n" +
+                "^GB725,75,4,B,4^FS\n" +
+                "^FO"+ finalX[4] + "," + finalY[4] + "\n" +
+                "^GB355,290,4,B,1^FS\n" +
+                "^FO"+ finalX[5] + "," + finalY[5] + "\n" +
+                "^GB355,290,4,B,1^FS\n" +
+                "^FO"+ finalX[6] + "," + finalY[6] + "^A0N,38,38^FDFecha: ^FS\n" +
+                "^FO"+ finalX[7] + "," + finalY[7] + "^A0N,38,38^FDHora: ^FS\n" +
+                "^FO"+ finalX[8] + "," + finalY[8] + "^A0N,38,38^FDValidez ^FS\n" +
+                "^FO"+ finalX[9] + "," + finalY[9] + "^A0N,20,23^FD(en horas) ^FS\n" +
+                "^FO"+ finalX[10] + "," + finalY[10] + "^A0N,35,35^FD6 hs^FS\n" +
+                "^FO"+ finalX[11] + "," + finalY[11] + "\n" +
+                "^GB50,50,3^FS\n" +
+                "^FO"+ finalX[12] + "," + finalY[12] + "^A0N,35,35^FD12 hs^FS\n" +
+                "^FO"+ finalX[13] + "," + finalY[13] + "\n" +
+                "^GB50,50,3^FS\n" +
+                "^FO"+ finalX[14] + "," + finalY[14] + "^A0N,35,35^FD24 hs^FS\n" +
+                "^FO"+ finalX[15] + "," + finalY[15] + "\n" +
+                "^GB50,50,3^FS\n" +
+                "^FO"+ finalX[16] + "," + finalY[16] + "^A0N,35,35^FD48 hs^FS\n" +
+                "^FO"+ finalX[17] + "," + finalY[17] + "\n" +
+                "^GB50,50,3^FS\n" +
+                "^FO"+ finalX[18] + "," + finalY[18] + "^A0N,35,35^FD72 hs^FS\n" +
+                "^FO"+ finalX[19] + "," + finalY[19] + "\n" +
+                "^GB50,50,3^FS\n" +
+                "^FO"+ finalX[20] + "," + finalY[20] + "^A0N,35,35^FD- Mantener lejos de^FS\n" +
+                "^FO"+ finalX[21] + "," + finalY[21] + "^A0N,35,35^FD    fuentes de calor^FS\n" +
+                "^FO"+ finalX[22] + "," + finalY[22] + "^A0N,35,35^FD- No Congelar^FS\n" +
+                "^FO"+ finalX[23] + "," + finalY[23] + "^A0N,35,35^FD- Fragil^FS\n" +
+                "^FO"+ finalX[24] + "," + finalY[24] + "^A0N,35,35^FD- No abrir^FS\n" +
+                "^PQ"+ cantidad + ",0,1,Y\n" +
+                "^XZ"
     }
 
     override fun admiteGiro(): Boolean {
         return false
     }
-
     override fun nombreLenguaje(): String {
         return "ZPL"
     }
-
     override fun admiteBarrasPack(): Boolean {
         return true
     }
-
     override fun admiteBarrasTapadora(): Boolean {
         return true
     }
+
+    override val ejemploFarmabox: String
+        get() = "^XA\n" +
+                "^XFR:TAPADORA.ZPL\n" +
+                "^FN1^FD125@#^FS\n" +
+                "^FN2^FD04/11/2020^FS\n" +
+                "^FN3^FDBul: 001 Fmbx.=200692  Doc.=FC 1116-05939381^FS\n" +
+                "^FN4^FD01  A5 13:20  22^FS\n" +
+                "^FN5^FDFCIA ANTIGUA POZUELO SCS ^FS\n" +
+                "^FN6^FDAv. Mitre 2471^FS\n" +
+                "^FN7^FDAvellaneda^FS\n" +
+                "^FN8^FD(2676901)^FS\n" +
+                "^FN9^FDDESP.COPIA 734-D^FS\n" +
+                "^FN10^FD123456789^FS\n" +
+                "^XZ"
+
+    override val ejemploPack: String
+        get() = "^XA\n" +
+                "^XFR:PACK.ZPL\n" +
+                "^FN1^FD123456789^FS\n" +
+                "^FN2^FDBulto Numero^FS\n" +
+                "^FN3^FD01/01/1900^FS\n" +
+                "^FN4^FD0000^FS^FS\n" +
+                "^FN5^FDNombre Producto^FS\n" +
+                "^FN6^FDPresentacion Producto^FS\n" +
+                "^FN7^FDFal. 0/ 2^FS\n" +
+                "^FN8^FD1   (Desc  1) [LOCALIZ]^FS\n" +
+                "^FN9^FD0001   30/10  F3 13:20   022^FS\n" +
+                "^FN10^FDEtiqueta Ejemplo Pack^FS\n" +
+                "^FN11^FD(ID_CLIE)^FS\n" +
+                "^XZ"
+
+    override val ejemploRefrigerados: String
+        get() = "^XA\n" +
+                "^XFR:PACK.ZPL\n" +
+                "^FN1^FD1234567890^FS\n" +
+                "^FN2^FDEtiq. de DESPACHO^FS\n" +
+                "^FN3^FD01/01/1900^FS\n" +
+                "^FN4^FD0000^FS^FS\n" +
+                "^FN5^FDEtiqueta Ejemplo^FS\n" +
+                "^FN6^FDRefrigerados^FS\n" +
+                "^FN7^FD^FS\n" +
+                "^FN8^FD***PRODUCTOS A REFRIGERAR ENTRE 2 y 8 GRADOS***^FS\n" +
+                "^FN9^FD0001   30/10  F3 13:20   022^FS\n" +
+                "^FN10^FDFarmacia^FS\n" +
+                "^FN11^FD(ID_CLIENTE)^FS\n" +
+                "^XZ"
+
+    override val ejemploIOMA: String
+        get() = "^XA\n" +
+                "^XFR:PACK.ZPL\n" +
+                "^FN1^FD1234567890^FS\n" +
+                "^FN2^FDEtiq. de DESPACHO^FS\n" +
+                "^FN3^FD01/01/1900^FS\n" +
+                "^FN4^FD0000^FS^FS\n" +
+                "^FN5^FDDireccion^FS\n" +
+                "^FN6^FDLocalidad^FS\n" +
+                "^FN7^FDEtiqueta IOMA^FS\n" +
+                "^FN8^FD*^FS\n" +
+                "^FN9^FD0001   30/10  F3 13:20   022^FS\n" +
+                "^FN10^FDFarmacia^FS\n" +
+                "^FN11^FD(INIO)^FS\n" +
+                "^XZ"
 }
-
-const val ZPLetiquetaPack = "^XA\n" +
-        "^XFR:PACK.ZPL\n" +
-        "^FN1^FD123456789^FS\n" +
-        "^FN2^FDBulto Numero^FS\n" +
-        "^FN3^FD01/01/1900^FS\n" +
-        "^FN4^FD0000^FS^FS\n" +
-        "^FN5^FDNombre Producto^FS\n" +
-        "^FN6^FDPresentacion Producto^FS\n" +
-        "^FN7^FDFal. 0/ 2^FS\n" +
-        "^FN8^FD1   (Desc  1) [LOCALIZ]^FS\n" +
-        "^FN9^FD0001   30/10  F3 13:20   022^FS\n" +
-        "^FN10^FDEtiqueta Ejemplo Pack^FS\n" +
-        "^FN11^FD(ID_CLIE)^FS\n" +
-        "^XZ"
-
-const val ZPLetiquetaIOMA = "^XA\n" +
-        "^XFR:PACK.ZPL\n" +
-        "^FN1^FD1234567890^FS\n" +
-        "^FN2^FDEtiq. de DESPACHO^FS\n" +
-        "^FN3^FD01/01/1900^FS\n" +
-        "^FN4^FD0000^FS^FS\n" +
-        "^FN5^FDDireccion^FS\n" +
-        "^FN6^FDLocalidad^FS\n" +
-        "^FN7^FDEtiqueta IOMA^FS\n" +
-        "^FN8^FD*^FS\n" +
-        "^FN9^FD0001   30/10  F3 13:20   022^FS\n" +
-        "^FN10^FDFarmacia^FS\n" +
-        "^FN11^FD(INIO)^FS\n" +
-        "^XZ"
-
-const val ZPLetiquetaRefrigerados = "^XA\n" +
-        "^XFR:PACK.ZPL\n" +
-        "^FN1^FD1234567890^FS\n" +
-        "^FN2^FDEtiq. de DESPACHO^FS\n" +
-        "^FN3^FD01/01/1900^FS\n" +
-        "^FN4^FD0000^FS^FS\n" +
-        "^FN5^FDEtiqueta Ejemplo^FS\n" +
-        "^FN6^FDRefrigerados^FS\n" +
-        "^FN7^FD^FS\n" +
-        "^FN8^FD***PRODUCTOS A REFRIGERAR ENTRE 2 y 8 GRADOS***^FS\n" +
-        "^FN9^FD0001   30/10  F3 13:20   022^FS\n" +
-        "^FN10^FDFarmacia^FS\n" +
-        "^FN11^FD(ID_CLIENTE)^FS\n" +
-        "^XZ"
-
-const val ZPLetiquetaPredespacho = "^XA\n" +
-        "^XFR:TAPADORA.ZPL\n" +
-        "^FN1^FD125@#^FS\n" +
-        "^FN2^FD04/11/2020^FS\n" +
-        "^FN3^FDBul: 001 Fmbx.=200692  Doc.=FC 1116-05939381^FS\n" +
-        "^FN4^FD01  A5 13:20  22^FS\n" +
-        "^FN5^FDFCIA ANTIGUA POZUELO SCS ^FS\n" +
-        "^FN6^FDAv. Mitre 2471^FS\n" +
-        "^FN7^FDAvellaneda^FS\n" +
-        "^FN8^FD(2676901)^FS\n" +
-        "^FN9^FDDESP.COPIA 734-D^FS\n" +
-        "^FN10^FD123456789^FS\n" +
-        "^XZ"
 
 const val ZPLLogo = "^GFA,1450,1450,25,gI03FFC07FF,Y06TFB,V037XFEC,U0gIFE,S03gLF8,R0gOFC,P01gQFE,P0SF4R0BLFC,O0PFBX01KF8,N0NFECgI05IF8,M07MF8gL01IF,L03LFEgP07FE,L0LF8gR03FC,K03KFCgT03F,J01KF8gV03C,J03JF8gX018J0JFC,I03JF,I0JF8,001IFC,003IFM0FC001F8K03FFL07F8M07FE,007FFC003FFC3FF007FFJ03JFJ03IFCK07JF,01IFI03FFCIFC1IF8001KFCI0KFJ03KFC,01FFCI07FF9IFC3IFC003LF001KFCI07KFE,03FF8I07FFBIFE7IFE00MF807KFEI0MF,07FEJ07RF01MFC07LF001MF80FFCJ07RF03MFC0MF803MF81FF8J07RF03MFE1MFC07MFC1FFK07RF07IF1IFE1FFE07FFC0IFE1IFC3FEK0SF07FFC07FFE3FFE01FF80IF80IFC3FCK0IFC1IFC3IF00FF807FFE3FFE00FJ0FF00IFC7FCK0IF81IF81IFI07007FFE3FFEN0600IFC7F8K0IF81IF01IFL07FFC3IFEP0IFC7F8K0IF01IF01IFJ07JFE3KFM06JFC7FL0IF01IF01IF001LFC1KFEJ03LFCFFK01IF01IF01IF00MFC1LF8001MFCFEK01IF01FFE03IF03MFC1LFE007MF8FEK01IF01FFE03FFE07MFC0LFE00NF8FEK01IF01FFE03FFE0NFC07LF01NF8FEK01FFE03FFE03FFE1JF9IFC03LF83JF1IF87EK03FFE03FFE03FFE3IFC1IFC01LFC7IF81IF87EK03FFE03FFE07FFE7IF01IF8007KFC7FFE01IF,7EK03FFE03FFC07FFC7FFE01IF8I0KFCIFC03IF,3EK03FFE07FFC07FFC7FFE01IF8J07IFCIFC03IF,3EK03FFE07FFC07FFCIFE03IF801400IFCIFC03IF,1EK03FFC07FFC07FFCIFE03IF0FFC007FFDIFC07IF,0FK03FFC07FFC07FFCIFE07IF1FFE007FFDIFC0JF,0FK07FFC07FFC0IFCJF1JF1IFC0IF8IFE3IFE,078J07FFC07FFC0IFCOF0NF8NFE,038J07FFC07FF80IF87NF07MF0NFE,01CJ07FFC0IF80IF87JFDIF07MF07MFE,00EJ07FFC0IF80IF83JF9IF03LFE07JFBFFE,006J07FF80IF80IF81JF3IF01LFC03IFE3FFE,001J0IF80IF01IF80IFE3IF007KF001IFE3FFE,I0CI0IF80IF80IF007FFC1IFI0JFCI07FF83FFE,I06X01FFN03FFEJ03FE,,:"

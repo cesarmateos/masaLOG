@@ -2,21 +2,17 @@ package com.example.masalog.configuraEtiqueta
 
 import com.example.masalog.BTHandler
 
-class IPL : Lenguaje{
+class IPL : Lenguaje() {
 
-    override fun cargarFormatoDespacho(
-        vertical: Int,
-        horizontal: Int,
-        sentidoNormal: Boolean,
-        barras: Boolean
-    ) {
+    override val multiplicador = 4
+
+    override fun cargarFormatoDespacho(vertical: Int, horizontal: Int, sentidoNormal: Boolean, barras: Boolean) {
         BTHandler.imprimir(LogoIPL)
         lateinit var posicionesEnX:IntArray
         lateinit var posicionesEnY:IntArray
         lateinit var orientacion:IntArray
 
         var tamanioTexto = 17
-        val multiplicador = 4
 
         val matrizOpcionesX = Array(2){Array(2){IntArray(19)} }
         val matrizOpcionesY = Array(2){Array(2){IntArray(19)} }
@@ -113,8 +109,6 @@ class IPL : Lenguaje{
         var modificadorMargen =""
 
         BTHandler.imprimir(LogoIPL)
-        val multiplicador = 4
-
 
         if (margen>0){
             modificadorMargen = "<STX>H38;f3;o" + (475+margen + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k6;d3,.<ETX>\n"
@@ -148,19 +142,14 @@ class IPL : Lenguaje{
         )
     }
 
-    override fun imprimirDespachoPack() {
-        BTHandler.imprimir(IPLetiquetaPack)
+    override fun imprimirRefrigerados50mm(modificaX : Int, modificaY: Int, cantidad: Int) {
+        BTHandler.imprimir(LogoIPL)
+        super.imprimirRefrigerados50mm(modificaX, modificaY, cantidad)
     }
 
-    override fun imprimirDespachoIOMA() {
-        BTHandler.imprimir(IPLetiquetaIOMA)
-    }
-    override fun imprimirDespachoRefrigerado() {
-        BTHandler.imprimir(IPLetiquetaRefrigerados)
-    }
-
-    override fun imprimirPredespacho() {
-        BTHandler.imprimir(IPLetiquetaPredespacho)
+    override fun imprimirRefrigerados65mm(modificaX : Int, modificaY: Int, cantidad: Int) {
+        BTHandler.imprimir(LogoIPL)
+        super.imprimirRefrigerados65mm(modificaX, modificaY, cantidad)
     }
 
     override fun admiteGiro(): Boolean {
@@ -178,66 +167,117 @@ class IPL : Lenguaje{
     override fun admiteBarrasTapadora(): Boolean {
         return false
     }
+
+    override fun etiquetaHeladera50mm(modificaX : Int, modificaY: Int, cantidad: Int): String{
+
+        val baseY =  intArrayOf(360,230,230,25,25 ,370,340,285,285,210,185,150,115, 80,220,185,145,100,85, 40,205,160,145,100, 85, 40,160)
+        val baseX =  intArrayOf(35 ,35 ,410,35,420,390,295,50 ,425,435,463,435,435,435, 50, 70, 90,125,75,125,250,300,250,300,250,300,35)
+
+        val posicionesY = baseY.map({ coordenada -> coordenada + modificaY * multiplicador})
+        val posicionesX = baseX.map({ coordenada -> coordenada + modificaX * multiplicador})
+
+
+        return "<STX><ESC>C<ETX>\n" +
+                "<STX><ESC>P<ETX>\n" +
+                "<STX>E5;F5;<ETX>\n" +
+                "<STX>U1;f3;o" + posicionesY[0] +","+ posicionesX[0] + ";c2;w1;h1;<ETX>\n" +
+                "<STX>W2;o" +  posicionesY[1] +","+ posicionesX[1] + ";l70;h380;w5;<ETX>\n" +
+                "<STX>W3;o" + posicionesY[2] +","+ posicionesX[2] + ";l70;h380;w5;<ETX>\n" +
+                "<STX>W4;o" + posicionesY[3] +","+ posicionesX[3] + ";l200;h370;w5;<ETX>\n" +
+                "<STX>W5;o" + posicionesY[4] +","+ posicionesX[4] + ";l200;h370;w5;<ETX>\n" +
+                "<STX>H6;f3;o" + posicionesY[5] +","+ posicionesX[5] + ";c21;b0;k10;d3,Cadena de Frio<ETX>\n" +
+                "<STX>H7;f3;o" + posicionesY[6] +","+ posicionesX[6] + ";c26;b0;k10;d3,Mantener entre 2 y 8 grados C<ETX>\n" +
+                "<STX>H8;f3;o" + posicionesY[7] +","+ posicionesX[7] + ";c21;b0;k12;d3,Fecha:<ETX>\n" +
+                "<STX>H9;f3;o" + posicionesY[8] +","+ posicionesX[8] + ";c21;b0;k12;d3,Hora:<ETX>\n" +
+                "<STX>H10;f3;o" + posicionesY[9] +","+ posicionesX[9] + ";c26;b0;k10;d3,- Mantener lejos de<ETX>\n" +
+                "<STX>H11;f3;o" + posicionesY[10] +","+ posicionesX[10] + ";c26;b0;k10;d3,fuentes de calor<ETX>\n" +
+                "<STX>H12;f3;o" + posicionesY[11] +","+ posicionesX[11] + ";c26;b0;k10;d3,- No Congelar<ETX>\n" +
+                "<STX>H13;f3;o" + posicionesY[12] +","+ posicionesX[12] + ";c26;b0;k10;d3,- Fragil<ETX>\n" +
+                "<STX>H14;f3;o" + posicionesY[13] +","+ posicionesX[13] + ";c26;b0;k10;d3,- No abrir<ETX>\n" +
+                "<STX>H15;f3;o" + posicionesY[14] +","+ posicionesX[14] + ";c26;b0;k12;d3,Validez<ETX>\n" +
+                "<STX>H16;f3;o" + posicionesY[15] +","+ posicionesX[15] + ";c26;b0;k6;d3,(en horas)<ETX>\n" +
+                "<STX>H17;f3;o" + posicionesY[16] +","+ posicionesX[16] + ";c26;b0;k12;d3,6<ETX>\n" +
+                "<STX>W18;o"+ posicionesY[17] +","+ posicionesX[17] + ";l50;h50;w5;<ETX>\n" +
+                "<STX>H19;f3;o"+ posicionesY[18] +","+ posicionesX[18] + ";c26;b0;k12;d3,12<ETX>\n" +
+                "<STX>W20;o"+ posicionesY[19] +","+ posicionesX[19] + ";l50;h50;w5;<ETX>\n" +
+                "<STX>H21;f3;o"+ posicionesY[20] +","+ posicionesX[20] + ";c26;b0;k12;d3,24<ETX>\n" +
+                "<STX>W22;o"+ posicionesY[21] +","+ posicionesX[21] + ";l50;h50;w5;<ETX>\n" +
+                "<STX>H23;f3;o"+ posicionesY[22] +","+ posicionesX[22] + ";c26;b0;k12;d3,48<ETX>\n" +
+                "<STX>W24;o"+ posicionesY[23] + "," + posicionesX[23] + ";l50;h50;w5;<ETX>\n" +
+                "<STX>H25;f3;o"+ posicionesY[24] + "," + posicionesX[24] + ";c26;b0;k12;d3,72<ETX>\n" +
+                "<STX>W26;o"+ posicionesY[25] + "," + posicionesX[25] + ";l50;h50;w5;<ETX>\n" +
+                "<STX>W27;o"+posicionesY[26] + "," + posicionesX[26] + ";l65;h170;w5;<ETX>\n" +
+                "<STX>R<ETX>\n" +
+                "<STX><ESC>E5<CAN><ETX>\n" +
+                "<STX><RS>" + cantidad.toString()+"<ETB><FF><ETX>"
+    }
+
+    override fun etiquetaHeladera65mm(modificaX: Int, modificaY: Int, cantidad: Int): String {
+        return ""
+    }
+
+    override val ejemploFarmabox: String
+        get() = "<STX>R<ETX>\n" +
+                "<STX><ESC>E11<CAN><ETX>\n" +
+                "<STX><ESC>F6<DEL>DESP.COPIA NNN-D<ETX>\n" +
+                "<STX><ESC>F8<DEL>Fecha_Hoy<ETX>\n" +
+                "<STX><ESC>F10<DEL>Pedido<ETX>\n" +
+                "<STX><ESC>F11<DEL>4444444444<ETX>\n" +
+                "<STX><ESC>F12<DEL>(ID_CLIE)<ETX>\n" +
+                "<STX><ESC>F17<DEL>Bul: NUM Fmbx.=NUMERO  Doc.=NUMERO FACTURA<ETX>\n" +
+                "<STX><ESC>F15<DEL>Direccion Farmacia<ETX>\n" +
+                "<STX><ESC>F16<DEL>Localidad<ETX>\n" +
+                "<STX><ESC>F13<DEL>ETIQUETA EJEMPLO PREDESPACHO<ETX>\n" +
+                "<STX><ESC>F21<DEL>01  A5 13:20  22<ETX>\n" +
+                "<STX><RS>1<ETB><FF><ETX>"
+
+    override val ejemploPack: String
+        get() = "<STX>R<ETX> \n" +
+                "<STX><ESC>E1<CAN><ETX>\n" +
+                "<STX><ESC>F6<DEL>Bulto Numero<ETX>\n" +
+                "<STX><ESC>F8<DEL>Fecha_Hoy<ETX>\n" +
+                "<STX><ESC>F10<DEL>1<ETX>\n" +
+                "<STX><ESC>F11<DEL>66666666<ETX>\n" +
+                "<STX><ESC>F12<DEL>(ID_CLIE)<ETX>\n" +
+                "<STX><ESC>F13<DEL>ETIQUETA EJEMPLO PACK<ETX>\n" +
+                "<STX><ESC>F15<DEL>NOMBRE PRODUCTO               <ETX>\n" +
+                "<STX><ESC>F16<DEL>PRESENTACION PRODUCTO<ETX>\n" +
+                "<STX><ESC>F17<DEL>2   (Desc  1) [LOCALIZ]<ETX>\n" +
+                "<STX><ESC>F21<DEL>0001   11/02  A1 14:10   025<ETX>\n" +
+                "<STX><ESC>F25<DEL>Fal. 0/ 2<ETX>\n" +
+                "<STX><RS>1<ETB><FF><ETX>"
+
+    override val ejemploIOMA: String
+        get() = "<STX>R<ETX> \n" +
+                "<STX><ESC>E1<CAN><ETX>\n" +
+                "<STX><ESC>F6<DEL>Etiq. de DESPACHO<ETX>\n" +
+                "<STX><ESC>F8<DEL>Fecha_Hoy<ETX>\n" +
+                "<STX><ESC>F10<DEL>0000<ETX>\n" +
+                "<STX><ESC>F11<DEL>5555555555<ETX>\n" +
+                "<STX><ESC>F12<DEL>( INIO)<ETX>\n" +
+                "<STX><ESC>F13<DEL>FARMACIA<ETX>\n" +
+                "<STX><ESC>F15<DEL>Direccion  <ETX>\n" +
+                "<STX><ESC>F16<DEL>Localidad<ETX>\n" +
+                "<STX><ESC>F17<DEL>*                             <ETX>\n" +
+                "<STX><ESC>F21<DEL>0001   18/03  V2 23:58   002<ETX>\n" +
+                "<STX><ESC>F25<DEL>ETIQUETA IOMA<ETX>\n" +
+                "<STX><RS>1<ETB><FF><ETX>"
+
+    override val ejemploRefrigerados: String
+        get() = "<STX>R<ETX> \n" +
+                "<STX><ESC>E1<CAN><ETX>\n" +
+                "<STX><ESC>F6<DEL>Etiq. de DESPACHO<ETX>\n" +
+                "<STX><ESC>F8<DEL>Fecha_Hoy<ETX>\n" +
+                "<STX><ESC>F10<DEL>0000<ETX>\n" +
+                "<STX><ESC>F11<DEL>9999999999<ETX>\n" +
+                "<STX><ESC>F12<DEL>(ID_CLIE)<ETX>\n" +
+                "<STX><ESC>F13<DEL>FARMACIA <ETX>\n" +
+                "<STX><ESC>F15<DEL>Etiqueta Ejemplo<ETX>\n" +
+                "<STX><ESC>F16<DEL>Refrigerados<ETX>\n" +
+                "<STX><ESC>F17<DEL>***PRODUCTOS A REFRIGERAR ENTRE 2 y 8 GRADOS<ETX>\n" +
+                "<STX><ESC>F21<DEL>0001   17/03  U7 23:40   007<ETX>\n" +
+                "<STX><RS>1<ETB><FF><ETX>"
 }
-
-
-const val IPLetiquetaPack = "<STX>R<ETX> \n" +
-        "<STX><ESC>E1<CAN><ETX>\n" +
-        "<STX><ESC>F6<DEL>Bulto Numero<ETX>\n" +
-        "<STX><ESC>F8<DEL>Fecha_Hoy<ETX>\n" +
-        "<STX><ESC>F10<DEL>1<ETX>\n" +
-        "<STX><ESC>F11<DEL>66666666<ETX>\n" +
-        "<STX><ESC>F12<DEL>(ID_CLIE)<ETX>\n" +
-        "<STX><ESC>F13<DEL>ETIQUETA EJEMPLO PACK<ETX>\n" +
-        "<STX><ESC>F15<DEL>NOMBRE PRODUCTO               <ETX>\n" +
-        "<STX><ESC>F16<DEL>PRESENTACION PRODUCTO<ETX>\n" +
-        "<STX><ESC>F17<DEL>2   (Desc  1) [LOCALIZ]<ETX>\n" +
-        "<STX><ESC>F21<DEL>0001   11/02  A1 14:10   025<ETX>\n" +
-        "<STX><ESC>F25<DEL>Fal. 0/ 2<ETX>\n" +
-        "<STX><RS>1<ETB><FF><ETX>"
-
-const val IPLetiquetaRefrigerados = "<STX>R<ETX> \n" +
-        "<STX><ESC>E1<CAN><ETX>\n" +
-        "<STX><ESC>F6<DEL>Etiq. de DESPACHO<ETX>\n" +
-        "<STX><ESC>F8<DEL>Fecha_Hoy<ETX>\n" +
-        "<STX><ESC>F10<DEL>0000<ETX>\n" +
-        "<STX><ESC>F11<DEL>9999999999<ETX>\n" +
-        "<STX><ESC>F12<DEL>(ID_CLIE)<ETX>\n" +
-        "<STX><ESC>F13<DEL>FARMACIA <ETX>\n" +
-        "<STX><ESC>F15<DEL>Etiqueta Ejemplo<ETX>\n" +
-        "<STX><ESC>F16<DEL>Refrigerados<ETX>\n" +
-        "<STX><ESC>F17<DEL>***PRODUCTOS A REFRIGERAR ENTRE 2 y 8 GRADOS<ETX>\n" +
-        "<STX><ESC>F21<DEL>0001   17/03  U7 23:40   007<ETX>\n" +
-        "<STX><RS>1<ETB><FF><ETX>"
-
-const val IPLetiquetaIOMA = "<STX>R<ETX> \n" +
-        "<STX><ESC>E1<CAN><ETX>\n" +
-        "<STX><ESC>F6<DEL>Etiq. de DESPACHO<ETX>\n" +
-        "<STX><ESC>F8<DEL>Fecha_Hoy<ETX>\n" +
-        "<STX><ESC>F10<DEL>0000<ETX>\n" +
-        "<STX><ESC>F11<DEL>5555555555<ETX>\n" +
-        "<STX><ESC>F12<DEL>( INIO)<ETX>\n" +
-        "<STX><ESC>F13<DEL>FARMACIA<ETX>\n" +
-        "<STX><ESC>F15<DEL>Direccion  <ETX>\n" +
-        "<STX><ESC>F16<DEL>Localidad<ETX>\n" +
-        "<STX><ESC>F17<DEL>*                             <ETX>\n" +
-        "<STX><ESC>F21<DEL>0001   18/03  V2 23:58   002<ETX>\n" +
-        "<STX><ESC>F25<DEL>ETIQUETA IOMA<ETX>\n" +
-        "<STX><RS>1<ETB><FF><ETX>"
-
-const val IPLetiquetaPredespacho = "<STX>R<ETX>\n" +
-        "<STX><ESC>E11<CAN><ETX>\n" +
-        "<STX><ESC>F6<DEL>DESP.COPIA NNN-D<ETX>\n" +
-        "<STX><ESC>F8<DEL>Fecha_Hoy<ETX>\n" +
-        "<STX><ESC>F10<DEL>Pedido<ETX>\n" +
-        "<STX><ESC>F11<DEL>4444444444<ETX>\n" +
-        "<STX><ESC>F12<DEL>(ID_CLIE)<ETX>\n" +
-        "<STX><ESC>F17<DEL>Bul: NUM Fmbx.=NUMERO  Doc.=NUMERO FACTURA<ETX>\n" +
-        "<STX><ESC>F15<DEL>Direccion Farmacia<ETX>\n" +
-        "<STX><ESC>F16<DEL>Localidad<ETX>\n" +
-        "<STX><ESC>F13<DEL>ETIQUETA EJEMPLO PREDESPACHO<ETX>\n" +
-        "<STX><ESC>F21<DEL>01  A5 13:20  22<ETX>\n" +
-        "<STX><RS>1<ETB><FF><ETX>"
 
 const val LogoIPL = "<STX><ESC>C<ETX>\n" +
         "<STX><ESC>P<ETX>\n" +

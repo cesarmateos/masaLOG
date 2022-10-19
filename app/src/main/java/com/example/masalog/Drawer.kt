@@ -48,13 +48,14 @@ fun Drawer(scope: CoroutineScope, scaffoldState: ScaffoldState, navController: N
                         scope = scope,
                         scaffoldState = scaffoldState,
                         navController = navController,
-                        ruta = Pantallas.ConfiguraSATO.name,
+                        ruta = Pantallas.Impresoras.name,
                         etiqueta = stringResource(R.string.config_impresora))
+
                     OpcionDrawerSecundaria(
                         scope = scope,
                         scaffoldState = scaffoldState,
                         navController = navController,
-                        ruta = Pantallas.Etiquetas.name,
+                        ruta = Pantallas.ConfiguraSATO.name,
                         etiqueta = stringResource(R.string.config_impresora_CL4NX))
 
                     OpcionDrawerSecundaria(
