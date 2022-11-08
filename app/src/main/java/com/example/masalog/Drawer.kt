@@ -103,7 +103,7 @@ fun Drawer(scope: CoroutineScope, scaffoldState: ScaffoldState, navController: N
                         scope = scope,
                         scaffoldState = scaffoldState,
                         navController = navController,
-                        ruta = Pantallas.ControladorProductos.name,
+                        ruta = Pantallas.ControladorInicio.name,
                         etiqueta = stringResource(R.string.control_archivo)
                     )
 
@@ -194,23 +194,5 @@ fun OpcionDrawerSecundaria(scope: CoroutineScope,
     }
 }
 
-@Composable
-fun OpcionDrawerSecundariaB(scope: CoroutineScope,
-                           scaffoldState: ScaffoldState,
-                           navController: NavHostController,
-                           ruta: String,
-                           etiqueta : String){
-    Row(modifier= Modifier
-        .fillMaxWidth()
-        .background(MoradoMuySuave)
-        .padding(horizontal = 40.dp, vertical = 10.dp)
-        .clickable {
-            navController.navigate(ruta)
-            scope.launch { scaffoldState.drawerState.close() }
-        })
-    {
-        Text(text=etiqueta, color= MaterialTheme.colors.primary)
-    }
-}
 
 

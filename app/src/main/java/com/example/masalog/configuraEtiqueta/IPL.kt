@@ -185,7 +185,7 @@ class IPL : Lenguaje() {
                 "<STX>W3;o" + posicionesY[2] +","+ posicionesX[2] + ";l70;h380;w5;<ETX>\n" +
                 "<STX>W4;o" + posicionesY[3] +","+ posicionesX[3] + ";l200;h370;w5;<ETX>\n" +
                 "<STX>W5;o" + posicionesY[4] +","+ posicionesX[4] + ";l200;h370;w5;<ETX>\n" +
-                "<STX>H6;f3;o" + posicionesY[5] +","+ posicionesX[5] + ";c21;b0;k10;d3,Cadena de Frio<ETX>\n" +
+                "<STX>H6;f3;o" + posicionesY[5] +","+ posicionesX[5] + ";c26;b0;k10;d3,Cadena de Frio<ETX>\n" +
                 "<STX>H7;f3;o" + posicionesY[6] +","+ posicionesX[6] + ";c26;b0;k10;d3,Mantener entre 2 y 8 grados C<ETX>\n" +
                 "<STX>H8;f3;o" + posicionesY[7] +","+ posicionesX[7] + ";c21;b0;k12;d3,Fecha:<ETX>\n" +
                 "<STX>H9;f3;o" + posicionesY[8] +","+ posicionesX[8] + ";c21;b0;k12;d3,Hora:<ETX>\n" +
@@ -213,7 +213,46 @@ class IPL : Lenguaje() {
     }
 
     override fun etiquetaHeladera65mm(modificaX: Int, modificaY: Int, cantidad: Int): String {
-        return ""
+
+        val baseY =  intArrayOf(455,320,320, 25, 25,465,435,385,385,295,270,210,150, 90,315,277,235,180,165,110, 95, 40,235,180,165,110)
+        val baseX =  intArrayOf( 35, 35,410, 35,410,390,272, 55,430,440,468,440,440,440,153,173, 93,125, 75,125, 75,125,250,300,250,300)
+
+        val posicionesY = baseY.map({ coordenada -> coordenada + modificaY * multiplicador})
+        val posicionesX = baseX.map({ coordenada -> coordenada + modificaX * multiplicador})
+
+
+        return "<STX><ESC>C<ETX>\n" +
+                "<STX><ESC>P<ETX>\n" +
+                "<STX>E5;F5;<ETX>\n" +
+                "<STX>U1;f3;o" + posicionesY[0] +","+ posicionesX[0] + ";c2;w1;h1;<ETX>\n" +
+                "<STX>W2;o" +  posicionesY[1] +","+ posicionesX[1] + ";l70;h380;w5;<ETX>\n" +
+                "<STX>W3;o" + posicionesY[2] +","+ posicionesX[2] + ";l70;h380;w5;<ETX>\n" +
+                "<STX>W4;o" + posicionesY[3] +","+ posicionesX[3] + ";l290;h380;w5;<ETX>\n" +
+                "<STX>W5;o" + posicionesY[4] +","+ posicionesX[4] + ";l290;h380;w5;<ETX>\n" +
+                "<STX>H6;f3;o" + posicionesY[5] +","+ posicionesX[5] + ";c26;b0;k12;d3,Cadena de Frio<ETX>\n" +
+                "<STX>H7;f3;o" + posicionesY[6] +","+ posicionesX[6] + ";c26;b0;k12;d3,Mantener entre 2 y 8 grados C<ETX>\n" +
+                "<STX>H8;f3;o" + posicionesY[7] +","+ posicionesX[7] + ";c26;b0;k16;d3,Fecha:<ETX>\n" +
+                "<STX>H9;f3;o" + posicionesY[8] +","+ posicionesX[8] + ";c26;b0;k16;d3,Hora:<ETX>\n" +
+                "<STX>H10;f3;o" + posicionesY[9] +","+ posicionesX[9] + ";c26;b0;k12;d3,- Mantener lejos de<ETX>\n" +
+                "<STX>H11;f3;o" + posicionesY[10] +","+ posicionesX[10] + ";c26;b0;k12;d3,fuentes de calor<ETX>\n" +
+                "<STX>H12;f3;o" + posicionesY[11] +","+ posicionesX[11] + ";c26;b0;k12;d3,- No Congelar<ETX>\n" +
+                "<STX>H13;f3;o" + posicionesY[12] +","+ posicionesX[12] + ";c26;b0;k12;d3,- Fragil<ETX>\n" +
+                "<STX>H14;f3;o" + posicionesY[13] +","+ posicionesX[13] + ";c26;b0;k12;d3,- No abrir<ETX>\n" +
+                "<STX>H15;f3;o" + posicionesY[14] +","+ posicionesX[14] + ";c26;b0;k14;d3,Validez<ETX>\n" +
+                "<STX>H16;f3;o" + posicionesY[15] +","+ posicionesX[15] + ";c26;b0;k7;d3,(en horas)<ETX>\n" +
+                "<STX>H17;f3;o" + posicionesY[16] +","+ posicionesX[16] + ";c26;b0;k14;d3,6<ETX>\n" +
+                "<STX>W18;o"+ posicionesY[17] +","+ posicionesX[17] + ";l60;h60;w5;<ETX>\n" +
+                "<STX>H19;f3;o"+ posicionesY[18] +","+ posicionesX[18] + ";c26;b0;k14;d3,12<ETX>\n" +
+                "<STX>W20;o"+ posicionesY[19] +","+ posicionesX[19] + ";l60;h60;w5;<ETX>\n" +
+                "<STX>H21;f3;o"+ posicionesY[20] +","+ posicionesX[20] + ";c26;b0;k14;d3,24<ETX>\n" +
+                "<STX>W22;o"+ posicionesY[21] +","+ posicionesX[21] + ";l60;h60;w5;<ETX>\n" +
+                "<STX>H23;f3;o"+ posicionesY[22] +","+ posicionesX[22] + ";c26;b0;k14;d3,48<ETX>\n" +
+                "<STX>W24;o"+ posicionesY[23] + "," + posicionesX[23] + ";l60;h60;w5;<ETX>\n" +
+                "<STX>H25;f3;o"+ posicionesY[24] + "," + posicionesX[24] + ";c26;b0;k14;d3,72<ETX>\n" +
+                "<STX>W26;o"+ posicionesY[25] + "," + posicionesX[25] + ";l60;h60;w5;<ETX>\n" +
+                "<STX>R<ETX>\n" +
+                "<STX><ESC>E5<CAN><ETX>\n" +
+                "<STX><RS>" + cantidad.toString()+"<ETB><FF><ETX>"
     }
 
     override val ejemploFarmabox: String

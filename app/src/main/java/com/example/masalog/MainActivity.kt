@@ -1,5 +1,6 @@
 package com.example.masalog
 
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,10 +16,11 @@ import com.example.masalog.configuraEtiqueta.PantallaConfiguraEtiqueta
 import com.example.masalog.configuraImpresora.PantallaConfiguraImpresora
 import com.example.masalog.configuraImpresora.PantallaConfiguraImpresoraRP4
 import com.example.masalog.configuraImpresora.PantallaConfiguraImpresoraSATO
+import com.example.masalog.configuraImpresora.PantallaControlaListado_IngresoProductoConLote
 import com.example.masalog.configuracion.PantallaConfiguracion
-import com.example.masalog.controlado.ControlProductos
-import com.example.masalog.controlado.PantallaControlaListadoIngresoProducto
+import com.example.masalog.controlado.PantallaControlaListado_IngresoProducto
 import com.example.masalog.controlado.PantallaControlaListado
+import com.example.masalog.controlado.PantallaControlaListado_Listado
 import com.example.masalog.etiquetaRefrigerados.PantallaEtiquetaHeladeras
 import com.example.masalog.etiquetado.PantallaEtiquetadoInicio
 import com.example.masalog.ui.theme.GrisPurple
@@ -38,7 +40,7 @@ class MainActivity() : ComponentActivity() {
                     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
                     val scope = rememberCoroutineScope()
                     val navController = rememberNavController()
-                    ControlProductos.asignarNavController(navController)
+
                     Scaffold(
                         scaffoldState = scaffoldState,
                         topBar = { BarraTOP(scope = scope, scaffoldState = scaffoldState)},
@@ -54,12 +56,30 @@ class MainActivity() : ComponentActivity() {
         }
     }
 
+/*    private val barcode = StringBuffer()
+
+    @SuppressLint("RestrictedApi")
+    override fun dispatchKeyEvent(event: android.view.KeyEvent?): Boolean {
+
+        if (event?.action == 0) {
+            val pressedKey = event?.unicodeChar?.toChar()
+            barcode.append(pressedKey)
+        }
+        if (event?.action == 0 && event?.keyCode == 66) {
+            Toast.makeText(baseContext, barcode.toString(), Toast.LENGTH_SHORT).show()
+            barcode.delete(0, barcode.length)
+        }
+
+        return super.dispatchKeyEvent(event)
+    }*/
+
 
 }
 
 
 @Composable
 fun Navegador(navController: NavHostController,modifier: Modifier = Modifier) {
+    val navController = rememberNavController()
     NavHost(
         navController = navController,
         startDestination = Pantallas.Inicio.name,
@@ -93,14 +113,20 @@ fun Navegador(navController: NavHostController,modifier: Modifier = Modifier) {
             PantallaEtiquetaHeladeras()
         }
 
+        composable(Pantallas.ControladorInicio.name){
+            PantallaControlaListado(navController)
+        }
+
          composable(Pantallas.ControladorProductos.name){
-             PantallaControlaListado(navController)
+             PantallaControlaListado_Listado(navController)
          }
 
         composable(Pantallas.ControladorIngreso.name){
-            PantallaControlaListadoIngresoProducto(
-                onClickControladorProductos = {navController.navigate(Pantallas.ControladorProductos.name)}
-            )
+            PantallaControlaListado_IngresoProducto(navController)
+        }
+
+        composable(Pantallas.ControladorIngresoLote.name){
+            PantallaControlaListado_IngresoProductoConLote(navController)
         }
 
         composable(Pantallas.Configuracion.name){

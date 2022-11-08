@@ -26,7 +26,7 @@ fun PantallaInicio(navController: NavHostController ) {
             Spacer(Modifier.size(PADDING_HORIZONTAL))
             BotonStandard(stringResource(R.string.etiquetado_archivo)) { navController.navigate(Pantallas.EtiquetadoPlantaInicio.name) }
             Spacer(Modifier.size(PADDING_HORIZONTAL))
-            BotonStandard(stringResource(R.string.control_archivo)){ navController.navigate((Pantallas.ControladorProductos.name)) }
+            BotonStandard(stringResource(R.string.control_archivo)){ navController.navigate((Pantallas.ControladorInicio.name)) }
             Spacer(Modifier.size(PADDING_HORIZONTAL))
             BotonStandard("Lenguaje"){ navController.navigate((Pantallas.Configuracion.name))}
         }

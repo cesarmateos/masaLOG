@@ -18,17 +18,20 @@ import com.example.masalog.ui.theme.Naranja
 
 @Composable
 fun  PantallaConfiguraImpresoraRP4(navController: NavHostController) {
+
     val sizeFuente = 18.sp
 
     val velocidadLimitada : IntLimitado by remember { mutableStateOf(IntLimitado(8,2,10)) }
     val oscuridadLimitada : IntLimitado by remember { mutableStateOf(IntLimitado(32,1,64)) }
     val calorLimitado : IntLimitado by remember { mutableStateOf(IntLimitado(15,1,20)) }
     val bluetoothLimitado : IntLimitado by remember { mutableStateOf(IntLimitado(300,30,300)) }
+    var modificaPapel: Boolean by remember { mutableStateOf(false) }
     var modificaBluetooth : Boolean by remember{ mutableStateOf(false) }
     var modificaVelocidad: Boolean by remember { mutableStateOf(false) }
     var modificaCalor: Boolean by remember { mutableStateOf(false) }
     var modificaOscuridad: Boolean by remember { mutableStateOf(false) }
     var bluetooth: Int by remember { mutableStateOf(bluetoothLimitado.valor) }
+    var papel: Boolean by remember { mutableStateOf(false) }
     var velocidad: Int by remember { mutableStateOf(velocidadLimitada.valor) }
     var calor: Int by remember{ mutableStateOf(calorLimitado.valor)}
     var oscuridad: Int by remember { mutableStateOf(oscuridadLimitada.valor) }
@@ -49,7 +52,9 @@ fun  PantallaConfiguraImpresoraRP4(navController: NavHostController) {
                         calor,
                         modificaCalor,
                         velocidad,
-                        modificaVelocidad
+                        modificaVelocidad,
+                        papel,
+                        modificaPapel
                     )
                     navController.navigate(Pantallas.Etiquetas.name)
             }
@@ -71,7 +76,9 @@ fun  PantallaConfiguraImpresoraRP4(navController: NavHostController) {
                                     calor,
                                     modificaCalor,
                                     velocidad,
-                                    modificaVelocidad)
+                                    modificaVelocidad,
+                                    papel,
+                                    modificaPapel)
                                     alertaAbierto.value = false
                                   },
                         colors = ButtonDefaults.buttonColors(backgroundColor = Naranja)
@@ -176,6 +183,31 @@ fun  PantallaConfiguraImpresoraRP4(navController: NavHostController) {
                     )
                 }
             }
+            Spacer(Modifier.size(10.dp))
+            Row(  //Papel
+
+                modifier = Modifier.padding(horizontal = 10.dp, vertical = 3.dp),
+                verticalAlignment = Alignment.CenterVertically
+            )
+            {
+                Text(text = "Tipo de rollo:", fontSize = sizeFuente)
+                Spacer(Modifier.size(10.dp))
+                if (modificaPapel) {
+                    ToggleHorizontal(
+                        estadoA = papel,
+                        onClick = { papel = it },
+                        textoA = "Papel",
+                        textoB = "Etiqueta"
+                    )
+                } else {
+                    Text(
+                        text = "Modificar",
+                        fontSize = sizeFuente,
+                        modifier = Modifier.clickable { modificaPapel = true },
+                        color = MaterialTheme.colors.secondary
+                    )
+                }
+            }
         }
     }
 }
@@ -183,11 +215,13 @@ fun  PantallaConfiguraImpresoraRP4(navController: NavHostController) {
 fun cambiarConfiguracionRP4(bluetooth: Int, modificaBluetooth: Boolean,
                             oscuridad: Int, modificaOscuridad:Boolean,
                             calor: Int, modificaCalor:Boolean,
-                            velocidad: Int, modificaVelocidad:Boolean){
+                            velocidad: Int, modificaVelocidad:Boolean,
+                            papel: Boolean, modificaPapel: Boolean){
     var setBluetooth = ""
     var setVelocidad = ""
     var setOscuridad = ""
     var setCalor = ""
+    var setPapel = ""
 
     if (modificaBluetooth){
         setBluetooth = "BT[9,$bluetooth:];"
@@ -217,12 +251,21 @@ fun cambiarConfiguracionRP4(bluetooth: Int, modificaBluetooth: Boolean,
       setVelocidad = "pS$velocidadCHAR;"
     }
 
+    if(modificaPapel){
+        setPapel = if(papel) {
+            "STC;"
+        }else{
+            "STG;"
+        }
+    }
+
 
     BTHandler.imprimir(
         "Kc" +
                 setBluetooth +
                 setOscuridad +
                 setCalor +
+                setPapel +
                 setVelocidad + "\n"
     )
 }

@@ -20,6 +20,12 @@ internal class PantallaEtiquetaRefrigeradosKtTest{
     }
 
     @Test
+    fun etiquetaIPL65mm_m0x0x1(){
+        val lenguaje = IPL()
+        assertEquals(etiquetaIPL65mmSinModificaciones,lenguaje.etiquetaHeladera65mm(0,0,1))
+    }
+
+    @Test
     fun etiquetaZPL65mm_0x0x1(){
         val lenguaje = ZPL()
         assertEquals(etiquetaZPL65mmSinModificaciones,lenguaje.etiquetaHeladera65mm(0,0,1))
@@ -47,7 +53,7 @@ const val etiquetaIPL50mmSinModificaciones = "<STX><ESC>C<ETX>\n" +
         "<STX>W3;o230,410;l70;h380;w5;<ETX>\n" +
         "<STX>W4;o25,35;l200;h370;w5;<ETX>\n" +
         "<STX>W5;o25,420;l200;h370;w5;<ETX>\n" +
-        "<STX>H6;f3;o370,390;c21;b0;k10;d3,Cadena de Frio<ETX>\n" +
+        "<STX>H6;f3;o370,390;c26;b0;k10;d3,Cadena de Frio<ETX>\n" +
         "<STX>H7;f3;o340,295;c26;b0;k10;d3,Mantener entre 2 y 8 grados C<ETX>\n" +
         "<STX>H8;f3;o285,50;c21;b0;k12;d3,Fecha:<ETX>\n" +
         "<STX>H9;f3;o285,425;c21;b0;k12;d3,Hora:<ETX>\n" +
@@ -81,7 +87,7 @@ const val etiquetaIPL50mmModificada = "<STX><ESC>C<ETX>\n" +
         "<STX>W3;o238,390;l70;h380;w5;<ETX>\n" +
         "<STX>W4;o33,15;l200;h370;w5;<ETX>\n" +
         "<STX>W5;o33,400;l200;h370;w5;<ETX>\n" +
-        "<STX>H6;f3;o378,370;c21;b0;k10;d3,Cadena de Frio<ETX>\n" +
+        "<STX>H6;f3;o378,370;c26;b0;k10;d3,Cadena de Frio<ETX>\n" +
         "<STX>H7;f3;o348,275;c26;b0;k10;d3,Mantener entre 2 y 8 grados C<ETX>\n" +
         "<STX>H8;f3;o293,30;c21;b0;k12;d3,Fecha:<ETX>\n" +
         "<STX>H9;f3;o293,405;c21;b0;k12;d3,Hora:<ETX>\n" +
@@ -125,13 +131,13 @@ const val etiquetaZPL65mmSinModificaciones = "^XA\n" +
         "^FO155,290\n" +
         "^GB50,50,3^FS\n" +
         "^FO70,365^A0N,35,35^FD12 hs^FS\n" +
-        "^FO150,355\n" +
+        "^FO155,355\n" +
         "^GB50,50,3^FS\n" +
         "^FO70,430^A0N,35,35^FD24 hs^FS\n" +
         "^FO155,420\n" +
         "^GB50,50,3^FS\n" +
-        "^FO245,300^A0N,35,35^FD48 hs^FS\n" +
-        "^FO330,290\n" +
+        "^FO250,300^A0N,35,35^FD48 hs^FS\n" +
+        "^FO335,290\n" +
         "^GB50,50,3^FS\n" +
         "^FO250,365^A0N,35,35^FD72 hs^FS\n" +
         "^FO335,355\n" +
@@ -162,13 +168,13 @@ const val etiquetaZPL65mmModificada = "^XA\n" +
         "^FO160,285\n" +
         "^GB50,50,3^FS\n" +
         "^FO75,360^A0N,35,35^FD12 hs^FS\n" +
-        "^FO155,350\n" +
+        "^FO160,350\n" +
         "^GB50,50,3^FS\n" +
         "^FO75,425^A0N,35,35^FD24 hs^FS\n" +
         "^FO160,415\n" +
         "^GB50,50,3^FS\n" +
-        "^FO250,295^A0N,35,35^FD48 hs^FS\n" +
-        "^FO335,285\n" +
+        "^FO255,295^A0N,35,35^FD48 hs^FS\n" +
+        "^FO340,285\n" +
         "^GB50,50,3^FS\n" +
         "^FO255,360^A0N,35,35^FD72 hs^FS\n" +
         "^FO340,350\n" +
@@ -218,3 +224,36 @@ const val etiquetaZPL50mmSinModificar = "^XA\n" +
         "^FO430,345^A0N,30,30^FD- No abrir^FS\n" +
         "^PQ1,0,1,Y\n" +
         "^XZ"
+
+const val etiquetaIPL65mmSinModificaciones = "<STX><ESC>C<ETX>\n" +
+        "<STX><ESC>P<ETX>\n" +
+        "<STX>E5;F5;<ETX>\n" +
+        "<STX>U1;f3;o455,35;c2;w1;h1;<ETX>\n" +
+        "<STX>W2;o320,35;l70;h380;w5;<ETX>\n" +
+        "<STX>W3;o320,410;l70;h380;w5;<ETX>\n" +
+        "<STX>W4;o25,35;l290;h380;w5;<ETX>\n" +
+        "<STX>W5;o25,410;l290;h380;w5;<ETX>\n" +
+        "<STX>H6;f3;o465,390;c26;b0;k12;d3,Cadena de Frio<ETX>\n" +
+        "<STX>H7;f3;o435,272;c26;b0;k12;d3,Mantener entre 2 y 8 grados C<ETX>\n" +
+        "<STX>H8;f3;o385,55;c26;b0;k16;d3,Fecha:<ETX>\n" +
+        "<STX>H9;f3;o385,430;c26;b0;k16;d3,Hora:<ETX>\n" +
+        "<STX>H10;f3;o295,440;c26;b0;k12;d3,- Mantener lejos de<ETX>\n" +
+        "<STX>H11;f3;o270,468;c26;b0;k12;d3,fuentes de calor<ETX>\n" +
+        "<STX>H12;f3;o210,440;c26;b0;k12;d3,- No Congelar<ETX>\n" +
+        "<STX>H13;f3;o150,440;c26;b0;k12;d3,- Fragil<ETX>\n" +
+        "<STX>H14;f3;o90,440;c26;b0;k12;d3,- No abrir<ETX>\n" +
+        "<STX>H15;f3;o315,153;c26;b0;k14;d3,Validez<ETX>\n" +
+        "<STX>H16;f3;o277,173;c26;b0;k7;d3,(en horas)<ETX>\n" +
+        "<STX>H17;f3;o235,93;c26;b0;k14;d3,6<ETX>\n" +
+        "<STX>W18;o180,125;l60;h60;w5;<ETX>\n" +
+        "<STX>H19;f3;o165,75;c26;b0;k14;d3,12<ETX>\n" +
+        "<STX>W20;o110,125;l60;h60;w5;<ETX>\n" +
+        "<STX>H21;f3;o95,75;c26;b0;k14;d3,24<ETX>\n" +
+        "<STX>W22;o40,125;l60;h60;w5;<ETX>\n" +
+        "<STX>H23;f3;o235,250;c26;b0;k14;d3,48<ETX>\n" +
+        "<STX>W24;o180,300;l60;h60;w5;<ETX>\n" +
+        "<STX>H25;f3;o165,250;c26;b0;k14;d3,72<ETX>\n" +
+        "<STX>W26;o110,300;l60;h60;w5;<ETX>\n" +
+        "<STX>R<ETX>\n" +
+        "<STX><ESC>E5<CAN><ETX>\n" +
+        "<STX><RS>1<ETB><FF><ETX>"

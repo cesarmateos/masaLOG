@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -20,9 +21,11 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusTarget
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -30,7 +33,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.masalog.configuraEtiqueta.Lenguaje
+import com.example.masalog.controlado.ControlProductos
+import com.example.masalog.controlado.ProductoControl
+import com.example.masalog.ui.theme.MoradoMuySuave
 
 import kotlin.math.min
 import kotlin.math.max
@@ -388,15 +395,17 @@ fun CajaTextoGris(text:String,modifier: Modifier){
     Text(text= text,
         textAlign = TextAlign.Center,
         color = MaterialTheme.colors.onBackground,
+        fontSize = 12.sp,
         modifier = modifier)
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun InputTexto(onClick: (texto: String) -> Unit,keyboardType: KeyboardType, largo: Dp){
+fun InputTexto(onClick: (texto: String) -> Unit,keyboardType: KeyboardType, largo: Dp, tecladoActivo : Boolean){
 
     var ingresoBarras by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Box(
         modifier = Modifier
@@ -431,13 +440,17 @@ fun InputTexto(onClick: (texto: String) -> Unit,keyboardType: KeyboardType, larg
                     }
                     false
                 }
-                .focusRequester(focusRequester)
+              .focusRequester(focusRequester)
         )
     }
 
-    LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
+    if(!tecladoActivo){
+        keyboardController?.hide()
     }
+
+   LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+   }
 }
 
 class IntLimitado(ValorIncial:Int,LimiteInferior:Int, LimiteSuperior: Int){
@@ -451,6 +464,132 @@ class IntLimitado(ValorIncial:Int,LimiteInferior:Int, LimiteSuperior: Int){
 
     fun restar(unidades:Int){
         this.valor = max(this.valor-unidades,limiteInferior)
+    }
+}
+
+@Composable
+fun MuestraProducto(navController: NavHostController, producto : ProductoControl, cuerpo: @Composable () -> Unit){
+    val interlineado = 6.dp
+
+    Column(modifier= Modifier.fillMaxWidth()){
+
+        //Nombre Producto
+        Text(text=producto.nombre,
+            fontSize = 22.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign=TextAlign.Center,
+            modifier= Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colors.surface)
+                .padding(vertical = interlineado))
+
+        //Código Barras
+        Text(text= producto.codigoBarras,
+            textAlign = TextAlign.End,
+            modifier= Modifier
+                .fillMaxWidth()
+                .padding(vertical = interlineado, horizontal = PADDING_HORIZONTAL))
+
+
+
+        //Cuerpo
+        Column(modifier= Modifier
+            .fillMaxWidth()
+            .padding(vertical = interlineado, horizontal = PADDING_HORIZONTAL),
+                horizontalAlignment =  Alignment.CenterHorizontally,) {
+            cuerpo()
+        }
+
+        //BOTÓN CANCELAR
+        Spacer(Modifier.size(10.dp))
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = PADDING_HORIZONTAL),
+            horizontalArrangement = Arrangement.End){
+            Button(onClick = {navController.navigate(Pantallas.ControladorProductos.name)},
+                colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary )) {
+                Text(text="Cancelar", color = Color.White, fontWeight = FontWeight.Bold)
+            }
+        }
+
+    }
+}
+
+@Composable
+fun ContableCargaCantidadEtiqueta(navController: NavHostController){
+    val estadoCheckBoxEtiqueta: Boolean by ControlProductos.etiqueta.observeAsState(false)
+    val interlineado = 6.dp
+
+    Row(modifier= Modifier
+        .fillMaxWidth()
+        .padding(vertical = 10.dp)){
+
+        //CONTABLE
+        Column(modifier = Modifier.weight(1.0f)){
+            Text(text="Contable",
+                modifier= Modifier
+                    .padding(2.dp)
+                    .background(MoradoMuySuave)
+                    .fillMaxWidth(),
+                textAlign=TextAlign.Center)
+            Text(text= ControlProductos.productoControlIngresado?.cantidad.toString(),
+                modifier=Modifier.fillMaxWidth(),
+                textAlign=TextAlign.Center)
+        }
+
+        //CONTADO
+        Column(modifier = Modifier.weight(1.0f)) {
+            Text(
+                text = "Contado",
+                modifier = Modifier
+                    .padding(2.dp)
+                    .background(MoradoMuySuave)
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center)
+            Text(
+                text = ControlProductos.productoControlIngresado?.contado().toString(),
+                modifier=Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center)
+        }
+
+        //DIFERENCIA
+        Column(modifier = Modifier.weight(1.0f)) {
+            Text(
+                text = "Diferencia",
+                modifier = Modifier
+                    .padding(2.dp)
+                    .background(MoradoMuySuave)
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
+            Text(
+                text = ControlProductos.productoControlIngresado?.diferencia().toString(),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth())
+        }
+
+    }
+
+    Row(modifier= Modifier
+        .fillMaxWidth()
+        .padding(vertical = interlineado),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center) {
+
+        //INGRESO CANTIDAD
+        Text(text = "Cantidad: ")
+        InputTexto(
+            onClick = { texto: String -> ControlProductos.cargarCantidad(texto, navController) },
+            keyboardType = KeyboardType.Number,
+            largo = 80.dp,
+            tecladoActivo = true)
+        Spacer(modifier=Modifier.size(30.dp))
+
+        //CHECKBOX ETIQUETA
+        Text("Etiqueta:",modifier=Modifier.padding(interlineado))
+        Checkbox(checked = estadoCheckBoxEtiqueta,
+            onCheckedChange = { ControlProductos.etiqueta.postValue(it)},
+            modifier= Modifier.padding(vertical = interlineado))
     }
 }
 

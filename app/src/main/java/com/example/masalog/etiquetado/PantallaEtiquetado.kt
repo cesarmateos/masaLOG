@@ -24,6 +24,7 @@ import java.nio.charset.StandardCharsets
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun PantallaEtiquetadoInicio(navController: NavHostController) {
+
     var archivo: Boolean by remember { mutableStateOf(ListadoEtiquetado.archivoCargado) }
 
     EstructuraTituloCuerpo("Etiquetado Planta")
@@ -53,7 +54,8 @@ fun PantallaEtiquetadoInicio(navController: NavHostController) {
                         InputTexto(onClick = { texto: String ->
                                     ListadoEtiquetado.imprimeLocalizador(texto) },
                                     keyboardType = KeyboardType.Number,
-                                    140.dp)
+                                    140.dp,
+                                    tecladoActivo = true)
                     }
                     Spacer(modifier = Modifier.size(10.dp))
                     BotonStandard(texto = "Terminar Etiquetado", onClick = {
@@ -114,12 +116,10 @@ fun PantallaEtiquetadoInicio(navController: NavHostController) {
 
 
 @Composable
-private fun ElegirArchivoEtiquetado(archivoCargado:Boolean,
-                                    modificaArchivoCargado: (Boolean)->Unit = {}) {
+private fun ElegirArchivoEtiquetado(archivoCargado:Boolean, modificaArchivoCargado: (Boolean)->Unit = {}) {
+
     val context = LocalContext.current
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { result ->
+    val launcher = rememberLauncherForActivityResult( contract = ActivityResultContracts.GetContent()) { result ->
         try{
             val item = result?.let {
                 context.contentResolver.openInputStream(it)
@@ -128,10 +128,11 @@ private fun ElegirArchivoEtiquetado(archivoCargado:Boolean,
             val bytes = item?.readBytes()
             val text = String(bytes!!, StandardCharsets.UTF_8)
 
+            item.close()
+
             ListadoEtiquetado.cargarProductos(text)
             modificaArchivoCargado(ListadoEtiquetado.archivoCargado)
 
-            item.close()
         }catch(exception: Exception){
             //Por si se arrepiente al elegir archivo
         }
@@ -139,5 +140,5 @@ private fun ElegirArchivoEtiquetado(archivoCargado:Boolean,
     }
 
     return BotonStandard(texto = "Cargar Archivo CSV",
-            onClick = {launcher.launch("*/*")})
+        onClick = {launcher.launch("*/*")})
 }

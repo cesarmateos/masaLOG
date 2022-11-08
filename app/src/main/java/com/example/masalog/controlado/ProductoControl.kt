@@ -1,15 +1,25 @@
 package com.example.masalog.controlado
 
-class ProductoControl(
-    initCodigoBarras: String,
-    initLocalizador: String,
-    initNombre:String,
-    initCantidad:Int){
 
-    val codigoBarras : String = initCodigoBarras
-    val cantidad : Int = initCantidad
-    val nombre : String = initNombre
-    val localizador : String = initLocalizador
+open class ProductoControl(
+    val codigoBarras: String,
+    val localizador: String,
+    val nombre:String,
+    val cantidad:Int){
+
+    lateinit var lote : String
+    lateinit var vencimiento : String
+
+    constructor(codigoBarras: String,
+                localizador: String,
+                nombre: String,
+                cantidad: Int,
+                lote: String,
+                vencimiento :String) : this(codigoBarras,localizador,nombre,cantidad){
+        this.lote = lote
+        this.vencimiento = vencimiento
+    }
+
     private var contado : Int = 0
 
 
@@ -31,5 +41,9 @@ class ProductoControl(
 
     fun matchCodigoBarras(codigoBarrasBuscado : String) : Boolean{
         return codigoBarras == codigoBarrasBuscado
+    }
+
+    fun matchProducto(codigoBarras: Int, lote: String, vencimiento:String): Boolean{
+        return true
     }
 }

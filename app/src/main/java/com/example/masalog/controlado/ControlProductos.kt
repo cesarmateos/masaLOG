@@ -1,7 +1,7 @@
 package com.example.masalog.controlado
 
-import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavHostController
 import com.example.masalog.BTHandler
 import com.example.masalog.Pantallas
@@ -9,20 +9,29 @@ import java.util.*
 import kotlin.math.ceil
 import kotlin.math.min
 
+
 object ControlProductos {
-    var productoControlIngresado: ProductoControl? = null
-    private val productos = mutableListOf<ProductoControl>()
-    @SuppressLint("StaticFieldLeak")
-    private lateinit var navController : NavHostController
-    var etiqueta = true
-    var crearBulto = false
+
+    //Configuración
+    val controlActivo = MutableLiveData<Boolean>(false)
+    val etiqueta = MutableLiveData<Boolean>(false)
+    val crearBulto = MutableLiveData<Boolean>(false)
+
+    //Tipo
+    var TipoControl : TipoControl =  TipoControlSinLote()
+
+    //Productos Seleccionados
+    var productoControlIngresado: ProductoControl = ProductoControl("","","",0)
+    var productosMatchCodigoBarras = mutableListOf<ProductoControl>()
+
+
+    val productos = mutableListOf<ProductoControl>()
+
+
+    //Armado Bultos
     private val bulto = mutableListOf<Pair<ProductoControl?,Int>>()
     var nroBulto = 1
-    var archivoCargado = false
 
-    fun asignarNavController(nav: NavHostController){
-        navController = nav
-    }
 
     fun porControlar(): List<ProductoControl>{
         return productos.filter{ item -> item.faltaControlar() >0}
@@ -31,51 +40,20 @@ object ControlProductos {
     fun controlados() : List<ProductoControl>{
         return productos.filter{ item -> item.contado() >0}
     }
-/* //CUANDO LO HABIA HECHO CON LOTE
-    fun lectura(codigoBarras: String) {
-        val barras = codigoBarras
-        productosMatchCodigoBarras = devolverListaConMatchCodigoBarras(barras, productos)
 
-        if (productosMatchCodigoBarras.isEmpty()) {
-            val productoDesconocido = ProductoComplejo(barras, "****", 0,"Producto Desconocido")
-            productos.add(productoDesconocido)
-            productosMatchCodigoBarras.add(productoDesconocido)
-        }
-    }
- */
-    fun lectura(codigoBarras: String){
-        val encontrado = productos.find{it.matchCodigoBarras(codigoBarras)}
-
-        if (encontrado != null){
-            productoControlIngresado = encontrado
-        }else{
-            val productoDesconocido = ProductoControl(codigoBarras, "****","Producto Desconocido", 0)
-            productos.add(productoDesconocido)
-            productoControlIngresado = productoDesconocido
-        }
-        navController.navigate((Pantallas.ControladorIngreso.name))
-    }
-
-    fun cargarCantidad(cantidad:String){
+    fun cargarCantidad(cantidad:String, navController : NavHostController){
         val cantidadInt = cantidad.toInt()
         productoControlIngresado?.agregar(cantidadInt)
 
         bulto.add(Pair(productoControlIngresado,cantidadInt))
 
-        if(etiqueta){
+        if(etiqueta.value == true){
             imprimirEtiquetaRecepcion(cantidad)
         }
 
         navController.navigate((Pantallas.ControladorProductos.name))
     }
 
-    private fun limpiar() {
-        productos.clear()
-        archivoCargado = false
-        productoControlIngresado = null
-        nroBulto = 1
-        bulto.clear()
-    }
 
     private fun imprimirEtiquetaRecepcion(cantidad:String){
 
@@ -104,24 +82,6 @@ object ControlProductos {
         val formatoFecha = SimpleDateFormat(formato)
         return formatoFecha.format(Date())
     }
-
-    fun cargarProductos(stream:String) {
-        val lineas = stream.lines()
-
-        try {
-            lineas.forEach {
-                val lista = it.split(";")
-                if (lista.isNotEmpty() && lista[0]!="") {
-                    val producto = ProductoControl(lista[0],lista[1],lista[2],lista[3].toInt())
-                    productos.add(producto)
-                }
-            }
-            archivoCargado = true
-        } catch (exception: NumberFormatException) {
-            limpiar()
-        }
-    }
-
     fun itemsEnBulto():Int{
         return bulto.size
     }
@@ -149,7 +109,7 @@ object ControlProductos {
                 "<STX><ESC>C<ETX>\n" +
                         "<STX><ESC>P<ETX>\n" +
                         "<STX>E23;F23;<ETX>\n" +
-                        "<STX>H0;o470,40;f3;c21;k14;d3,Bulto:$nroBulto<ETX>\n" +
+                        "<STX>H0;o470,40;f3;c21;k14;d3,Bulto:${nroBulto}<ETX>\n" +
                         "<STX>H1;o470,475;f3;c21;k14;d3,Fecha:${fechaActual("dd/MM/yyyy")}<ETX>\n" +
                         "<STX>H2;o470,240;f3;c21;k14;d3,Etiq:"+(j+1)+"/"+"$cantidadEtiquetas<ETX>\n" +
                         stringProductos +
@@ -161,7 +121,15 @@ object ControlProductos {
         nroBulto++
     }
 
-    fun terminar(){
+    fun limpiar() {
+        controlActivo.postValue(false)
+        productos.clear()
+        productoControlIngresado =  ProductoControl("","","",0)
+        nroBulto = 1
+        bulto.clear()
+    }
+
+    fun terminar(navController : NavHostController){
         limpiar()
         navController.navigate((Pantallas.Inicio.name))
     }

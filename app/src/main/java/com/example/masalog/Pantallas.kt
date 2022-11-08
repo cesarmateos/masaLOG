@@ -8,6 +8,8 @@ enum class Pantallas {
     ConfiguraRP4,
     ControladorProductos,
     ControladorIngreso,
+    ControladorIngresoLote,
+    ControladorInicio,
     EtiquetadoPlantaInicio,
     EtiquetaHeladeras,
     Configuracion;
@@ -22,6 +24,8 @@ enum class Pantallas {
                 ConfiguraRP4.name -> ConfiguraRP4
                 ControladorProductos.name -> ControladorProductos
                 ControladorIngreso.name -> ControladorIngreso
+                ControladorIngresoLote.name -> ControladorIngresoLote
+                ControladorInicio.name -> ControladorInicio
                 EtiquetadoPlantaInicio.name -> EtiquetadoPlantaInicio
                 EtiquetaHeladeras.name ->EtiquetaHeladeras
                 Configuracion.name ->Configuracion

@@ -50,7 +50,7 @@ fun  PantallaConfiguraImpresoraSATO(navController: NavHostController) {
                 verticalAlignment = Alignment.CenterVertically
             )
             {
-                Text(text = "Tipo de papel:", fontSize = sizeFuente)
+                Text(text = "Tipo de rollo:", fontSize = sizeFuente)
                 Spacer(Modifier.size(10.dp))
                 if (modificaPapel) {
                     ToggleHorizontal(
