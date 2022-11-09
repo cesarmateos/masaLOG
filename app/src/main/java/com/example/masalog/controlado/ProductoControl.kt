@@ -43,7 +43,4 @@ open class ProductoControl(
         return codigoBarras == codigoBarrasBuscado
     }
 
-    fun matchProducto(codigoBarras: Int, lote: String, vencimiento:String): Boolean{
-        return true
-    }
 }

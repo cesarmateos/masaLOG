@@ -173,8 +173,8 @@ class IPL : Lenguaje() {
         val baseY =  intArrayOf(360,230,230,25,25 ,370,340,285,285,210,185,150,115, 80,220,185,145,100,85, 40,205,160,145,100, 85, 40,160)
         val baseX =  intArrayOf(35 ,35 ,410,35,420,390,295,50 ,425,435,463,435,435,435, 50, 70, 90,125,75,125,250,300,250,300,250,300,35)
 
-        val posicionesY = baseY.map({ coordenada -> coordenada + modificaY * multiplicador})
-        val posicionesX = baseX.map({ coordenada -> coordenada + modificaX * multiplicador})
+        val posicionesY = baseY.map { coordenada -> coordenada + modificaY * multiplicador }
+        val posicionesX = baseX.map { coordenada -> coordenada + modificaX * multiplicador }
 
 
         return "<STX><ESC>C<ETX>\n" +
@@ -217,8 +217,8 @@ class IPL : Lenguaje() {
         val baseY =  intArrayOf(455,320,320, 25, 25,465,435,385,385,295,270,210,150, 90,315,277,235,180,165,110, 95, 40,235,180,165,110)
         val baseX =  intArrayOf( 35, 35,410, 35,410,390,272, 55,430,440,468,440,440,440,153,173, 93,125, 75,125, 75,125,250,300,250,300)
 
-        val posicionesY = baseY.map({ coordenada -> coordenada + modificaY * multiplicador})
-        val posicionesX = baseX.map({ coordenada -> coordenada + modificaX * multiplicador})
+        val posicionesY = baseY.map { coordenada -> coordenada + modificaY * multiplicador }
+        val posicionesX = baseX.map { coordenada -> coordenada + modificaX * multiplicador }
 
 
         return "<STX><ESC>C<ETX>\n" +

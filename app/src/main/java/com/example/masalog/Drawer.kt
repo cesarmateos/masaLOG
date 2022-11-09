@@ -154,25 +154,6 @@ fun OpcionDrawerPrimaria(scope: CoroutineScope,
 }
 
 @Composable
-fun OpcionDrawerPrimariaB(scope: CoroutineScope,
-                         scaffoldState: ScaffoldState,
-                         navController: NavHostController,
-                         ruta: String,
-                         etiqueta : String){
-    Row(modifier= Modifier
-        .fillMaxWidth()
-        .background(MaterialTheme.colors.primary)
-        .padding(horizontal = 20.dp, vertical = 10.dp)
-        .clickable {
-            navController.navigate(ruta)
-            scope.launch { scaffoldState.drawerState.close() }
-        })
-    {
-        Text(text=etiqueta, color= Color.White)
-    }
-}
-
-@Composable
 fun OpcionDrawerSecundaria(scope: CoroutineScope,
                            scaffoldState: ScaffoldState,
                            navController: NavHostController,

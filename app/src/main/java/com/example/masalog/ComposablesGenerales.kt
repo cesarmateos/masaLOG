@@ -173,7 +173,7 @@ fun BotoneraDireccion(ejeX : Int, ejeY: Int, onClickX: (Int) -> Unit, onClickY: 
 fun BotoneraDireccionConIndicadores(ejeX : Int, ejeY: Int, onClickX: (Int) -> Unit, onClickY: (Int) -> Unit,lenguaje: Lenguaje){
     Column {
         Row(modifier = Modifier.fillMaxWidth()){
-            Column() {
+            Column {
                 Row{
                     Text(
                         text = "Horizontal : ",
@@ -532,7 +532,7 @@ fun ContableCargaCantidadEtiqueta(navController: NavHostController){
                     .background(MoradoMuySuave)
                     .fillMaxWidth(),
                 textAlign=TextAlign.Center)
-            Text(text= ControlProductos.productoControlIngresado?.cantidad.toString(),
+            Text(text= ControlProductos.productoControlIngresado.cantidad.toString(),
                 modifier=Modifier.fillMaxWidth(),
                 textAlign=TextAlign.Center)
         }
@@ -547,7 +547,7 @@ fun ContableCargaCantidadEtiqueta(navController: NavHostController){
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center)
             Text(
-                text = ControlProductos.productoControlIngresado?.contado().toString(),
+                text = ControlProductos.productoControlIngresado.contado().toString(),
                 modifier=Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center)
         }
@@ -563,7 +563,7 @@ fun ContableCargaCantidadEtiqueta(navController: NavHostController){
                 textAlign = TextAlign.Center
             )
             Text(
-                text = ControlProductos.productoControlIngresado?.diferencia().toString(),
+                text = ControlProductos.productoControlIngresado.diferencia().toString(),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth())
         }

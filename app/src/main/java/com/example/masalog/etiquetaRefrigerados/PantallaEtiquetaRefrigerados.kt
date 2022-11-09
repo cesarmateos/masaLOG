@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.sp
 import com.example.masalog.*
 import com.example.masalog.R
 import com.example.masalog.configuraEtiqueta.IPL
-import com.example.masalog.configuraEtiqueta.LogoIPL
 import com.example.masalog.configuraEtiqueta.ZPL
 import com.example.masalog.configuracion.Configuracion
 

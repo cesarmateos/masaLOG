@@ -90,9 +90,9 @@ fun MuestraLoteVencimiento(){
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center){
         Text("Lote: ",fontWeight = FontWeight.Bold)
-        ControlProductos.productoControlIngresado?.let { Text(it.lote) }
+        ControlProductos.productoControlIngresado.let { Text(it.lote) }
         Spacer(modifier=Modifier.size(27.dp))
         Text("Vencimiento: ",fontWeight = FontWeight.Bold)
-        ControlProductos.productoControlIngresado?.let { Text(it.vencimiento) }
+        ControlProductos.productoControlIngresado.let { Text(it.vencimiento) }
     }
 }

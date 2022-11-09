@@ -10,8 +10,8 @@ class ZPL : Lenguaje(){
         val origenX = intArrayOf(560,580,40,190,190,190,250,190,190,340, 40, 90,270,480,670, 55, 40, 40)
         val origenY = intArrayOf( 40,100,40, 40, 70,100,100,145,185,243,283,335,335,335,335,360,435,470)
 
-        val finalX = origenX.map({coordenada -> (coordenada + horizontal * multiplicador) })
-        val finalY = origenY.map({coordenada -> (coordenada + vertical * multiplicador) })
+        val finalX = origenX.map { coordenada -> (coordenada + horizontal * multiplicador) }
+        val finalY = origenY.map { coordenada -> (coordenada + vertical * multiplicador) }
 
         val scaneable = if(barras){
             "^BY2,2.7,50\n" + "^FO" + finalX[2] + "," + finalY[2] +  "^B2B,90,Y,N^FN1^FS\n"
@@ -55,8 +55,8 @@ class ZPL : Lenguaje(){
         val origenX = intArrayOf(55, 0,320,400,600, 50, 90,260,450,665, 70, 50, 50, 50,440, 50,610,580)
         val origenY = intArrayOf(40, 0, 57, 57, 57,135,197,197,197,197,222,340,375,400,400,445,335,365)
 
-        val finalX = origenX.map({coordenada -> (coordenada + horizontal * multiplicador) })
-        val finalY = origenY.map({coordenada -> ((coordenada + margen) + (vertical * multiplicador)) })
+        val finalX = origenX.map { coordenada -> (coordenada + horizontal * multiplicador) }
+        val finalY = origenY.map { coordenada -> ((coordenada + margen) + (vertical * multiplicador)) }
 
         val scaneable = if(barras){
             "^BY2,2.7,50\n" +
@@ -96,8 +96,8 @@ class ZPL : Lenguaje(){
         val origenX = intArrayOf(50,430,340, 50, 70,430, 50, 50, 70, 85,155, 70,155,245,330,245,330,245,330,418,430,430,430,430,430)
         val origenY = intArrayOf(35, 37, 70,105,120,120,175,175,195,265,255,327,317,203,193,265,255,327,317,175,190,225,265,305,345)
 
-        val finalX = origenX.map({coordenada -> (coordenada + modificaX * multiplicador) })
-        val finalY = origenY.map({coordenada -> (coordenada + modificaY * multiplicador) })
+        val finalX = origenX.map { coordenada -> (coordenada + modificaX * multiplicador) }
+        val finalY = origenY.map { coordenada -> (coordenada + modificaY * multiplicador) }
 
         return  "^XA\n" +
                 "^FO" + finalX[0]+ ","+ finalY[0] + "^GFA,1450,1450,25,gI03FFC07FF,Y06TFB,V037XFEC,U0gIFE,S03gLF8,R0gOFC,P01gQFE,P0SF4R0BLFC,O0PFBX01KF8,N0NFECgI05IF8,M07MF8gL01IF,L03LFEgP07FE,L0LF8gR03FC,K03KFCgT03F,J01KF8gV03C,J03JF8gX018J0JFC,I03JF,I0JF8,001IFC,003IFM0FC001F8K03FFL07F8M07FE,007FFC003FFC3FF007FFJ03JFJ03IFCK07JF,01IFI03FFCIFC1IF8001KFCI0KFJ03KFC,01FFCI07FF9IFC3IFC003LF001KFCI07KFE,03FF8I07FFBIFE7IFE00MF807KFEI0MF,07FEJ07RF01MFC07LF001MF80FFCJ07RF03MFC0MF803MF81FF8J07RF03MFE1MFC07MFC1FFK07RF07IF1IFE1FFE07FFC0IFE1IFC3FEK0SF07FFC07FFE3FFE01FF80IF80IFC3FCK0IFC1IFC3IF00FF807FFE3FFE00FJ0FF00IFC7FCK0IF81IF81IFI07007FFE3FFEN0600IFC7F8K0IF81IF01IFL07FFC3IFEP0IFC7F8K0IF01IF01IFJ07JFE3KFM06JFC7FL0IF01IF01IF001LFC1KFEJ03LFCFFK01IF01IF01IF00MFC1LF8001MFCFEK01IF01FFE03IF03MFC1LFE007MF8FEK01IF01FFE03FFE07MFC0LFE00NF8FEK01IF01FFE03FFE0NFC07LF01NF8FEK01FFE03FFE03FFE1JF9IFC03LF83JF1IF87EK03FFE03FFE03FFE3IFC1IFC01LFC7IF81IF87EK03FFE03FFE07FFE7IF01IF8007KFC7FFE01IF,7EK03FFE03FFC07FFC7FFE01IF8I0KFCIFC03IF,3EK03FFE07FFC07FFC7FFE01IF8J07IFCIFC03IF,3EK03FFE07FFC07FFCIFE03IF801400IFCIFC03IF,1EK03FFC07FFC07FFCIFE03IF0FFC007FFDIFC07IF,0FK03FFC07FFC07FFCIFE07IF1FFE007FFDIFC0JF,0FK07FFC07FFC0IFCJF1JF1IFC0IF8IFE3IFE,078J07FFC07FFC0IFCOF0NF8NFE,038J07FFC07FF80IF87NF07MF0NFE,01CJ07FFC0IF80IF87JFDIF07MF07MFE,00EJ07FFC0IF80IF83JF9IF03LFE07JFBFFE,006J07FF80IF80IF81JF3IF01LFC03IFE3FFE,001J0IF80IF01IF80IFE3IF007KF001IFE3FFE,I0CI0IF80IF80IF007FFC1IFI0JFCI07FF83FFE,I06X01FFN03FFEJ03FE,,:^FS\n" +
@@ -142,8 +142,8 @@ class ZPL : Lenguaje(){
         val origenX = intArrayOf(50,430,340, 50, 50,417, 70,430,170,180, 85,155, 70,155, 70,155,250,335,250,335,430,430,430,430,430)
         val origenY = intArrayOf(35, 37, 70,110,195,195,133,133,212,250,300,290,365,355,430,420,300,290,365,355,225,265,325,380,435)
 
-        val finalX = origenX.map({coordenada -> (coordenada + modificaX * multiplicador) })
-        val finalY = origenY.map({coordenada -> (coordenada + modificaY * multiplicador) })
+        val finalX = origenX.map { coordenada -> (coordenada + modificaX * multiplicador) }
+        val finalY = origenY.map { coordenada -> (coordenada + modificaY * multiplicador) }
 
         return  "^XA\n" +
                 "^FO"+ finalX[0] + "," + finalY[0] + ZPLLogo + "^FS\n" +

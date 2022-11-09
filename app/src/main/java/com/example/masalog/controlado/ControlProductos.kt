@@ -1,5 +1,6 @@
 package com.example.masalog.controlado
 
+import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavHostController
@@ -13,9 +14,9 @@ import kotlin.math.min
 object ControlProductos {
 
     //Configuración
-    val controlActivo = MutableLiveData<Boolean>(false)
-    val etiqueta = MutableLiveData<Boolean>(false)
-    val crearBulto = MutableLiveData<Boolean>(false)
+    val controlActivo = MutableLiveData(false)
+    val etiqueta = MutableLiveData(false)
+    val crearBulto = MutableLiveData(false)
 
     //Tipo
     var TipoControl : TipoControl =  TipoControlSinLote()
@@ -43,7 +44,7 @@ object ControlProductos {
 
     fun cargarCantidad(cantidad:String, navController : NavHostController){
         val cantidadInt = cantidad.toInt()
-        productoControlIngresado?.agregar(cantidadInt)
+        productoControlIngresado.agregar(cantidadInt)
 
         bulto.add(Pair(productoControlIngresado,cantidadInt))
 
@@ -66,10 +67,10 @@ object ControlProductos {
                 "<STX>H7;o035,55;f3;c21;d0,20;k10;<ETX>\n" +
                 "<STX>R<ESC>E32<CAN><ETX>\n" +
                 "<STX>"+
-                productoControlIngresado?.codigoBarras.toString() + "<CR>\n" + //H0
-                productoControlIngresado?.nombre?.take(26)+ "<CR>\n" + //H1
-                productoControlIngresado?.nombre?.drop(25)+ "<CR>\n" + // H2
-                productoControlIngresado?.localizador +"<CR>\n" + // H3
+                productoControlIngresado.codigoBarras + "<CR>\n" + //H0
+                productoControlIngresado.nombre.take(26) + "<CR>\n" + //H1
+                productoControlIngresado.nombre.drop(25) + "<CR>\n" + // H2
+                productoControlIngresado.localizador +"<CR>\n" + // H3
                 cantidad+ "<CR>\n" +//H6
                 fechaActual("dd/MM/yyyy HH:mm:ss")+ //H7
                 "<ETX>\n" +
@@ -78,6 +79,7 @@ object ControlProductos {
         BTHandler.imprimir(etiqueta)
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun fechaActual(formato: String): String {
         val formatoFecha = SimpleDateFormat(formato)
         return formatoFecha.format(Date())
