@@ -23,7 +23,7 @@ class Configuracion(private val context: Context) {
     }
 
     val getLenguaje: Flow<Boolean?> = context.dataStoree.data
-        .map { preferences -> preferences[LENGUAJE_KEY] ?: false }
+        .map { preferences -> preferences[LENGUAJE_KEY] ?: true }
 
     suspend fun cambiarLenguaje(nuevo: Boolean) {
         context.dataStoree.edit { preferences ->

@@ -79,7 +79,7 @@ class MainActivity() : ComponentActivity() {
 
 @Composable
 fun Navegador(navController: NavHostController,modifier: Modifier = Modifier) {
-    val navController = rememberNavController()
+    //val navController = rememberNavController()
     NavHost(
         navController = navController,
         startDestination = Pantallas.Inicio.name,
