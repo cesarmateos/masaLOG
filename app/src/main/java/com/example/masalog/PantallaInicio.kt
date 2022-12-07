@@ -27,6 +27,15 @@ fun PantallaInicio(navController: NavHostController ) {
             BotonStandard(stringResource(R.string.control_archivo)){ navController.navigate((Pantallas.ControladorInicio.name)) }
             Spacer(Modifier.size(PADDING_HORIZONTAL))
             BotonStandard("Lenguaje"){ navController.navigate((Pantallas.Configuracion.name))}
+            /*
+            Spacer(Modifier.size(PADDING_HORIZONTAL))
+            BotonStandard("Prueba Loca ZPL"){ BTHandler.imprimir(LocZPL)}
+
+             */
         }
+
+
     }
 }
+
+//val LocZPL= "^XA^FO40,40^A0N,30,30^FD7793640215622                 ^FS^FO40,100^A0N,43,43^FDACTRON ^FS^FO40,140^A0N,43,43^FD 600MG CAP.BL X20^FS^FO40,230^A0N,88,88^FD01  K_2216/2216^FS^FO40,350^A0N,30,30^FD15/11/22 15:59 TESTING^FS^XZ"

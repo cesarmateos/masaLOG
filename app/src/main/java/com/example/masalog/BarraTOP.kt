@@ -68,21 +68,22 @@ fun TopDerecho(){
             }
             EstadoDispositivo.IMPRIMIENDO ->{
                 Text("Imprimiendo...")
-                BotonCierreBT()
+                BotonCierreBT(Color.Green)
             }
             EstadoDispositivo.DESCONECTADO ->{
                 SinImpresoraClickeable()
             }
             EstadoDispositivo.CONECTANDO -> {
-                Text("Conectando a "+ (BTHandler.nombreDispositivoConectado()?.take(8)))
-                BotonCierreBT()
+                val nombre = BTHandler.nombreDispositivoConectado()
+                Text("Conectando a "+ nombre?.take(3) + ".." + nombre?.takeLast(3))
+                BotonCierreBT(Color.Red)
             }
             EstadoDispositivo.LISTABT ->{
                 SelectorDispositivo()
             }
             EstadoDispositivo.CONECTADO ->{
-                BTHandler.nombreDispositivoConectado()?.let { Text(it.take(8)) }
-                BotonCierreBT()
+                BTHandler.nombreDispositivoConectado()?.let { Text(it.take(16)) }
+                BotonCierreBT(Color.Green)
             }
         }
 
@@ -90,13 +91,13 @@ fun TopDerecho(){
 }
 
 @Composable
-fun BotonCierreBT(){
+fun BotonCierreBT(color: Color){
     Button(
         onClick = {
             BTHandler.desconectar()
         },
         modifier = Modifier.size(25.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red),
+        colors = ButtonDefaults.buttonColors(color),
         contentPadding = PaddingValues(1.dp)
     ) {
         Icon(imageVector = Icons.Filled.Close, contentDescription = "")
