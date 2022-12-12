@@ -34,7 +34,6 @@ fun PantallaInicio(navController: NavHostController ) {
              */
         }
 
-
     }
 }
 
