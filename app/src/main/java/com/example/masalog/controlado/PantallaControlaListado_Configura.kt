@@ -5,6 +5,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.Checkbox
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -13,12 +14,11 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.masalog.BotonStandard
-import com.example.masalog.CajaTextoGris
-import com.example.masalog.EstructuraTituloCuerpo
+import com.example.masalog.*
 import java.nio.charset.StandardCharsets
 
 @Composable
@@ -105,6 +105,11 @@ fun PantallaControlaListado_Configura() {
                             .weight(1.0f)
                             .padding(5.dp)
                     )
+                    CajaTextoGris(
+                        text = "Cant.", modifier = Modifier
+                            .weight(1.0f)
+                            .padding(5.dp)
+                    )
                     if (estadoCheckControlLote.value) {
                         CajaTextoGris(
                             text = "Lote", modifier = Modifier
@@ -117,11 +122,6 @@ fun PantallaControlaListado_Configura() {
                                 .padding(5.dp)
                         )
                     }
-                    CajaTextoGris(
-                        text = "Cant.", modifier = Modifier
-                            .weight(1.0f)
-                            .padding(5.dp)
-                    )
                 }
 
 
@@ -138,7 +138,10 @@ fun PantallaControlaListado_Configura() {
 @Composable
 private fun ElegirArchivoControl() {
 
+    val alerta = remember { mutableStateOf(false) }
+
     val context = LocalContext.current
+
     val launcher = rememberLauncherForActivityResult( contract = ActivityResultContracts.GetContent()) { result ->
         try{
             val item = result?.let {
@@ -153,9 +156,25 @@ private fun ElegirArchivoControl() {
             ControlProductos.TipoControl.cargarInicial(text)
 
         }catch(exception: Exception){
-            //Por si se arrepiente al elegir archivo
+            alerta.value = true
         }
 
+    }
+
+    if(alerta.value) {
+        AlertDialog(onDismissRequest = { alerta.value = false },
+            title = { Text(text = "Error") },
+            text = { Text(text = "Algo salió mal al procesar el archivo" ) },
+            buttons = {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(PADDING_HORIZONTAL)
+                ) {
+                    BotonStandard(texto = "Cerrar", onClick = { alerta.value = false })
+                }
+            }
+        )
     }
 
     return BotonStandard(texto = "Cargar Archivo CSV",

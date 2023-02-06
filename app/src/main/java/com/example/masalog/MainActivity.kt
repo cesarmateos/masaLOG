@@ -16,7 +16,7 @@ import com.example.masalog.configuraEtiqueta.PantallaConfiguraEtiqueta
 import com.example.masalog.configuraImpresora.PantallaConfiguraImpresora
 import com.example.masalog.configuraImpresora.PantallaConfiguraImpresoraRP4
 import com.example.masalog.configuraImpresora.PantallaConfiguraImpresoraSATO
-import com.example.masalog.configuraImpresora.PantallaControlaListado_IngresoProductoConLote
+import com.example.masalog.controlado.PantallaControlaListado_IngresoProductoConLote
 import com.example.masalog.configuracion.PantallaConfiguracion
 import com.example.masalog.controlado.PantallaControlaListado_IngresoProducto
 import com.example.masalog.controlado.PantallaControlaListado
@@ -27,7 +27,7 @@ import com.example.masalog.ui.theme.GrisPurple
 import com.example.masalog.ui.theme.MasaLOGTheme
 
 
-class MainActivity() : ComponentActivity() {
+class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -124,13 +124,13 @@ fun SelectorDispositivo(){
                     onDismissRequest = { listaActiva = false },
                     modifier= Modifier.size(230.dp,600.dp))
                 {
-                    dispositivos.forEachIndexed { index, dispositivo ->
+                    dispositivos.forEach {  dispositivo ->
                         DropdownMenuItem(onClick = {
                             listaActiva = false
-                            elegido = dispositivo
-                            BTHandler.conectar(index)
+                            elegido = dispositivo.nombre
+                            BTHandler.conectar(dispositivo.posicion)
                         }) {
-                            Text(text = dispositivo)
+                            Text(text = dispositivo.nombre)
                         }
                     }
                 }

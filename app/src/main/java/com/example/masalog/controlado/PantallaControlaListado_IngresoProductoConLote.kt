@@ -1,4 +1,4 @@
-package com.example.masalog.configuraImpresora
+package com.example.masalog.controlado
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.masalog.ContableCargaCantidadEtiqueta
 import com.example.masalog.MuestraProducto
-import com.example.masalog.controlado.ControlProductos
 import com.example.masalog.ui.theme.GrisPurple
 import com.example.masalog.ui.theme.MoradoMuySuave
 

@@ -23,7 +23,7 @@ object BTHandler {
     private lateinit var bluetoothSocket: BluetoothSocket
 
     private var btDevice : BluetoothDevice? = null
-    private var dispositivosEmparejados: MutableList<String> = mutableListOf()
+    private var dispositivosEmparejados: MutableList<itemListaBluetooth> = mutableListOf()
 
     private var existeBT: Boolean = false
 
@@ -52,13 +52,19 @@ object BTHandler {
         }
     }
 
+    //Algún día sacar esto de acá y ponerlo el la UI
     fun obtenerListaDispositivos(){
         //Carga la lista de dispositivos si no está vacía
         if (dispositivosEmparejados.isEmpty()){
             pairedDevices = bluetoothAdapter?.bondedDevices as Set<BluetoothDevice>
-            pairedDevices.forEach { device ->
-                dispositivosEmparejados.add(device.name)
+            pairedDevices.forEachIndexed  { index, device ->
+                if(device.bluetoothClass.deviceClass == 1664){
+
+                    dispositivosEmparejados.add(itemListaBluetooth(device.name,index))
+                }
+
             }
+            dispositivosEmparejados.sortBy { it.nombre }
         }
     }
 
@@ -131,7 +137,7 @@ object BTHandler {
         return retorno
     }
 
-    fun dispositivos(): MutableList<String>{
+    fun dispositivos(): MutableList<itemListaBluetooth>{
         return dispositivosEmparejados
     }
 
@@ -170,3 +176,5 @@ object BTHandler {
     }
 
 }
+
+data class itemListaBluetooth(val nombre: String, val posicion: Int)

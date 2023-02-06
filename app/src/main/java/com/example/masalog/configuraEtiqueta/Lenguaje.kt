@@ -2,7 +2,7 @@ package com.example.masalog.configuraEtiqueta
 
 import com.example.masalog.BTHandler
 
-abstract class Lenguaje() {
+abstract class Lenguaje {
 
     abstract val multiplicador : Int
     abstract val ejemploPack : String
