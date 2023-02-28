@@ -24,7 +24,7 @@ fun  PantallaConfiguraImpresoraRP4(navController: NavHostController) {
     val velocidadLimitada : IntLimitado by remember { mutableStateOf(IntLimitado(8,2,10)) }
     val oscuridadLimitada : IntLimitado by remember { mutableStateOf(IntLimitado(32,1,64)) }
     val calorLimitado : IntLimitado by remember { mutableStateOf(IntLimitado(15,1,20)) }
-    val bluetoothLimitado : IntLimitado by remember { mutableStateOf(IntLimitado(300,30,300)) }
+    val bluetoothLimitado : IntLimitado by remember { mutableStateOf(IntLimitado(300,0,300)) }
     var modificaPapel: Boolean by remember { mutableStateOf(false) }
     var modificaBluetooth : Boolean by remember{ mutableStateOf(false) }
     var modificaVelocidad: Boolean by remember { mutableStateOf(false) }

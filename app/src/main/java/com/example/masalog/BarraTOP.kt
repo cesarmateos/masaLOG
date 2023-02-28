@@ -74,8 +74,11 @@ fun TopDerecho(){
                 SinImpresoraClickeable()
             }
             EstadoDispositivo.CONECTANDO -> {
-                val nombre = BTHandler.nombreDispositivoConectado()
-                Text("Conectando a "+ nombre?.take(3) + ".." + nombre?.takeLast(3))
+                var nombre = BTHandler.nombreDispositivoConectado()
+                if (nombre?.length!! > 8){
+                    nombre = nombre?.take(3) + ".." + nombre?.takeLast(3)
+                }
+                Text("Conectando a "+ nombre)
                 BotonCierreBT(Color.Red)
             }
             EstadoDispositivo.LISTABT ->{

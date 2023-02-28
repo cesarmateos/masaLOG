@@ -52,10 +52,10 @@ object BTHandler {
         }
     }
 
-    //Algún día sacar esto de acá y ponerlo el la UI
     fun obtenerListaDispositivos(){
+        dispositivosEmparejados.clear()
         //Carga la lista de dispositivos si no está vacía
-        if (dispositivosEmparejados.isEmpty()){
+        //if (dispositivosEmparejados.isEmpty()){
             pairedDevices = bluetoothAdapter?.bondedDevices as Set<BluetoothDevice>
             pairedDevices.forEachIndexed  { index, device ->
                 if(device.bluetoothClass.deviceClass == 1664){
@@ -65,7 +65,7 @@ object BTHandler {
 
             }
             dispositivosEmparejados.sortBy { it.nombre }
-        }
+        //}
     }
 
     @OptIn(DelicateCoroutinesApi::class)
