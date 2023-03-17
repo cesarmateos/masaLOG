@@ -14,7 +14,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -42,7 +41,7 @@ fun PantallaControlaListado_Configura() {
                 )
                 Spacer(Modifier.size(10.dp))
                 //Etiqueta Producto
-                Row {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("Etiqueta producto: ")
                     Checkbox(checked = estadoCheckBoxEtiqueta,
                         onCheckedChange = {
@@ -52,7 +51,7 @@ fun PantallaControlaListado_Configura() {
 
                 //Arma Bultos
                 Spacer(Modifier.size(10.dp))
-                Row {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("Armar Bultos: ")
                     Checkbox(checked = estadoCheckBoxBultos,
                         onCheckedChange = {
@@ -61,7 +60,7 @@ fun PantallaControlaListado_Configura() {
                 }
                 //Control Lote
                 Spacer(Modifier.size(10.dp))
-                Row {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("Con Control de Lote y Vencimiento: ")
                     Checkbox(checked = estadoCheckControlLote.value,
                         onCheckedChange = {

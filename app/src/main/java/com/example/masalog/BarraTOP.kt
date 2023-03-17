@@ -76,7 +76,7 @@ fun TopDerecho(){
             EstadoDispositivo.CONECTANDO -> {
                 var nombre = BTHandler.nombreDispositivoConectado()
                 if (nombre?.length!! > 8){
-                    nombre = nombre?.take(3) + ".." + nombre?.takeLast(3)
+                    nombre = nombre.take(3) + ".." + nombre.takeLast(3)
                 }
                 Text("Conectando a "+ nombre)
                 BotonCierreBT(Color.Red)
@@ -87,6 +87,9 @@ fun TopDerecho(){
             EstadoDispositivo.CONECTADO ->{
                 BTHandler.nombreDispositivoConectado()?.let { Text(it.take(16)) }
                 BotonCierreBT(Color.Green)
+            }
+            else -> {
+                Text("Algo anda mal")
             }
         }
 

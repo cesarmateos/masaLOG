@@ -4,14 +4,14 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.masalog"
-        minSdk 25
-        targetSdk 31
+        minSdk 29
+        targetSdk 33
         versionCode 1
-        versionName "1.0"
+        versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -31,14 +31,13 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
-        useIR = true
+        //useIR = true
     }
     buildFeatures {
         compose true
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
-        kotlinCompilerVersion '1.5.31'
     }
     packagingOptions {
         resources {
@@ -51,10 +50,10 @@ android {
 dependencies {
 
     implementation("androidx.datastore:datastore-preferences:1.0.0")
-    implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.4.2'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
