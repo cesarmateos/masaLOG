@@ -1,13 +1,12 @@
 package com.example.masalog
 
-
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -29,6 +28,7 @@ import com.example.masalog.ui.theme.MasaLOGTheme
 
 class MainActivity : ComponentActivity() {
 
+    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -55,25 +55,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
-/*    private val barcode = StringBuffer()
-
-    @SuppressLint("RestrictedApi")
-    override fun dispatchKeyEvent(event: android.view.KeyEvent?): Boolean {
-
-        if (event?.action == 0) {
-            val pressedKey = event?.unicodeChar?.toChar()
-            barcode.append(pressedKey)
-        }
-        if (event?.action == 0 && event?.keyCode == 66) {
-            Toast.makeText(baseContext, barcode.toString(), Toast.LENGTH_SHORT).show()
-            barcode.delete(0, barcode.length)
-        }
-
-        return super.dispatchKeyEvent(event)
-    }*/
-
-
 }
 
 
@@ -133,13 +114,5 @@ fun Navegador(navController: NavHostController,modifier: Modifier = Modifier) {
             PantallaConfiguracion()
         }
 
-    }
-}
-
-@Preview(name = "Inicio")
-@Composable
-fun InicioDark(){
-    MasaLOGTheme(darkTheme=  true) {
-        PantallaInicio(navController = rememberNavController())
     }
 }

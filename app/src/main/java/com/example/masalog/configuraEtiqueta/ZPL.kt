@@ -45,25 +45,33 @@ class ZPL : Lenguaje(){
         BTHandler.imprimir(etiqueta)
     }
 
-    override fun cargarFormatoPredespacho(vertical: Int, horizontal: Int, margen: Int, barras :Boolean) {
+    override fun cargarFormatoPredespacho(vertical: Int, horizontal: Int, margen: Int, barras :Boolean, posicionBarras:Boolean) {
         var modificadorMargen =""
 
         if (margen>0){
             modificadorMargen = "^F020,20^FD.^FS<ETX>\n"
         }
 
+        var mueveDerecha = 0
+        var mueveIzquierda = 0
+
+        if(!posicionBarras){
+            mueveDerecha = 200
+            mueveIzquierda = -530
+        }
+
         val origenX = intArrayOf(55, 0,320,400,600, 50, 90,260,450,665, 70, 50, 50, 50,440, 50,610,580)
-        val origenY = intArrayOf(40, 0, 57, 57, 57,135,197,197,197,197,222,340,375,400,400,445,335,365)
+        val origenY = intArrayOf(40, 0, 57, 57, 57,135,197,197,197,197,222,340,375,400,400,445,330,365)
 
         val finalX = origenX.map { coordenada -> (coordenada + horizontal * multiplicador) }
         val finalY = origenY.map { coordenada -> ((coordenada + margen) + (vertical * multiplicador)) }
 
         val scaneable = if(barras){
             "^BY2,2.7,50\n" +
-                    "^FO"+ ( 655 + horizontal * multiplicador) + "," + ( 310 + margen + (vertical * multiplicador))+"^B2B,80,Y,N^FN10^FS"
+                    "^FO"+ ( 655 + horizontal * multiplicador + mueveIzquierda) + "," + ( 310 + margen + (vertical * multiplicador))+"^B2B,80,Y,N^FN10^FS"
         }else{
-            "^FO" +  finalX[16] + "," + finalY[16] + "^BXN,12,200,,,1,^FN10^FS\n"+
-                    "^FO" +  finalX[17] + "," + finalY[17] + "^A0B,25,25^FN10^FS\n"
+            "^FO" +  (finalX[16]+ mueveIzquierda) + "," + finalY[16] + "^BXN,12,200,,,1,^FN10^FS\n"+
+                    "^FO" +  (finalX[17]+ mueveIzquierda) + "," + finalY[17] + "^A0B,25,25^FN10^FS\n"
         }
 
 
@@ -73,19 +81,19 @@ class ZPL : Lenguaje(){
                 "^FO" +  finalX[0] + "," + finalY[0] + ZPLLogoChico + "^FS\n"+
                 //"^FO" +  finalX[1] + "," + finalY[1] + "^A0N,20,23^FDMonroe Americana^FS\n"+
                 "^FO" +  finalX[2] + "," + finalY[2] + "^A0N,35,35^FDPed:^FS\n"+
-                "^FO" +  finalX[3] + "," + finalY[3] + "^A0N,35,35^FN1^FS\n"+
-                "^FO" +  finalX[4] + "," + finalY[4] + "^A0N,35,35^FN2^FS\n"+
-                "^FO" +  finalX[5] + "," + finalY[5] + "^A0N,30,33^FN3^FS\n"+
+                "^FO" +  finalX[3] + "," + finalY[3] + "^A0N,35,35^FN1^FS\n"+ //Pedido
+                "^FO" +  finalX[4] + "," + finalY[4] + "^A0N,35,35^FN2^FS\n"+ // Fecha
+                "^FO" +  finalX[5] + "," + finalY[5] + "^A0N,30,33^FN3^FS\n"+ // Linea datos bulto
                 "^FO" +  finalX[6] + "," + finalY[6] + "^A0N,20,20^FDEntrega^FS\n"+
                 "^FO" +  finalX[7] + "," + finalY[7] + "^A0N,20,20^FDRadio^FS\n"+
                 "^FO" +  finalX[8] + "," + finalY[8] + "^A0N,20,20^FDSalida^FS\n"+
                 "^FO" +  finalX[9] + "," + finalY[9] + "^A0N,20,20^FDOrden^FS\n"+
-                "^FO" +  finalX[10] + "," + finalY[10] + "^A0N,90,100^FN4^FS\n"+
-                "^FO" +  finalX[11]+ "," + finalY[11] + "^A0N,28,33^FN5^FS\n"+
-                "^FO" +  finalX[12] + "," + finalY[12]+ "^A0N,25,25^FN6^FS\n"+
-                "^FO" +  finalX[13] + "," + finalY[13] + "^A0N,25,25^FN7^FS\n"+
-                "^FO" +  finalX[14] + "," + finalY[14]+ "^A0N,25,25^FN8^FS\n"+
-                "^FO" +  finalX[15]+ "," + finalY[15]+ "^A0N,45,50^FN9^FS\n"+
+                "^FO" +  finalX[10] + "," + finalY[10] + "^A0N,90,100^FN4^FS\n"+ // DATOS ENTREGA
+                "^FO" +  (finalX[11]+mueveDerecha)+ "," + finalY[11] + "^A0N,35,38^FN5^FS\n"+ //Nombre Farmacia
+                "^FO" +  (finalX[12]+mueveDerecha) + "," + finalY[12]+ "^A0N,25,25^FN6^FS\n"+ // Dirección
+                "^FO" +  (finalX[13]+mueveDerecha) + "," + finalY[13] + "^A0N,25,25^FN7^FS\n"+ // Localidad
+                "^FO" +  (finalX[14]+mueveDerecha) + "," + finalY[14]+ "^A0N,25,25^FN8^FS\n"+ // Cliente
+                "^FO" +  (finalX[15]+mueveDerecha) + "," + finalY[15]+ "^A0N,35,38^FN9^FS\n"+ // DESP
                 scaneable+
                 "^XZ"
 
@@ -193,6 +201,9 @@ class ZPL : Lenguaje(){
         return true
     }
     override fun admiteBarrasTapadora(): Boolean {
+        return true
+    }
+    override fun admiteCambioDeLadoBarrasTapadora(): Boolean {
         return true
     }
 

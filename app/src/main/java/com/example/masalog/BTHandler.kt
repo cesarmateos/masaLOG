@@ -1,11 +1,24 @@
 package com.example.masalog
 
+import android.Manifest.permission.BLUETOOTH
+import android.Manifest.permission.BLUETOOTH_ADVERTISE
+import android.Manifest.permission.BLUETOOTH_CONNECT
+import android.Manifest.permission.BLUETOOTH_SCAN
+import android.app.Activity.RESULT_OK
 import android.bluetooth.*
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.util.Log
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.registerForActivityResult
+import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.content.ContextCompat
 import java.io.OutputStream
 import java.util.*
 import java.io.IOException
@@ -17,46 +30,83 @@ private const val TAG = "MainActivity"
 
 object BTHandler {
 
-    private var bluetoothAdapter: BluetoothAdapter? = null
+    private lateinit var bluetoothAdapter: BluetoothAdapter
     private lateinit var pairedDevices: Set<BluetoothDevice>
     private lateinit var bluetoothManager: BluetoothManager
     private lateinit var bluetoothSocket: BluetoothSocket
+    private lateinit var mainActivity: MainActivity
 
     private var btDevice : BluetoothDevice? = null
     private var dispositivosEmparejados: MutableList<itemListaBluetooth> = mutableListOf()
 
-    private var existeBT: Boolean = false
 
     //Variable de estado que accederá la UI
-    val estadoBT = MutableLiveData<EstadoDispositivo>()
+    val estadoBT = MutableLiveData<EstadoDispositivo>(EstadoDispositivo.DESCONECTADO)
     val alerta = MutableLiveData(false)
 
     private var outputStream: OutputStream? = null
 
     fun iniciar(activity: MainActivity){
+        lateinit var takeResultLauncher :ActivityResultLauncher<Intent>
+        mainActivity = activity
         bluetoothManager = activity.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         bluetoothAdapter = bluetoothManager.adapter
-        existeBT = bluetoothAdapter != null
-        estadoBT.postValue(EstadoDispositivo.SINHARDWARE)
+/*
+        if (!(bluetoothAdapter.isEnabled)) {
+            estadoBT.postValue(EstadoDispositivo.BTAPAGADO)
+            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            startActivityForResult(mainActivity,enableBtIntent, 2,null)
+        }
+ */
 
-        if (existeBT){
-            estadoBT.postValue(EstadoDispositivo.DESCONECTADO)
-
-            //Habilita el adaptador si está deshabilitado
-            if (!(bluetoothAdapter?.isEnabled)!!) {
-                val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-                val REQUEST_ENABLE_BT = 1
-                startActivityForResult(activity,enableBtIntent, REQUEST_ENABLE_BT,null)
-                //activity.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
+        //Verifico y pido permisos
+        val takePermission = mainActivity.registerForActivityResult(ActivityResultContracts.RequestPermission()){
+            if(it)
+            {
+                val intent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                takeResultLauncher.launch(intent)
             }
+        }
+        takeResultLauncher = mainActivity.registerForActivityResult(ActivityResultContracts.StartActivityForResult(),
+            ActivityResultCallback{
+                result->
+                if(result.resultCode == RESULT_OK){
+                    estadoBT.postValue(EstadoDispositivo.DESCONECTADO)
+                }
+
+            })
+
+        pedirPermisos()
+
+        if (!(bluetoothAdapter.isEnabled)) {
+            estadoBT.postValue(EstadoDispositivo.BTAPAGADO)
+            takePermission.launch(android.Manifest.permission.BLUETOOTH_CONNECT)
+        }
+
+    }
+
+    fun pedirPermisos(){
+        if (ActivityCompat.checkSelfPermission(
+                mainActivity,
+                BLUETOOTH_CONNECT
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                mainActivity, arrayOf(BLUETOOTH_SCAN, BLUETOOTH_CONNECT, BLUETOOTH,
+                    BLUETOOTH_ADVERTISE), 1)
+            return
         }
     }
 
     fun obtenerListaDispositivos(){
         dispositivosEmparejados.clear()
-        //Carga la lista de dispositivos si no está vacía
-        //if (dispositivosEmparejados.isEmpty()){
-            pairedDevices = bluetoothAdapter?.bondedDevices as Set<BluetoothDevice>
+
+        if (ActivityCompat.checkSelfPermission(
+                mainActivity,
+                BLUETOOTH_CONNECT
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            pairedDevices = bluetoothAdapter.bondedDevices as Set<BluetoothDevice>
             pairedDevices.forEachIndexed  { index, device ->
                 if(device.bluetoothClass.deviceClass == 1664){
 
@@ -64,65 +114,74 @@ object BTHandler {
                 }
 
             }
-            dispositivosEmparejados.sortBy { it.nombre }
-        //}
+        }
+
+
+        dispositivosEmparejados.sortBy { it.nombre }
     }
 
     @OptIn(DelicateCoroutinesApi::class)
     fun conectar(posicion: Int){
-        if(existeBT){
-            estadoBT.postValue(EstadoDispositivo.CONECTANDO)
+        estadoBT.postValue(EstadoDispositivo.CONECTANDO)
 
-            btDevice = pairedDevices.elementAt(posicion)
+        btDevice = pairedDevices.elementAt(posicion)
 
-            GlobalScope.launch (Dispatchers.Main) {
-                if(outputStream == null) {
-                    outputStream = connect(btDevice!!)?.also {
-                        estadoBT.postValue(EstadoDispositivo.CONECTADO)
-                    }
+        GlobalScope.launch (Dispatchers.Main) {
+            if(outputStream == null) {
+                outputStream = connect(btDevice!!)?.also {
+                    estadoBT.postValue(EstadoDispositivo.CONECTADO)
                 }
             }
-
         }
+
     }
 
     private suspend fun connect(device:BluetoothDevice): OutputStream? {
-        return withContext(Dispatchers.IO) {
-            val uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
-            var outputStream: OutputStream? = null
-            if (existeBT && bluetoothAdapter!!.isEnabled) {
-                try {
-                    bluetoothSocket = device.createRfcommSocketToServiceRecord(uuid)
-                    bluetoothAdapter!!.cancelDiscovery()
-                    bluetoothSocket.connect()
-                    if (bluetoothSocket.isConnected) {
-                        outputStream = bluetoothSocket.outputStream
+        if (ActivityCompat.checkSelfPermission(
+                mainActivity,
+                BLUETOOTH_CONNECT
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return withContext(Dispatchers.IO) {
+                val uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
+                var outputStream: OutputStream? = null
+
+                if (bluetoothAdapter.isEnabled) {
+                    try {
+                        bluetoothSocket = device.createRfcommSocketToServiceRecord(uuid)
+                        bluetoothAdapter!!.cancelDiscovery()
+                        bluetoothSocket.connect()
+                        if (bluetoothSocket.isConnected) {
+                            outputStream = bluetoothSocket.outputStream
+                        }
+                    } catch (e: Exception) {
+                        Log.d(TAG, "connect: ${e.message}")
+                        estadoBT.postValue(EstadoDispositivo.DESCONECTADO)
                     }
-                } catch (e: Exception){
-                    Log.d(TAG, "connect: ${e.message}")
-                    estadoBT.postValue(EstadoDispositivo.DESCONECTADO)
                 }
+                outputStream
             }
-            outputStream
         }
+        return null
     }
 
     fun desconectar(){
-        if(existeBT) {
-            outputStream = null
 
-            try {
-                outputStream?.close()
-            } catch (e: IOException) {
-            }
+        outputStream = null
 
-            try {
-                bluetoothSocket.close()
-                estadoBT.postValue(EstadoDispositivo.DESCONECTADO)
-            } catch (e: IOException) {
-            }
-            //bluetoothSocket = null
+        try {
+            outputStream?.close()
+        } catch (e: IOException) {
+            //No atajo la excepción
         }
+
+        try {
+            bluetoothSocket.close()
+            estadoBT.postValue(EstadoDispositivo.DESCONECTADO)
+        } catch (e: IOException) {
+            //No atajo la excepción
+        }
+            //bluetoothSocket = null
     }
 
     private fun evaluoConexion() : Boolean{
@@ -142,14 +201,22 @@ object BTHandler {
     }
 
     fun nombreDispositivoConectado(): String?{
-        if(estadoBT.value == EstadoDispositivo.CONECTADO || estadoBT.value == EstadoDispositivo.CONECTANDO ){
-            return btDevice?.name
+
+        if (ActivityCompat.checkSelfPermission(
+                mainActivity,
+                BLUETOOTH_CONNECT
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            if (estadoBT.value == EstadoDispositivo.CONECTADO || estadoBT.value == EstadoDispositivo.CONECTANDO) {
+                return btDevice?.name
+            }
         }
        return ""
     }
 
     fun imprimir(datos: String){
-        if (existeBT && estadoBT.value == EstadoDispositivo.CONECTADO && evaluoConexion()) {
+
+        if (estadoBT.value == EstadoDispositivo.CONECTADO && evaluoConexion()) {
             estadoBT.postValue(EstadoDispositivo.IMPRIMIENDO)
             try{
                 outputStream?.run {
@@ -163,6 +230,7 @@ object BTHandler {
         }else{
             alerta.postValue(true)
         }
+
     }
 
     fun cerrarDialogo(){

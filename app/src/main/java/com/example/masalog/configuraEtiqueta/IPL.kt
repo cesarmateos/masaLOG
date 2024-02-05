@@ -105,13 +105,21 @@ class IPL : Lenguaje() {
         )
     }
 
-    override fun cargarFormatoPredespacho(vertical: Int, horizontal: Int, margen: Int, barras :Boolean) {
+    override fun cargarFormatoPredespacho(vertical: Int, horizontal: Int, margen: Int, barras :Boolean, posicionBarras:Boolean) {
         var modificadorMargen =""
 
         BTHandler.imprimir(LogoIPL)
 
         if (margen>0){
             modificadorMargen = "<STX>H38;f3;o" + (475+margen + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k6;d3,.<ETX>\n"
+        }
+
+        var mueveDerecha = 0
+        var mueveIzquierda = 0
+
+        if(!posicionBarras){
+            mueveDerecha = 180
+            mueveIzquierda = -570
         }
 
         BTHandler.imprimir(
@@ -130,13 +138,13 @@ class IPL : Lenguaje() {
                     "<STX>H29;f3;o" + (290 + vertical * multiplicador) + "," + (440 + horizontal * multiplicador) + ";c26;b0;k7;d3,Salida<ETX>n" +
                     "<STX>H30;f3;o" + (290 + vertical * multiplicador) + "," + (680 + horizontal * multiplicador) + ";c26;b0;k7;d3,Orden<ETX>n" +
                     "<STX>H21;f3;o" + (285 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k29;d0,30;<ETX>n" +
-                    "<STX>H13;f3;o" + (160 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k12;d0,26;<ETX>n" +
-                    "<STX>H15;f3;o" + (120 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k9;d0,26;<ETX>n" +
-                    "<STX>H16;f3;o" + (90 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k9;d0,26;<ETX>n" +
-                    "<STX>H12;f3;o" + (100 + vertical * multiplicador) + "," + (420 + horizontal * multiplicador) + ";c26;b0;k12;d0,10;<ETX>n" +
-                    "<STX>H6;f3;o" + (55 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador) + ";c26;b0;k18;d0,16;<ETX>n" +
-                    "<STX>B11;f3;o" + (170 + vertical * multiplicador) + "," + (620 + horizontal * multiplicador) + ";c17,200,0;w11;h11;i1;d0,10;<ETX>n" +
-                    "<STX>I11;f3;o" + (30 + vertical * multiplicador) + "," + (620 + horizontal * multiplicador) + ";c20;h1;w1;b0<ETX>n" +
+                    "<STX>H13;f3;o" + (170 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador + mueveDerecha) + ";c26;b0;k13;d0,26;<ETX>n" + //Nombre Farmacia
+                    "<STX>H15;f3;o" + (120 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador + mueveDerecha) + ";c26;b0;k9;d0,26;<ETX>n" + //Dirección
+                    "<STX>H16;f3;o" + (90 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador + mueveDerecha) + ";c26;b0;k9;d0,26;<ETX>n" +  // Localidad
+                    "<STX>H12;f3;o" + (110 + vertical * multiplicador) + "," + (420 + horizontal * multiplicador + mueveDerecha) + ";c26;b0;k12;d0,10;<ETX>n" + //Cod Cliente
+                    "<STX>H6;f3;o" + (55 + vertical * multiplicador) + "," + (40 + horizontal * multiplicador+ + mueveDerecha) + ";c26;b0;k18;d0,16;<ETX>n" + //DESP COPIA
+                    "<STX>B11;f3;o" + (170 + vertical * multiplicador) + "," + (620 + horizontal * multiplicador + mueveIzquierda) + ";c17,200,0;w11;h11;i1;d0,10;<ETX>n" + //QR
+                    "<STX>I11;f3;o" + (30 + vertical * multiplicador) + "," + (620 + horizontal * multiplicador + mueveIzquierda) + ";c20;h1;w1;b0<ETX>n" + //QR
                     "<STX>H25;f3;o" + (40 + vertical * multiplicador) + "," + (640 + horizontal * multiplicador) + ";c26;b0;k7;d0,30;<ETX>n" +
                     "<STX>R<ETX>"
         )
@@ -166,6 +174,10 @@ class IPL : Lenguaje() {
 
     override fun admiteBarrasTapadora(): Boolean {
         return false
+    }
+
+    override fun admiteCambioDeLadoBarrasTapadora(): Boolean {
+        return true
     }
 
     override fun etiquetaHeladera50mm(modificaX : Int, modificaY: Int, cantidad: Int): String{

@@ -63,15 +63,15 @@ fun TopDerecho(){
         horizontalArrangement = Arrangement.spacedBy(6.dp)){
 
         when(estado) {
-            EstadoDispositivo.SINHARDWARE ->{
-                Text("Dispositivo sin BT")
-            }
             EstadoDispositivo.IMPRIMIENDO ->{
                 Text("Imprimiendo...")
                 BotonCierreBT(Color.Green)
             }
             EstadoDispositivo.DESCONECTADO ->{
                 SinImpresoraClickeable()
+            }
+            EstadoDispositivo.BTAPAGADO ->{
+                Text("BT desactivado")
             }
             EstadoDispositivo.CONECTANDO -> {
                 var nombre = BTHandler.nombreDispositivoConectado()
@@ -94,6 +94,7 @@ fun TopDerecho(){
         }
 
     }
+
 }
 
 @Composable

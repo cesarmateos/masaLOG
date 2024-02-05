@@ -11,7 +11,7 @@ abstract class Lenguaje {
     abstract val ejemploFarmabox : String
 
     abstract fun cargarFormatoDespacho(vertical: Int, horizontal: Int, sentidoNormal: Boolean, barras: Boolean)
-    abstract fun cargarFormatoPredespacho(vertical: Int, horizontal: Int,margen:Int, barras :Boolean)
+    abstract fun cargarFormatoPredespacho(vertical: Int, horizontal: Int,margen:Int, barras :Boolean, posicionBarras:Boolean)
 
     fun imprimirEjemploPack(){
         BTHandler.imprimir(ejemploPack)
@@ -50,5 +50,6 @@ abstract class Lenguaje {
     abstract fun admiteGiro():Boolean
     abstract fun admiteBarrasPack():Boolean
     abstract fun admiteBarrasTapadora():Boolean
+    abstract fun admiteCambioDeLadoBarrasTapadora():Boolean
     abstract fun nombreLenguaje(): String
 }

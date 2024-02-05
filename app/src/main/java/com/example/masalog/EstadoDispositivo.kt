@@ -1,7 +1,7 @@
 package com.example.masalog
 
 enum class EstadoDispositivo {
-    SINHARDWARE,
+    BTAPAGADO,
     IMPRIMIENDO,
     DESCONECTADO,
     CONECTANDO,

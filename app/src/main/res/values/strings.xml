@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MASApp 2</string>
     <string name="envia_configuracion">Enviar Configuración</string>
-    <string name="app_name_version">MASApp 2.2.0</string>
+    <string name="app_name_version">MASApp 2.3.0</string>
     <string name="alerta_impresora_no_activa">No se encontró una impresora conectada o lista para imprimir</string>
     <string name="alerta_calor">Tenga en cuenta que a mayor calor menos vida útil del cabezal. \n  ¿Es necesario configurar el calor por encima de 15? </string>
     <string name="config_impresora">Configurar Impresora</string>

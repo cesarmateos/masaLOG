@@ -16,7 +16,7 @@ val espaciado = 20.dp
 
 
 @Composable
-fun  PantallaConfiguraEtiqueta() {
+fun PantallaConfiguraEtiqueta() {
     var state by remember { mutableStateOf(0) }
     val titles = listOf("Pack/Ref/IOMA", "Farmabox")
 
@@ -116,6 +116,7 @@ fun Predespacho(lenguaje: Lenguaje){
     var horizontal : Int by remember { mutableStateOf(0)}
     var vertical : Int by remember { mutableStateOf(0)}
     var barras: Boolean by remember {mutableStateOf(false)}
+    var barrasDerecha : Boolean by remember{mutableStateOf(true)}
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -132,26 +133,32 @@ fun Predespacho(lenguaje: Lenguaje){
                 }
                 Spacer(modifier = Modifier.size(espaciado))
             }
+            if(lenguaje.admiteCambioDeLadoBarrasTapadora()){
+                Column(modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.End) {
+                    ToggleVertical(normal = barrasDerecha, onClick = {barrasDerecha = it}, textoA= "Cod.Derecha", textoB="Cod.Izq.")
+                }
+            }
         }
 
         Spacer(modifier = Modifier.size(espaciado))
 
         //BOTONES
         BotonStandard(texto = "Formulario Papel Continuo",
-            onClick = { lenguaje.cargarFormatoPredespacho(vertical,horizontal, 225, barras)
+            onClick = { lenguaje.cargarFormatoPredespacho(vertical,horizontal, 225, barras,barrasDerecha)
                         lenguaje.imprimirEjemploFarmabox()
             }
         )
         Spacer(modifier = Modifier.size(espaciado))
         BotonStandard(texto = "Formulario Etiqueta",
-            onClick = { lenguaje.cargarFormatoPredespacho(vertical,horizontal, 0,barras)
+            onClick = { lenguaje.cargarFormatoPredespacho(vertical,horizontal, 0,barras,barrasDerecha)
                         lenguaje.imprimirEjemploFarmabox()
             }
         )
 
         Spacer(modifier = Modifier.size(espaciado))
         BotonStandard(texto = "Formulario Emergencia",
-            onClick = { lenguaje.cargarFormatoPredespacho(vertical,horizontal, 825,barras)
+            onClick = { lenguaje.cargarFormatoPredespacho(vertical,horizontal, 825,barras,barrasDerecha)
                         lenguaje.imprimirEjemploFarmabox() }
         )
     }
