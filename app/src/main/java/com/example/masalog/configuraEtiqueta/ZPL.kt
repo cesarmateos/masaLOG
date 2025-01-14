@@ -272,8 +272,8 @@ class ZPL : Lenguaje(){
 
     override fun codigoBarras(codigo: String, tamanio: Int): String {
         return "^XA\n" +
-                "^BY"+ (tamanio+2) +",2," + (50 + tamanio*10) +"\n" +
-                "^FO30,50^BC^FD"+ codigo +"^FS\n" +
+                "^BY"+ (tamanio) +",2," + (50 + tamanio*10) +"\n" +
+                "^FO50,50^BC^FD"+ codigo +"^FS\n" +
                 "^XZ"
     }
 }

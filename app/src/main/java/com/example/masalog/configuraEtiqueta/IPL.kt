@@ -344,7 +344,7 @@ class IPL : Lenguaje() {
                 // f Dirección
 
                 "<STX>B1;o20,780;f1;c2,0;w"+ tamanio +";i1;h"+ alto +";d0,18;<ETX>\n" +
-                "<STX>I1;o"+ 30 + alto +",780;f1;c20;h1;w1;b0<ETX>\n"+
+                "<STX>I1;o"+ (30 + alto) +",780;f1;c20;h1;w1;b0<ETX>\n"+
 
                 "<STX>R<ETX>\n" +
                 "<STX><ESC>E18<CAN><ETX>\n" +
