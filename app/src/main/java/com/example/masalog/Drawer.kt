@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun Drawer(scope: CoroutineScope, scaffoldState: ScaffoldState, navController: NavHostController) {
 
-    val espacioEntreBotones = 10.dp
+    val espacioEntreBotones = 8.dp
 
     Column(modifier= Modifier.fillMaxWidth().background(MaterialTheme.colors.background)){
 
@@ -105,6 +105,16 @@ fun Drawer(scope: CoroutineScope, scaffoldState: ScaffoldState, navController: N
                         navController = navController,
                         ruta = Pantallas.ControladorInicio.name,
                         etiqueta = stringResource(R.string.control_archivo)
+                    )
+
+                    //Genera CB
+                    Spacer(Modifier.size(espacioEntreBotones))
+                    OpcionDrawerPrimaria(
+                        scope = scope,
+                        scaffoldState = scaffoldState,
+                        navController = navController,
+                        ruta = Pantallas.GenerarCodigoBarras.name,
+                        etiqueta = stringResource(R.string.generar_CB)
                     )
 
                     //Lenguaje

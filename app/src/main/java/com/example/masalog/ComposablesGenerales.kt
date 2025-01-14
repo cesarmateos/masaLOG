@@ -44,6 +44,7 @@ import kotlin.math.max
 
 
 val PADDING_HORIZONTAL = 20.dp
+val PADDING_HORIZONTAL_REDUCIDO = 10.dp
 val redondeoFlechas = 20.dp
 
 @Composable
@@ -422,9 +423,9 @@ fun InputTexto(onClick: (texto: String) -> Unit,keyboardType: KeyboardType, larg
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
             keyboardActions = KeyboardActions(onDone = {
                 if(ingresoBarras != ""){
-                    if(ingresoBarras.toInt() != 0 ) {
+                    //if(ingresoBarras.toInt() != 0 ) {
                         onClick(ingresoBarras)
-                    }
+                  //  }
                 }
                 ingresoBarras = ""
             }),

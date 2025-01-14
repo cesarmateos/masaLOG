@@ -12,6 +12,7 @@ enum class Pantallas {
     ControladorInicio,
     EtiquetadoPlantaInicio,
     EtiquetaHeladeras,
+    GenerarCodigoBarras,
     Configuracion;
 
     companion object {
@@ -28,6 +29,7 @@ enum class Pantallas {
                 ControladorInicio.name -> ControladorInicio
                 EtiquetadoPlantaInicio.name -> EtiquetadoPlantaInicio
                 EtiquetaHeladeras.name ->EtiquetaHeladeras
+                GenerarCodigoBarras.name ->GenerarCodigoBarras
                 Configuracion.name ->Configuracion
                 null -> Inicio
                 else -> throw IllegalArgumentException("La ruta $route no es reconocida.")

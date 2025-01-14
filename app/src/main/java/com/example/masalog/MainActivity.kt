@@ -20,6 +20,7 @@ import com.example.masalog.configuracion.PantallaConfiguracion
 import com.example.masalog.controlado.PantallaControlaListado_IngresoProducto
 import com.example.masalog.controlado.PantallaControlaListado
 import com.example.masalog.controlado.PantallaControlaListado_Listado
+import com.example.masalog.codigoBarras.PantallaGenerarCodigoBarras
 import com.example.masalog.etiquetaRefrigerados.PantallaEtiquetaHeladeras
 import com.example.masalog.etiquetado.PantallaEtiquetadoInicio
 import com.example.masalog.ui.theme.GrisPurple
@@ -108,6 +109,10 @@ fun Navegador(navController: NavHostController,modifier: Modifier = Modifier) {
 
         composable(Pantallas.ControladorIngresoLote.name){
             PantallaControlaListado_IngresoProductoConLote(navController)
+        }
+
+        composable(Pantallas.GenerarCodigoBarras.name){
+            PantallaGenerarCodigoBarras()
         }
 
         composable(Pantallas.Configuracion.name){

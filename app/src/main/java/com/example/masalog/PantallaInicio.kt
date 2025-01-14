@@ -17,15 +17,17 @@ fun PantallaInicio(navController: NavHostController ) {
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             BotonStandard(stringResource(R.string.config_impresora)) { navController.navigate(Pantallas.Impresoras.name) }
-            Spacer(Modifier.size(PADDING_HORIZONTAL))
+            Spacer(Modifier.size(PADDING_HORIZONTAL_REDUCIDO))
             BotonStandard(stringResource(R.string.config_etiquetas)) { navController.navigate((Pantallas.Etiquetas.name)) }
-            Spacer(Modifier.size(PADDING_HORIZONTAL))
+            Spacer(Modifier.size(PADDING_HORIZONTAL_REDUCIDO))
             BotonStandard(stringResource(R.string.etiqueta_heladeras)) { navController.navigate(Pantallas.EtiquetaHeladeras.name) }
-            Spacer(Modifier.size(PADDING_HORIZONTAL))
+            Spacer(Modifier.size(PADDING_HORIZONTAL_REDUCIDO))
             BotonStandard(stringResource(R.string.etiquetado_archivo)) { navController.navigate(Pantallas.EtiquetadoPlantaInicio.name) }
-            Spacer(Modifier.size(PADDING_HORIZONTAL))
+            Spacer(Modifier.size(PADDING_HORIZONTAL_REDUCIDO))
             BotonStandard(stringResource(R.string.control_archivo)){ navController.navigate((Pantallas.ControladorInicio.name)) }
-            Spacer(Modifier.size(PADDING_HORIZONTAL))
+            Spacer(Modifier.size(PADDING_HORIZONTAL_REDUCIDO))
+            BotonStandard("Generar Código de Barras"){ navController.navigate((Pantallas.GenerarCodigoBarras.name))}
+            Spacer(Modifier.size(PADDING_HORIZONTAL_REDUCIDO))
             BotonStandard("Lenguaje"){ navController.navigate((Pantallas.Configuracion.name))}
             /*
             Spacer(Modifier.size(PADDING_HORIZONTAL))

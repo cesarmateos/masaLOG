@@ -10,15 +10,11 @@ import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.util.Log
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.result.registerForActivityResult
 import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.core.content.ContextCompat
 import java.io.OutputStream
 import java.util.*
 import java.io.IOException
@@ -41,7 +37,7 @@ object BTHandler {
 
 
     //Variable de estado que accederá la UI
-    val estadoBT = MutableLiveData<EstadoDispositivo>(EstadoDispositivo.DESCONECTADO)
+    val estadoBT = MutableLiveData(EstadoDispositivo.DESCONECTADO)
     val alerta = MutableLiveData(false)
 
     private var outputStream: OutputStream? = null

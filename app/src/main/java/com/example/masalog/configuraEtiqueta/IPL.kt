@@ -328,6 +328,31 @@ class IPL : Lenguaje() {
                 "<STX><ESC>F17<DEL>***PRODUCTOS A REFRIGERAR ENTRE 2 y 8 GRADOS<ETX>\n" +
                 "<STX><ESC>F21<DEL>0001   17/03  U7 23:40   007<ETX>\n" +
                 "<STX><RS>1<ETB><FF><ETX>"
+
+    override fun codigoBarras(codigo: String, tamanio: Int): String {
+        val alto = 50 + (tamanio*20)
+
+        return "<STX><ESC>C<ETX>\n" +
+                "<STX><ESC>P<ETX>\n" +
+                "<STX>E18;F18;<ETX>\n" +
+
+                //c7 es EAN;
+                // w Width magnification;
+                // h Height magnification;
+                // i1 Interpre Field habilitado ( el número escrito del CB)
+                // r Ratio; Defines the character rotation for human-readable fields, or the bar code ratio for a bar code field
+                // f Dirección
+
+                "<STX>B1;o20,780;f1;c2,0;w"+ tamanio +";i1;h"+ alto +";d0,18;<ETX>\n" +
+                "<STX>I1;o"+ 30 + alto +",780;f1;c20;h1;w1;b0<ETX>\n"+
+
+                "<STX>R<ETX>\n" +
+                "<STX><ESC>E18<CAN><ETX>\n" +
+                "<STX><ESC>F1<LF>"+codigo+"<ETX>\n" +
+                "<STX><ETB><ETX>"
+
+
+    }
 }
 
 const val LogoIPL = "<STX><ESC>C<ETX>\n" +

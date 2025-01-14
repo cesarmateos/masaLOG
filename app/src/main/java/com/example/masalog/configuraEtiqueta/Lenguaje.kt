@@ -44,12 +44,19 @@ abstract class Lenguaje {
         BTHandler.imprimir(etiqueta)
     }
 
+    open fun imprimirCodigoBarras(texto: String,tamanio: Int){
+        val etiqueta = codigoBarras(texto,tamanio)
+        BTHandler.imprimir(etiqueta)
+    }
+
     abstract fun etiquetaHeladera50mm(modificaX : Int, modificaY: Int, cantidad: Int) : String
     abstract fun etiquetaHeladera65mm(modificaX : Int, modificaY: Int, cantidad: Int) : String
+    abstract fun codigoBarras(codigo: String,tamanio: Int):String
 
     abstract fun admiteGiro():Boolean
     abstract fun admiteBarrasPack():Boolean
     abstract fun admiteBarrasTapadora():Boolean
     abstract fun admiteCambioDeLadoBarrasTapadora():Boolean
+
     abstract fun nombreLenguaje(): String
 }

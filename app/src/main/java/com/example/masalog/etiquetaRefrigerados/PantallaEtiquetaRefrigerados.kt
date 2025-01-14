@@ -42,7 +42,9 @@ fun PantallaEtiquetaHeladeras() {
         Column{
             BotoneraDireccionConIndicadores(ejeX,ejeY,{ejeX= it}, {ejeY= it}, lenguaje)
             Spacer(Modifier.size(10.dp))
-            Row(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)){
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)){
                 Text(text="Tamaño Etiqueta: ",style = TextStyle(fontWeight = FontWeight.Bold),fontSize =18.sp)
                 ToggleHorizontal(estadoA = mediana, onClick = {mediana = it}, textoA = "50 mm", textoB = "65 mm")
             }
